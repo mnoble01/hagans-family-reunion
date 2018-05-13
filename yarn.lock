@@ -2824,6 +2824,10 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
+flexbox-reset@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/flexbox-reset/-/flexbox-reset-2.3.0.tgz#55a57ded3ae31d335bc71a8ec24dbd8a6f6712d4"
+
 follow-redirects@^1.0.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
