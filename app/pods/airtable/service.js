@@ -1,6 +1,8 @@
 import Service from '@ember/service';
 import Airtable from 'airtable';
+import AirtableModel from './model';
 import { computed } from '@ember/object';
+import { defer } from 'rsvp';
 
 export default Service.extend({
   init() {
@@ -15,26 +17,37 @@ export default Service.extend({
     return Airtable.base('appTLUN9CFH4IhugP');
   }),
 
-  users() {
+  _deserializeRecord(record) {
+    return new AirtableModel(record);
+    // return AirtableModel.create();
+  },
+
+  _serializeRecord(records) {
+
+  },
+
+  fetch(tableName, opts = {}) {
+    const defaultOpts = {
+      perPage: 12,
+      page: 1,
+      view: 'Grid view',
+    };
+    opts = Object.assign({}, defaultOpts, opts);
+
+    const dfd = defer();
     // TODO try async await
-    this.get('_base')('Users').select({
-        // Selecting the first 3 records in Grid view:
-        maxRecords: 3,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        // This function (`page`) will get called for each page of records.
-
-        records.forEach(function(record) {
-            console.log('Retrieved', record.get('Name'));
-        });
-
-        // To fetch the next page of records, call `fetchNextPage`.
-        // If there are more records, `page` will get called again.
-        // If there are no more records, `done` will get called.
-        fetchNextPage();
-
-    }, function done(err) {
-        if (err) { console.error(err); return; }
+    // TODO try pagination with fetchNextPage?
+    this.get('_base')(tableName).select({
+        pageSize: opts.perPage,
+        view: opts.view,
+    }).firstPage((error, records) => {
+      if (error) {
+        dfd.reject(error);
+      } else {
+        dfd.resolve(records.map(record => this._deserializeRecord(record)));
+      }
     });
+
+    return dfd.promise;
   },
 });
