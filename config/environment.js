@@ -2,13 +2,11 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: 'hagans-family-reunion',
+    modulePrefix: 'hagans-family',
+    podModulePrefix: 'hagans-family/pods',
     environment,
     rootURL: '/',
     locationType: 'auto',
-    
-    firebase: 'https://YOUR-FIREBASE-NAME.firebaseio.com/',
-
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

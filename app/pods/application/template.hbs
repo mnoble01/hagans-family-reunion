@@ -1,9 +1,5 @@
-<nav local-class='nav'>
-  {{#each menuItems as |item|}}
-    {{#application/menu-item destination=item.destination target=item.target icon=item.icon faicon=item.faicon}}
-      {{item.label}}
-    {{/application/menu-item}}
-  {{/each}}
-</nav>
+{{app-header}}
 
 {{outlet}}
+
+{{app-footer}}
