@@ -5,6 +5,7 @@ export default Route.extend({
   airtable: service(),
 
   async model() {
-    console.log(await this.get('airtable').fetch('users'));
+    const users = await this.get('airtable').fetch('users');
+    console.log('users', users);
   },
 });

@@ -19,7 +19,6 @@ export default Service.extend({
 
   _deserializeRecord(record) {
     return new AirtableModel(record);
-    // return AirtableModel.create();
   },
 
   _serializeRecord(records) {
