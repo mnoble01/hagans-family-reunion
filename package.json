@@ -13,7 +13,7 @@
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint .",
-    "start": "node server.js",
+    "start": "ember build && node server.js",
     "test": "ember test"
   },
   "devDependencies": {
