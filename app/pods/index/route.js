@@ -17,6 +17,8 @@ export default Route.extend({
     //   console.log(err);
     //   console.error('Error obtaining token: ' + err.responseText);
     // });
+
+    // TODO handle errors (with flash messages)
     await this.get('session').authenticate();
   },
 });

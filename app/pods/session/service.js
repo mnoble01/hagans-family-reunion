@@ -31,13 +31,19 @@ export default Service.extend({
   user: null,
 
   async authenticate() {
-    const response = await this.get('ajax').post('/api/login', {
-      data: {
-        email: 'makala.noble@gmail.com',
-        password: 'password',
-      },
-    });
-    console.log('response', response);
-    console.log(new AirtableModel(response));
+    try {
+      const response = await this.get('ajax').post('/api/login', {
+        data: {
+          email: 'makala.noble@gmail.com',
+          password: 'password',
+        },
+      });
+      const user = new AirtableModel(response);
+      this.set('user', user);
+      this.set('isAuthenticated', true);
+    } catch (e) {
+      this.set('isAuthenticated', false);
+      throw e;
+    }
   },
 });
