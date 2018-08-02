@@ -1,8 +1,9 @@
 import Route from '@ember/routing/route';
-import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
+// import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import { inject as service } from '@ember/service';
 
-export default Route.extend(ApplicationRouteMixin, {
+// export default Route.extend(ApplicationRouteMixin, {
+export default Route.extend({
   session: service(),
   ajax: service(),
 
@@ -16,12 +17,6 @@ export default Route.extend(ApplicationRouteMixin, {
     //   console.log(err);
     //   console.error('Error obtaining token: ' + err.responseText);
     // });
-    await this.get('ajax').post('/api/login', {
-      data: {
-        email: 'email',
-        username: 'username',
-        password: 'password',
-      },
-    });
+    await this.get('session').authenticate();
   },
 });
