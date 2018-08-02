@@ -10,16 +10,5 @@
     }
   },
   "headers": {
-    "/": {
-      "Cache-Control": "no-store, no-cache"
-    },
-    "**.js": {
-      "Cache-Control": "no-store, no-cache",
-      "Access-Control-Allow-Origin": "https://hagans-family.herokuapp.com"
-    },
-    "**.css": {
-      "Cache-Control": "no-store, no-cache",
-      "Access-Control-Allow-Origin": "https://hagans-family.herokuapp.com"
-    }
   }
 }
