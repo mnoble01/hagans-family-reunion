@@ -13,7 +13,7 @@
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint .",
-    "start": "ember serve",
+    "start": "node server.js",
     "test": "ember test"
   },
   "devDependencies": {
@@ -67,6 +67,5 @@
     "passport-session": "^1.0.2",
     "rsvp": "^4.8.3",
     "simple-oauth2": "^2.2.0"
-  },
-  "start": "node server.js"
+  }
 }
