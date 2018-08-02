@@ -32,7 +32,7 @@ export default Service.extend({
 
   async authenticate() {
     try {
-      const response = await this.get('ajax').post('/login', {
+      const response = await this.get('ajax').post('/api/login', {
         data: {
           email: 'makala.noble@gmail.com',
           password: 'password',
