@@ -19,7 +19,7 @@
     },
     "**.css": {
       "Cache-Control": "no-store, no-cache",
-      "Access-Control-Allow-Origin": "cdn-instance.example.com"
+      "Access-Control-Allow-Origin": "https://hagans-family.herokuapp.com"
     }
   }
 }
