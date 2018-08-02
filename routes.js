@@ -38,7 +38,6 @@ passport.use('local-login', new LocalStrategy({
       }
     });
 
-    console.log('airtable key', process.env.AIRTABLE_API_KEY);
     // https://medium.com/@bmshamsnahid/node-js-authentication-using-passport-js-78386be1f518
     // error
     // return done(error)
