@@ -6,7 +6,7 @@
   },
   "proxies": {
     "/api/": {
-      "origin": "https://hagans-family.herokuapp.com/api"
+      "origin": "https://hagans-family.herokuapp.com:3000/api"
     }
   },
   "headers": {
