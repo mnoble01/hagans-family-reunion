@@ -6,6 +6,7 @@ export default Route.extend(ApplicationRouteMixin, {
   airtable: service(),
 
   async model() {
+    console.log('application model hook');
     const users = await this.get('airtable').fetch('users');
     console.log('users', users);
   },

@@ -2,15 +2,15 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  authManager: service('session'),
+  session: service(),
 
   actions: {
     authenticate() {
       const { login, password } = this.getProperties('login', 'password');
-      this.get('authManager').authenticate('authenticator:oauth2', login, password).then(() => {
-        alert('Success authenticaing!');
+      this.get('session').authenticate('authenticator:oauth2', login, password).then(() => {
+        console.info('Success authenticaing!');
       }, (err) => {
-        alert('Error obtaining token: ' + err.responseText);
+        console.error('Error obtaining token: ' + err.responseText);
       });
     },
   },
