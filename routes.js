@@ -84,11 +84,6 @@ module.exports = function(app) {
   app.use(passport.session());
   app.use(express.static('dist'));
 
-  app.post('/login', passport.authenticate('local-login'), function(req, res) {
-    console.log('respond json', req.user);
-    res.json({ ...req.user });
-  });
-
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
     console.log('respond json', req.user);
     res.json({ ...req.user });
