@@ -4,6 +4,7 @@ const app = express();
 
 // set our port
 const port = process.env.PORT || 3000;
+console.log('NODE PORT', port);
 
 // set the static files location
 app.use(express.static(__dirname + '/dist'));
