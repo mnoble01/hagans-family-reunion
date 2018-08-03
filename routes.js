@@ -94,7 +94,7 @@ module.exports = function(app) {
   //   res.json({ ...req.user });
   // });
   app.post('/api/login', function(req, res) {
-    res.json({response: true});
+    res.json({ response: true });
   });
 
   //   router.post('/signup', passport.authenticate('local-signup', {
