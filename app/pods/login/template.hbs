@@ -1,1 +1,19 @@
-Login
+<div local-class='login-form'>
+  <div local-class='page-title'>
+    Login
+  </div>
+
+  <label local-class='input-label'> Email </label>
+  <input local-class='input' oninput={{action (mut email)}} type='email'>
+  <label local-class='input-label'> Password </label>
+  <input local-class='input' oninput={{action (mut password)}} type='password' >
+
+  <div local-class='buttons'>
+    <button local-class='login' onclick={{action login}}>
+      Login
+    </button>
+    <button local-class='register' onclick={{action register}}>
+      Register
+    </button>
+  </div>
+</div>

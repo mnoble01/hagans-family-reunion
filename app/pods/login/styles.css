@@ -1,0 +1,30 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin: auto;
+}
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+}
+
+.input-label {
+  composes: input-label from 'hagans-family/styles/shared';
+}
+
+.input {
+  composes: input from 'hagans-family/styles/shared';
+}
+
+.buttons {
+  composes: button-container from 'hagans-family/styles/shared';
+}
+
+.login {
+  composes: primary-button from 'hagans-family/styles/shared';
+}
+
+.register {
+  composes: secondary-button from 'hagans-family/styles/shared';
+}

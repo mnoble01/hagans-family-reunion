@@ -5,3 +5,7 @@ Application Index
 {{#if session.user}}
   Logged in as {{session.user.email}}
 {{/if}}
+
+{{#link-to 'login'}}
+  Login
+{{/link-to}}
