@@ -1,0 +1,30 @@
+@value dark-gray, black from 'hagans-family/styles/shared';
+
+.application {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.app-header {
+  /* TODO make header sticky for wider screens */
+  /* position: absolute;
+  top: 0; */
+  background: rgba(36,38,41,0.8);
+}
+@media (max-width: ) {
+  .app-header {
+    background: black;
+  }
+}
+
+.app-footer {
+  background: black;
+  color: dark-gray;
+  border-bottom: 24px black;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}

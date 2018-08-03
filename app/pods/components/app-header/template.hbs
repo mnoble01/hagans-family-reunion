@@ -1,1 +1,19 @@
-APP HEADER
+{{#link-to 'index' local-class='link-to-index'}}
+  Hagans Family
+{{/link-to}}
+
+<div local-class='menu'>
+  {{#if session.isAuthenticated}}
+    TODO authenticated menu
+  {{else}}
+    {{#link-to 'login' local-class='menu-link'}}
+      Login
+    {{/link-to}}
+    {{#link-to 'register' local-class='menu-link'}}
+      Register
+    {{/link-to}}
+    {{#link-to 'contact' local-class='menu-link'}}
+      Contact
+    {{/link-to}}
+  {{/if}}
+</div>

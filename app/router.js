@@ -13,6 +13,8 @@ Router.map(function() {
   this.route('users', function() {
     this.route('user', { path: ':user_id' });
   });
+  this.route('password-reset');
+  this.route('contact');
 });
 
 export default Router;

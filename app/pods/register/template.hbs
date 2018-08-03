@@ -1,1 +1,25 @@
-Register
+<div local-class='register-form'>
+  <div local-class='page-title'>
+    Register
+  </div>
+
+  <label local-class='input-label'> First Name </label>
+  <input local-class='input' oninput={{action (mut firstName)}} type='email'>
+  <label local-class='input-label'> Last Name </label>
+  <input local-class='input' oninput={{action (mut lastName)}} type='email'>
+  <label local-class='input-label'> Email </label>
+  <input local-class='input' oninput={{action (mut email)}} type='email'>
+  <label local-class='input-label'> Password </label>
+  <input local-class='input' oninput={{action (mut password)}} type='password' >
+  <label local-class='input-label'> Confirm Password </label>
+  <input local-class='input' oninput={{action (mut passwordConfirm)}} type='password' >
+
+  <div local-class='buttons'>
+    <button local-class='register' onclick={{action register}}>
+      Register
+    </button>
+    {{#link-to 'login' local-class='login'}}
+      Login
+    {{/link-to}}
+  </div>
+</div>

@@ -1,0 +1,24 @@
+@value gold from 'hagans-family/styles/shared';
+@value light-gray from 'hagans-family/styles/shared';
+
+.article-header {
+  border-top: 1px solid light-gray;
+  margin-bottom: 36px;
+  position: relative;
+}
+
+@value icon-size: 36px;
+.icon {
+  color: #fff;
+  background: gold;
+  border-radius: 100%;
+  font-size: 28px;
+  text-align: center;
+  width: icon-size;
+  height: icon-size;
+  line-height: icon-size;
+  margin: auto;
+  position: absolute;
+  top: calc(-1 * (icon-size / 2));
+  left: calc(50% - (icon-size / 2));
+}

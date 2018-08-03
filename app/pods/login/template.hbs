@@ -1,4 +1,8 @@
 <div local-class='login-form'>
+  <div local-class='decoration'>
+    {{article-header}}
+  </div>
+
   <div local-class='page-title'>
     Login
   </div>
@@ -12,8 +16,9 @@
     <button local-class='login' onclick={{action login}}>
       Login
     </button>
-    <button local-class='register' onclick={{action register}}>
+    {{!-- <button local-class='register' onclick={{action register}}> --}}
+    {{#link-to 'register' local-class='register'}}
       Register
-    </button>
+    {{/link-to}}
   </div>
 </div>

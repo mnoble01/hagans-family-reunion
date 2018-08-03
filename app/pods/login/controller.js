@@ -13,8 +13,4 @@ export default Controller.extend({
     //   console.error('Error obtaining token: ' + err.responseText);
     // });
   },
-
-  register() {
-    console.log('register');
-  },
 });

@@ -1,11 +1,4 @@
-@value gold from 'hagans-family/styles/shared';
-
-.decoration {
-  max-width: 90%;
-  padding: 0 5%;
-}
-
-.login-form {
+.register-form {
   display: flex; /* TODO need when all content is flex? */
   flex-direction: column;
   width: 450px;
@@ -28,10 +21,10 @@
   composes: button-container from 'hagans-family/styles/shared';
 }
 
-.login {
+.register {
   composes: primary-button from 'hagans-family/styles/shared';
 }
 
-.register {
+.login {
   composes: secondary-button from 'hagans-family/styles/shared';
 }

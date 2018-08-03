@@ -1,3 +1,29 @@
+.link-to-index {
+  composes: page-title from 'hagans-family/styles/shared';
+  composes: gold-link from 'hagans-family/styles/shared';
+  text-decoration: none;
+  font-size: 30px !important;
+  margin: 0 !important;
+}
+
 .app-header {
-  background: pink;
+  display: flex;
+  align-items: center;
+  padding: 28px 40px;
+}
+
+.menu {
+  margin-left: auto;
+}
+
+.menu-link {
+  composes: link from 'hagans-family/styles/shared';
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 0 12px;
+  letter-spacing: 1.4px;
+}
+.menu-link:hover {
+  color: #8C97A2;
 }

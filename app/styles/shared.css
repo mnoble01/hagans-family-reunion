@@ -13,14 +13,16 @@
 
 body {
   color: black;
+  margin: 0;
   /* TODO get Lato font */
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
+  font-size: 14px;
 }
 
 .page-title {
   font-size: 40px;
-  margin-top: 16px;
+  margin: 16px 0;
   text-align: center;
   /* TODO get Noto Serif font */
   font-family: 'Noto Serif', Georgia, serif;
@@ -38,6 +40,7 @@ body {
   border: 2px solid #DDD;
   padding: 0 12px;
   height: 40px;
+  font-size: 15px;
 }
 .input:focus {
   border-color: #BBB;
@@ -77,6 +80,8 @@ body {
   margin: 0;
   border-radius: 4px;
   border: none;
+  text-align: center;
+  text-decoration: none;
 
   /* opacity: 1; */
   min-width: 100px;
@@ -104,4 +109,19 @@ body {
 }
 .secondary-button:hover {
   background: #E5E5E5;
+}
+
+.link {
+  transition: all .3s;
+}
+.link:focus {
+  outline: none;
+}
+
+.gold-link {
+  composes: link;
+  color: gold;
+}
+.gold-link:hover {
+  color: light-gold;
 }
