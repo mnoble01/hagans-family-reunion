@@ -7,11 +7,12 @@ const session = require('express-session');
 const Airtable = require('airtable');
 require('dotenv').config();
 
-const airtableBase = new Airtable({
-  apiKey: 'YOUR_API_KEY',
+Airtable.configure({
+  apiKey: process.env.AIRTABLE_API_KEY,
   endpointUrl: 'https://api.airtable.com', // TODO use an env variable
-}).base('appTLUN9CFH4IhugP');
-
+});
+// var base = new Airtable({ apiKey: 'YOUR_API_KEY' }).base('app1mjrfgjv0RUiFT');
+const airtableBase = Airtable.base('appTLUN9CFH4IhugP');
 const USER_TABLE = 'users';
 
 passport.use('local-login', new LocalStrategy({
