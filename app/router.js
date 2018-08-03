@@ -12,6 +12,8 @@ Router.map(function() {
   this.route('users', function() {
     this.route('user', { path: ':user_id' });
   });
+  this.route('register');
+  this.route('profile');
 });
 
 export default Router;

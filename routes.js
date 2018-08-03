@@ -70,6 +70,8 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
+  // or res.redirect('/login');
+  // or res.redirect('/access-denied');
   res.status(400).json({
       message: 'access denied',
   });
@@ -88,9 +90,9 @@ module.exports = function(app) {
     res.json({ ...req.user });
   });
 
-  //   router.post('/signup', passport.authenticate('local-signup', {
-  //     successRedirect : '/auth/profile',
-  //     failureRedirect : 'auth/signup'
+  //   router.post('/register', passport.authenticate('local-register', {
+  //     successRedirect : '/profile',
+  //     failureRedirect : '/signup'
   // }));
 
   app.get('/api/user', isLoggedIn, function(req, res) {

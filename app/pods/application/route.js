@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 // export default Route.extend(ApplicationRouteMixin, {
 export default Route.extend({
   airtable: service(),
+  // TODO support deep linking
 
   async model() {
     console.log('application model hook');

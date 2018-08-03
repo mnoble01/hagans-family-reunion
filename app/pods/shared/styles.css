@@ -1,0 +1,63 @@
+@value header-color: rgba(36,38,41,0.8);
+@value input-color: #666;
+
+@value medium-gray: #888;
+@value dark-gray: #616A74;
+@value black: #292C2f;
+
+@value light-gold: #E8BB37;
+@value gold: #E7AE01;
+
+@value powder-blue: #678DB8;
+
+.box-shadow {
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+}
+
+/* TODO get a css reset */
+.input {
+  color: input-color;
+  border-radius: 2px;
+  border: 2px solid #DDD;
+  padding: 0 12px;
+}
+
+.input-label {
+  font-size: 15px;
+  line-height: 22px;
+  color: #555;
+  display: block;
+  margin: 0 0 8px 0;
+}
+
+.-button {
+  color: white;
+  vertical-align: middle;
+  height: auto;
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: none;
+  text-shadow: none;
+  font-family: inherit;
+  outline: none;
+  margin: 0;
+  opacity: 1;
+}
+
+.primary-button {
+  composes: -button;
+  background: gold;
+}
+.primary-button {
+  background: light-gold;
+}
+
+.secondary-button {
+  composes: -button;
+  background: #EEE;
+}
+.secondary-button:hover {
+  color: input-color;
+  background: #E5E5E5;
+}
