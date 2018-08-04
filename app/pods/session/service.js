@@ -1,14 +1,15 @@
 import Service, { inject as service } from '@ember/service';
 import AirtableModel from 'hagans-family/pods/airtable/model';
+import { bool } from '@ember/object/computed';
 
 export default Service.extend({
   ajax: service(),
 
-  isAuthenticated: false,
+  isAuthenticated: bool('user.id'),
   user: null,
 
   async authorize() {
-    const response = await this.get('ajax').get('/api/user');
+    const response = await this.get('ajax').request('/api/user');
     const user = new AirtableModel(response);
     this.set('user', user);
   },
@@ -23,9 +24,7 @@ export default Service.extend({
       });
       const user = new AirtableModel(response);
       this.set('user', user);
-      this.set('isAuthenticated', true);
     } catch (e) {
-      this.set('isAuthenticated', false);
       throw e;
     }
   },

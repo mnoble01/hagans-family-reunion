@@ -15,6 +15,8 @@ Router.map(function() {
   });
   this.route('password-reset');
   this.route('contact');
+
+  this.route('not-found', { path: '/*path' });
 });
 
 export default Router;

@@ -113,11 +113,9 @@ passport.use('local-register', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback : true,
 }, function(req, email, password, done) {
-  console.log('REGISTER');
   findAirtableUserByEmail({
     email,
     onSuccess: (airtableUser) => {
-      console.log('FOUND AIRTABLE USER');
       // create db user
       Users.findOne({ email }, (dbError, dbUser) => {
         if (dbError) {
@@ -140,7 +138,6 @@ passport.use('local-register', new LocalStrategy({
       });
     },
     onError: (airtableError) => {
-      console.log('ON findbyemail ERROR', airtableError);
       // create airtable user
       createAirtableUser({
         attrs: {
@@ -175,20 +172,23 @@ passport.use('local-register', new LocalStrategy({
 passport.serializeUser(function(user, done) {
   // user was successfully authenticated
   // so return the user id storage in the session
-  console.log('serializeUser', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   // called on all requests to confirm session status
   // The id comes from same storage as serializeUser
-
-  // TODO get user by id
-  const user = { id: 'user-id', email: 'user-email' };
-  // if (error) {
-  //   done(err);
-  // } else {
-  done(null, user);
+  findAirtableUserById({
+    id,
+    onSuccess(airtableUser) {
+      done(null, airtableUser.serialize());
+    },
+    onError(error) {
+      return done(null, false, {
+        message: 'User not found',
+      });
+    },
+  });
 });
 
 // route middleware to ensure user is logged in
@@ -220,7 +220,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/user', isLoggedIn, function(req, res) {
-    return res.status(200).send({ user: { id: 1, email: 'vladimir@kremlin.ru' } });
+    return res.status(200).send({ ...req.user });
   });
 
   app.get('/api/logout', isLoggedIn, function(req, res) {
