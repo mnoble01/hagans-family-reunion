@@ -5,6 +5,11 @@
   margin: auto;
 }
 
+.decoration {
+  max-width: 90%;
+  padding: 0 5%;
+}
+
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
 }

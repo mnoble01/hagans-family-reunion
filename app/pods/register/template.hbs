@@ -1,4 +1,8 @@
 <div local-class='register-form'>
+  <div local-class='decoration'>
+    {{article-header}}
+  </div>
+  
   <div local-class='page-title'>
     Register
   </div>
@@ -15,7 +19,11 @@
   <input local-class='input' oninput={{action (mut passwordConfirm)}} type='password' >
 
   <div local-class='buttons'>
-    <button local-class='register' onclick={{action register}}>
+    <button
+      local-class='register'
+      onclick={{perform register}}
+      disabled={{or (not (and firstName lastName mail password passwordConfirm)) register.isRunning}}
+    >
       Register
     </button>
     {{#link-to 'login' local-class='login'}}

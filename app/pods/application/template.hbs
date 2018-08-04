@@ -4,7 +4,14 @@
   </div>
 
   <div local-class='content'>
+    {{flash-messages}}
     {{outlet}}
+    <!-- {{liquid-outlet}} -->
+    <!-- {{#animated-container}}
+      {{#animated-value router.currentRouteName}}
+        {{outlet}}
+      {{/animated-value}}
+    {{/animated-container}} -->
   </div>
 
   <div local-class='app-footer'>

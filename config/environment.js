@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(environment) {
-  let ENV = {
+  const ENV = {
     modulePrefix: 'hagans-family',
     podModulePrefix: 'hagans-family/pods',
     environment,
@@ -14,14 +14,20 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
+    },
+
+    flashMessageDefaults: {
+      sticky: true,
+      allowClose: true,
+      destroyOnClick: false,
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
   };
 
   if (environment === 'development') {

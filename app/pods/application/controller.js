@@ -1,12 +1,10 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import fadeTransition from 'ember-animated/transitions/fade';
 
 export default Controller.extend({
   flashMessages: service(),
+  router: service(),
 
-  register: task(function*() {
-    console.log('register');
-    // TODO check password === passwordConfirm
-  }),
+  fadeTransition,
 });

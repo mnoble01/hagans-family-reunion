@@ -16,7 +16,15 @@ class AirtableModel {
         },
       });
     }
+    this.id = this._airtableModel.id;
     return this;
+  }
+
+  serialize() {
+    return {
+      id: this._airtableModel.id,
+      ...this._airtableModel.fields,
+    };
   }
 
   // Or add nice-named functions

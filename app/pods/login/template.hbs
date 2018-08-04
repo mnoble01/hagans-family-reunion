@@ -8,15 +8,14 @@
   </div>
 
   <label local-class='input-label'> Email </label>
-  <input local-class='input' oninput={{action (mut email)}} type='email'>
+  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email' autofocus>
   <label local-class='input-label'> Password </label>
-  <input local-class='input' oninput={{action (mut password)}} type='password' >
+  <input local-class='input' oninput={{action (mut password) value='target.value'}} type='password' onkeydown={{action onEnter}}>
 
   <div local-class='buttons'>
-    <button local-class='login' onclick={{action login}}>
+    <button local-class='login' onclick={{perform login}} disabled={{or (not (and email password)) login.isRunning}}>
       Login
     </button>
-    {{!-- <button local-class='register' onclick={{action register}}> --}}
     {{#link-to 'register' local-class='register'}}
       Register
     {{/link-to}}

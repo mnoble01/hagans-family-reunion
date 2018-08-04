@@ -1,0 +1,23 @@
+.flash-message {
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 32px;
+}
+
+.flash-message.danger,
+.flash-message.warning {
+  background: #C74933;
+  color: white;
+}
+
+.flash-message.info {
+  background: #A5BBD5;
+}
+
+.flash-message.success {
+  background: #4EA651;
+}
+
+.message {
+
+}
