@@ -6,18 +6,11 @@ import { inject as service } from '@ember/service';
 export default EmberObject.extend({
   ajax: service(),
 
-  // init(airtableRecord) {
-  //   this.set('_airtableRecord', airtableRecord);
-  //   for (const key of Object.keys(airtableRecord.fields)) {
-  //      defineProperty(this, camelize(key), alias(`_airtableRecord.fields.${key}`));
-  //   }
-  // },
-
   init(response) {
     this.set('_source', response);
     for (const key of Object.keys(response)) {
        defineProperty(this, camelize(key), alias(`_source.${key}`));
-       delete this[key]; // not sure why I need this
+       delete this[key];
     }
   },
 

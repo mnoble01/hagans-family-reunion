@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/dist'));
 
 // configure our routes
-require('./routes')(app);
+require('./server/routes')(app);
 
 app.listen(port);
 

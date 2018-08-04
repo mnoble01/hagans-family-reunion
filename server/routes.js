@@ -5,6 +5,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const Airtable = require('airtable');
+const AirtableModel = require('./airtable-model');
 require('dotenv').config();
 
 const airtableBase = new Airtable({
@@ -23,9 +24,9 @@ passport.use('local-login', new LocalStrategy({
         pageSize: 100,
         view: 'Grid view',
     }).eachPage((records, fetchNextPage) => {
-      // TODO use airtable model here
       for (const record of records) {
-        if (record.fields['Email'] === email) {
+        const airtableModel = new AirtableModel(record);
+        if (airtableModel.email === email) {
           const user = { id: record.id, ...record.fields };
           done(null, user);
         }
@@ -54,11 +55,12 @@ passport.use('local-login', new LocalStrategy({
   },
 ));
 passport.serializeUser(function(user, done) {
-  console.log('serializeUser', user);
+  // console.log('serializeUser', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
+  // TODO
   const user = { id: 'user-id', email: 'user-email' };
   // error
   // done(err);

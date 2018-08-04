@@ -8,16 +8,7 @@ export default Route.extend({
   ajax: service(),
 
   async model() {
-    // TODO this should actually be authorizing
-    // console.log('application/index model hook');
-    // // this.get('session').authenticate('authenticator:oauth2', login, password).then(() => {
-    // await this.get('session').authenticate('authenticator:oauth2', 'EMAIL', 'PASS').then(() => {
-    //   console.info('Success authenticaing!');
-    // }, (err) => {
-    //   console.log(err);
-    //   console.error('Error obtaining token: ' + err.responseText);
-    // });
-
+    // TODO this should actually be authorizing (not authenticating) by getting the current user
     // TODO handle errors (with flash messages)
     await this.get('session').authenticate();
   },
