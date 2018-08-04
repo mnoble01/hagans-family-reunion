@@ -10,6 +10,10 @@
   padding: 0 5%;
 }
 
+.flash-messages.flash-messages {
+  margin: 24px 0 0;
+}
+
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
 }

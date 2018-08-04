@@ -7,6 +7,12 @@ export default Service.extend({
   isAuthenticated: false,
   user: null,
 
+  async authorize() {
+    const response = await this.get('ajax').get('/api/user');
+    const user = new AirtableModel(response);
+    this.set('user', user);
+  },
+
   async authenticate({ email, password }) {
     try {
       const response = await this.get('ajax').post('/api/login', {
@@ -22,5 +28,18 @@ export default Service.extend({
       this.set('isAuthenticated', false);
       throw e;
     }
+  },
+
+  async register({ email, password, firstName, lastName }) {
+    const response = await this.get('ajax').post('/api/register', {
+      data: {
+        email,
+        password,
+        firstName,
+        lastName,
+      },
+    });
+    const user = new AirtableModel(response);
+    this.set('user', user);
   },
 });

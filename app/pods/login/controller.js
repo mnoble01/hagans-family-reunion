@@ -8,6 +8,7 @@ export default Controller.extend({
   flashMessages: service(),
 
   login: task(function*() {
+    this.flashMessages.clearMessages();
     try {
       yield this.session.authenticate({
         email: this.email,
