@@ -2,7 +2,7 @@
 
 .reunion-page-header {
   font-size: 17px;
-  width: 450px;
+  width: 450px; /* copied from login page? */
   margin: 0 auto;
   display: flex; /* TODO need when all content is flex? */
   flex-direction: column;
@@ -21,8 +21,8 @@
 }
 
 .page-links {
-  /* copied from login page - make a shared css rule */
-  /* font-size: 17px; */
+  display: flex;
+  flex-direction: column;
 }
 
 .link {

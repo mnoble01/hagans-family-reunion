@@ -3,8 +3,9 @@
 
 .article-header {
   border-top: 1px solid light-gray;
-  margin: 36px 0;
+  margin: 36px auto;
   position: relative;
+  max-width: 450px;
 }
 
 @value icon-size: 36px;

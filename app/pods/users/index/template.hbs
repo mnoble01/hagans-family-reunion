@@ -1,0 +1,18 @@
+{{article-header}}
+
+<div local-class='page-title'>
+  People
+</div>
+
+<div local-class='users'>
+  {{#each users as |user|}}
+    <div local-class='user'>
+      {{#link-to 'users.user' user.id local-class='user-link'}}
+        <img local-class='user-image' src={{or user.profileImage.firstObject.url '/images/avatar.jpg'}} />
+        <div local-class='user-name'>
+          {{user.firstName}} {{user.lastName}}
+        </div>
+      {{/link-to}}
+    </div>
+  {{/each}}
+</div>

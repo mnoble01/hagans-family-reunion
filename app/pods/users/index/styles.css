@@ -1,0 +1,42 @@
+@value dark-gray, gold from 'hagans-family/styles/shared';
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+}
+
+.users {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.user {
+  max-width: 200px;
+  text-align: center;
+  margin: 0 16px 16px;
+}
+
+.user-link {
+  text-decoration: none;
+}
+
+.user-name {
+  font-size: 17px;
+  line-height: 26px;
+  color: dark-gray;
+  font-weight: bold;
+  margin: 16px 0 16px;
+  transition: all .3s;
+}
+.user-link:hover .user-name {
+  color: gold;
+}
+
+.user-image {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 100%;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

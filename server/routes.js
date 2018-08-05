@@ -27,9 +27,12 @@ function fetchAirtableUsers({ onSuccess, onError }) {
       pageSize: 100,
       view: 'Grid view',
   }).eachPage((records, fetchNextPage) => {
-    airtableRecords.push(
-      ...records.map(r => new AirtableModel(r))
-    );
+    for (const record of records) {
+      const airtableModel = new AirtableModel(record);
+      if (airtableModel.status === 'Member' || airtableModel.status === 'Inactive') {
+        airtableRecords.push(new AirtableModel(record));
+      }
+    }
     fetchNextPage();
   }, (error) => {
     if (error) {
@@ -248,10 +251,9 @@ module.exports = function(app) {
   });
 
   app.get('/api/users', isLoggedIn, function(req, res) {
-    // return res.status(200).send({ ...req.user });
     fetchAirtableUsers({
       onSuccess: (airtableUsers) => {
-        res.status(200).json(airtableUsers);
+        res.status(200).json(airtableUsers.map(user => user.serialize()));
       },
       onError:() => {
         res.status(500).json({ message: 'Something went wrong' });
