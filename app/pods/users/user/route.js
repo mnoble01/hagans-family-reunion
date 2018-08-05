@@ -6,9 +6,6 @@ export default Route.extend({
   ajax: service(),
 
   queryParams: {
-    edit: {
-      refreshModel: true,
-    },
     tab: {
       refreshModel: false,
     },
@@ -27,5 +24,11 @@ export default Route.extend({
     if (isExiting) {
       controller.set('tab');
     }
+  },
+
+  actions: {
+    refreshModel() {
+      this.refresh();
+    },
   },
 });

@@ -20,6 +20,8 @@
 }
 
 .profile-item {
+  display: flex;
+  flex-direction: column;
   font-size: 15px;
   color: dark-gray;
   margin-bottom: 32px;
@@ -32,6 +34,10 @@
   padding-bottom: 8px;
   margin-bottom: 8px;
   border-bottom: 1px solid light-gray;
+}
+.profile-header.no-border {
+  border: none;
+  margin-bottom: 0;
 }
 
 .profile-header .icon {
@@ -60,6 +66,8 @@
   transition: all .3s;
   padding: 0 16px;
   border-bottom: 2px solid transparent;
+}
+.tab:not(:last-child) {
   border-right: 1px solid #466B95;
 }
 .tab.active {
@@ -99,4 +107,18 @@
 }
 .user-link img {
   margin-right: 16px;
+}
+
+.input {
+  composes: input from 'hagans-family/styles/shared';
+  width:
+}
+
+.buttons {
+  composes: button-container from 'hagans-family/styles/shared';
+}
+
+.submit {
+  composes: primary-button from 'hagans-family/styles/shared';
+  max-width: 150px;
 }

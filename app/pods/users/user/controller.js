@@ -1,14 +1,18 @@
 import Controller from '@ember/controller';
 import { alias } from '@ember/object/computed';
-import { computed, observer } from '@ember/object';
+import { computed, observer, get } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import moment from 'moment';
-import { task } from 'ember-concurrency';
+import { getOwner } from '@ember/application';
+import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import AirtableModel from 'hagans-family/pods/airtable/model';
 
 export default Controller.extend({
   ajax: service(),
+  session: service(),
+  flashMessages: service(),
+
   queryParams: ['edit', 'tab'],
   edit: false,
   tab: 'info',
@@ -31,8 +35,8 @@ export default Controller.extend({
     if (this.user.address) {
       const address = this.user.address;
       const response = yield this.ajax.request(`/api/location/${encodeURIComponent(address)}`);
-      this.set('addressLocation', response.geometry.location);
-      this.set('formattedAddress', response['formatted_address']);
+      this.set('addressLocation', get(response, 'geometry.location'));
+      this.set('formattedAddress', get(response, 'formatted_address'));
     }
   }),
 
@@ -66,5 +70,30 @@ export default Controller.extend({
     return new AirtableModel(user);
   },
 
-  // TODO edit mode
+  editedFields: computed('model.user', 'formattedAddress', function() {
+    return {
+      birthDate: this.user.birthDate,
+      contactMethods: this.user.contactMethods,
+      phone: this.user.phone,
+      address: this.formattedAddress || this.user.address,
+    };
+  }),
+
+  updateUser: task(function*() {
+    for (const key of Object.keys(this.editedFields)) {
+      this.user.set(key, this.editedFields[key]);
+    }
+
+    try {
+      yield this.ajax.put(`/api/users/${this.user.id}`, {
+        data: JSON.stringify(this.user.serialize()),
+      });
+      this.flashMessages.success('Your information has been updated', { scope: 'update-user' });
+      yield timeout(1500);
+      this.send('refreshModel');
+      this.transitionToRoute('users.user', this.user.id, { queryParams: { tab: 'info' } });
+    } catch (e) {
+      this.flashMessages.danger(e, { scope: 'update-user' });
+    }
+  }),
 });

@@ -90,6 +90,16 @@ function createAirtableUser({ attrs, onSuccess, onError }) {
   });
 }
 
+function updateAirtableUser({ id, attrs, onSuccess, onError }) {
+  airtableBase(USER_TABLE).update(id, attrs, (err, record) => {
+    if (err) {
+      return onError(err);
+    } else {
+      return onSuccess(new AirtableModel(record));
+    }
+  });
+}
+
 // function sendError(res, error) {
 //   const output = {
 //     error: {
@@ -260,8 +270,8 @@ module.exports = function(app) {
       onSuccess: (airtableUsers) => {
         res.status(200).json(airtableUsers.map(user => user.serialize()));
       },
-      onError:() => {
-        res.status(500).json({ message: 'Something went wrong' });
+      onError:(error) => {
+        res.status(error.statusCode).json(error);
       },
     });
   });
@@ -272,8 +282,25 @@ module.exports = function(app) {
       onSuccess: (airtableUser) => {
         res.status(200).json(airtableUser.serialize());
       },
-      onError: () => {
-        res.status(404).json({ message: 'Not found' });
+      onError: (error) => {
+        res.status(error.statusCode).json(error);
+      },
+    });
+  });
+
+  app.put('/api/users/:id', function(req, res) {
+    const attrs = req.body;
+    delete attrs['Table ID'];
+    delete attrs['Created At'];
+
+    updateAirtableUser({
+      id: req.params.id,
+      attrs,
+      onSuccess: (airtableUser) => {
+        res.status(200).json(airtableUser.serialize());
+      },
+      onError: (error) => {
+        res.status(error.statusCode).json(error);
       },
     });
   });
@@ -285,7 +312,7 @@ module.exports = function(app) {
       if (error) {
         res.status(500).json(error);
       } else {
-        res.json(response && response.json && response.json.results && response.json.results[0]);
+        res.json(response && response.json && response.json.results && response.json.results[0] || {});
       }
     });
   });

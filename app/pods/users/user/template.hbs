@@ -18,6 +18,13 @@
         Family Relationships
       {{/link-to}}
     </div>
+    {{#if (eq user.id session.user.id)}}
+      <div local-class='tab {{if (eq tab 'edit') 'active'}}'>
+        {{#link-to 'users.user' user.id (query-params tab='edit') local-class='tab-link'}}
+          Edit
+        {{/link-to}}
+      </div>
+    {{/if}}
   </div>
 
   {{#liquid-if (eq tab 'relationships')}}
@@ -84,6 +91,56 @@
         </div>
       </div>
     {{/if}}
+
+  {{else if (eq tab 'edit')}}
+
+    <div local-class='profile-item'>
+      <div local-class='profile-header no-border'>
+        Birth Date
+      </div>
+      <input local-class='input' type='date' value={{editedFields.birthDate}} onchange={{action (mut editedFields.birthDate) value='target.value'}} />
+    </div>
+
+    <div local-class='profile-item'>
+      <div local-class='profile-header no-border'>
+        Preferred Methods of Contact
+      </div>
+      {{#power-select-multiple
+        options=(array 'Email' 'SMS Text' 'Snail Mail')
+        onchange=(action (mut editedFields.contactMethods))
+        selected=editedFields.contactMethods
+      as |name|}}
+        {{name}}
+      {{/power-select-multiple}}
+    </div>
+
+    <div local-class='profile-item'>
+      <div local-class='profile-header no-border'>
+        <i class='genericon genericon-phone' local-class='icon'></i>
+        Phone Number
+      </div>
+      <input local-class='input' type='tel' value={{editedFields.phone}} oninput={{action (mut editedFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}' />
+    </div>
+
+    <div local-class='profile-item'>
+      <div local-class='profile-header no-border'>
+        <i class='genericon genericon-location' local-class='icon'></i>
+        Address
+      </div>
+      <input local-class='input' type='text' value={{editedFields.address}} oninput={{action (mut editedFields.address) value='target.value'}} />
+    </div>
+
+    {{flash-messages scope='update-user'}}
+
+    <div local-class='buttons'>
+      <button local-class='submit' onclick={{perform updateUser}} disabled={{updateUser.isRunning}}>
+        {{#if updateUser.isRunning}}
+          Please wait...
+        {{else}}
+          Update
+        {{/if}}
+      </button>
+    </div>
 
   {{else}}
 
