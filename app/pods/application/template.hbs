@@ -1,9 +1,10 @@
 <div local-class='application'>
-  <div local-class='app-header'>
+  {{log onIndexPage}}
+  <div local-class='app-header {{if onIndexPage 'index-page'}}'>
     {{app-header transitionTo=(action transitionTo)}}
   </div>
 
-  {{#if (eq router.currentRouteName 'index')}}
+  {{#if onIndexPage}}
     <div local-class='site-image'>
       <div local-class='site-description-container'>
         <div local-class='site-description'>
