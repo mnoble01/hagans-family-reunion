@@ -41,6 +41,23 @@
   /* position: relative; */
 }
 
+@keyframes -rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading {
+  background: url(/images/watercolor-circle.png);
+  background-size: contain;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  animation: -rotate 2s infinite;
+}
+
 .site-image {
   background: url(/images/family-photo.jpg);
   /* position: absolute;

@@ -1,0 +1,15 @@
+<div local-class='reunion-page-header'>
+  {{article-header}}
+
+  <div local-class='page-title'>
+    Past Years
+  </div>
+
+  <div local-class='page-links'>
+    {{#each model.pastYearRoutes as |route|}}
+      {{#link-to route.route local-class='link'}}
+        {{route.name}}
+      {{/link-to}}
+    {{/each}}
+  </div>
+</div>
