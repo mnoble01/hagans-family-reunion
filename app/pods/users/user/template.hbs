@@ -6,65 +6,72 @@
 
 <img local-class='user-image' src={{or user.profileImage.firstObject.url '/images/avatar.jpg'}} />
 
-{{#if user.birthDate}}
-  <div local-class='profile-item'>
-    <div local-class='profile-header'>
-      Age
+<div local-class='info'>
+  {{#if user.birthDate}}
+    <div local-class='profile-item'>
+      <div local-class='profile-header'>
+        Age
+      </div>
+      {{moment-from-now birthDate hideAffix=true}}
     </div>
-    {{moment-from-now birthDate hideAffix=true}}
-  </div>
 
-  <div local-class='profile-item'>
-    <div local-class='profile-header'>
-      Birth Date
+    <div local-class='profile-item'>
+      <div local-class='profile-header'>
+        <i class='genericon genericon-comment' local-class='icon'></i>
+        Birth Date
+      </div>
+      {{moment-format birthDate 'MMMM Do YYYY'}}
     </div>
-    {{moment-format birthDate 'MMMM Do YYYY'}}
-  </div>
-{{/if}}
+  {{/if}}
 
-{{#if user.contactMethods.length}}
-  <div local-class='profile-item'>
-    <div local-class='profile-header'>
-      Preferred Methods of Contact
+  {{#if user.contactMethods.length}}
+    <div local-class='profile-item'>
+      <div local-class='profile-header'>
+        <i class='genericon genericon-comment' local-class='icon'></i>
+        Preferred Methods of Contact
+      </div>
+      {{contactMethods}}
     </div>
-    {{contactMethods}}
-  </div>
-{{/if}}
+  {{/if}}
 
-{{#if user.email}}
-  <div local-class='profile-item'>
-    <div local-class='profile-header'>
-      Email
+  {{#if user.email}}
+    <div local-class='profile-item'>
+      <div local-class='profile-header'>
+        <i class='genericon genericon-mail' local-class='icon'></i>
+        Email
+      </div>
+      {{user.email}}
     </div>
-    {{user.email}}
-  </div>
-{{/if}}
+  {{/if}}
 
-{{#if user.phone}}
-  <div local-class='profile-item'>
-    <div local-class='profile-header'>
-      Phone Number
+  {{#if user.phone}}
+    <div local-class='profile-item'>
+      <div local-class='profile-header'>
+        <i class='genericon genericon-phone' local-class='icon'></i>
+        Phone Number
+      </div>
+      {{user.phone}}
     </div>
-    {{user.phone}}
-  </div>
-{{/if}}
+  {{/if}}
 
-{{#if user.address}}
-  <div local-class='profile-item'>
-    <div local-class='profile-header'>
-      Address
+  {{#if user.address}}
+    <div local-class='profile-item'>
+      <div local-class='profile-header'>
+        <i class='genericon genericon-location' local-class='icon'></i>
+        Address
+      </div>
+      {{#if (and user.address loadAddressCoordinates.isRunning)}}
+        <div local-class='loading'>Loading...</div>
+      {{else if addressLocation}}
+        {{#leaflet-map center=addressLocation zoom=15 local-class='address-map'}}
+          {{tile-layer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+          {{#marker-layer location=addressLocation}}
+            {{#popup-layer}}
+              {{formattedAddress}}
+            {{/popup-layer}}
+          {{/marker-layer}}
+        {{/leaflet-map}}
+      {{/if}}
     </div>
-    {{#if (and user.address loadAddressCoordinates.isRunning)}}
-      <div local-class='loading'>Loading...</div>
-    {{else if addressLocation}}
-      {{#leaflet-map center=addressLocation zoom=15 local-class='address-map'}}
-        {{tile-layer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-        {{#marker-layer location=addressLocation}}
-          {{#popup-layer}}
-            {{formattedAddress}}
-          {{/popup-layer}}
-        {{/marker-layer}}
-      {{/leaflet-map}}
-    {{/if}}
-  </div>
-{{/if}}
+  {{/if}}
+</div>
