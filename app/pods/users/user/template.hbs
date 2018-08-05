@@ -206,7 +206,7 @@
         {{#if (and user.address loadAddressCoordinates.isRunning)}}
           <div local-class='loading'>Loading...</div>
         {{else if addressLocation}}
-          {{#leaflet-map center=addressLocation zoom=15 local-class='address-map'}}
+          {{#leaflet-map center=addressLocation zoom=12 local-class='address-map'}}
             {{tile-layer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
             {{#marker-layer location=addressLocation}}
               {{#popup-layer}}
