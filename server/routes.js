@@ -21,6 +21,25 @@ const airtableBase = new Airtable({
 
 const USER_TABLE = 'users';
 
+function fetchAirtableUsers({ onSuccess, onError }) {
+  const airtableRecords = [];
+  airtableBase(USER_TABLE).select({
+      pageSize: 100,
+      view: 'Grid view',
+  }).eachPage((records, fetchNextPage) => {
+    airtableRecords.push(
+      ...records.map(r => new AirtableModel(r))
+    );
+    fetchNextPage();
+  }, (error) => {
+    if (error) {
+     onError(error);
+    } else {
+      onSuccess(airtableRecords);
+    }
+  });
+}
+
 function findAirtableUserByEmail({ email, onSuccess, onError }) {
   let foundModel;
   airtableBase(USER_TABLE).select({
@@ -225,7 +244,18 @@ module.exports = function(app) {
   });
 
   app.get('/api/user', isLoggedIn, function(req, res) {
-    return res.status(200).send({ ...req.user });
+    return res.status(200).json({ ...req.user });
   });
 
+  app.get('/api/users', isLoggedIn, function(req, res) {
+    // return res.status(200).send({ ...req.user });
+    fetchAirtableUsers({
+      onSuccess: (airtableUsers) => {
+        res.status(200).json(airtableUsers);
+      },
+      onError:() => {
+        res.status(500).json({ message: 'Something went wrong' });
+      },
+    });
+  });
 };

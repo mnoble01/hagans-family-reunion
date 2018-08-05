@@ -17,6 +17,10 @@ export default Controller.extend({
       scheduleOnce('afterRender', () => {
         this.flashMessages.success('Successfully logged out', { scope: 'login' });
       });
+    } else if (this.redirect && !this.session.isAuthenticated) {
+      scheduleOnce('afterRender', () => {
+        this.flashMessages.info('Login to see that page', { scope: 'login' });
+      });
     }
   },
 
@@ -27,7 +31,11 @@ export default Controller.extend({
         email: this.email,
         password: this.password,
       });
-      this.transitionToRoute('account');
+      if (this.redirect) {
+        window.location = this.redirect;
+      } else {
+        this.transitionToRoute('account');
+      }
     } catch (e) {
       this.flashMessages.danger(e, { scope: 'login' });
     }

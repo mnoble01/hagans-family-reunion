@@ -1,12 +1,16 @@
 import Route from '@ember/routing/route';
-// import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import { inject as service } from '@ember/service';
 
-// export default Route.extend(ApplicationRouteMixin, {
 export default Route.extend({
   airtable: service(),
   session: service(),
-  // TODO support deep linking
+  router: service(),
+
+  init() {
+    this._super(...arguments);
+    // Hack to work around ember-cli-document-title's use of the private `router`
+    this.router.setTitle = (...params) => this._router.setTitle(...params);
+  },
 
   async model() {
     try {
@@ -17,17 +21,17 @@ export default Route.extend({
     }
   },
 
+  afterModel() {
+    // if not authenticated, transition to login with 'redirect' parameter
+    const onLoginPage = window.location.pathname === '/login';
+    const hasRedirectParam = window.location.search.indexOf('redirect') > -1;
+    if (!this.session.isAuthenticated && !onLoginPage && !hasRedirectParam) {
+      this.transitionTo('login', { queryParams: { redirect: window.location.href } });
+    }
+  },
+
+
   title(tokens = []) {
     return [...tokens.reverse(), 'Hagans Family'].join(' - ');
   },
-
-  // afterModel({ model }, transition) {
-  //   // The session endpoint will always return a minimal payload (e.g. CSRF info)
-  //   // even if the user isn't actually signed in, so we need to force a logout
-  //   // if there's no actual active user.
-  //   if (!(model.user.id && model.organization.id)) {
-  //     window.location = SIGN_OUT_URL;
-  //     transition.abort();
-  //   }
-  // },
 });

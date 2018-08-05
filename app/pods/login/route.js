@@ -7,6 +7,9 @@ export default Route.extend({
     logout: {
       refreshModel: true,
     },
+    redirect: {
+      refreshModel: true,
+    },
   },
 
   titleToken: 'Login',
@@ -31,6 +34,7 @@ export default Route.extend({
   resetController(controller, isExiting) {
     if (isExiting) {
       controller.set('logout', false);
+      controller.set('redirect');
     }
   },
 });

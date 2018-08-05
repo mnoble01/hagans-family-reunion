@@ -11,7 +11,8 @@
 }
 
 .flash-message.info {
-  background: #A5BBD5;
+  background: #89A5C8;
+  color: white;
 }
 
 .flash-message.success {
