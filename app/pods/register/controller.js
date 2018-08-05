@@ -7,13 +7,6 @@ export default Controller.extend({
   flashMessages: service(),
   session: service(),
 
-  // TODO remove
-  firstName: 'first',
-  lastName: 'last',
-  email: 'asldfj@kjsdf.sdf',
-  password: 'blah',
-  passwordConfirm: 'blah',
-
   register: task(function*() {
     this.flashMessages.clearMessages();
 

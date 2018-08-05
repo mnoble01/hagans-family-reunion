@@ -1,0 +1,21 @@
+@value medium-gray from 'hagans-family/styles/shared';
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+}
+
+.page-links {
+  /* copied from login page - make a shared css rule */
+  display: flex; /* TODO need when all content is flex? */
+  flex-direction: column;
+  width: 450px;
+  margin: 32px auto 0;
+  text-align: center;
+  font-size: 17px;
+}
+
+.link {
+  composes: gray-link from 'hagans-family/styles/shared';
+  text-decoration: underline;
+  height: 30px;
+}

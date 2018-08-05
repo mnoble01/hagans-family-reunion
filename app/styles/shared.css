@@ -132,3 +132,10 @@ body {
 .gold-link:hover {
   color: light-gold;
 }
+
+.gray-link {
+  color: medium-gray;
+}
+.gray-link:hover {
+  color: dark-gray;
+}

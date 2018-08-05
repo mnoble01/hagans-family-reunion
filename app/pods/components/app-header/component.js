@@ -10,7 +10,28 @@ export default Component.extend({
     return [{
       route: '2019-reunion',
       name: '2019 Reunion',
-      children: [],
+      children: [{
+        route: '2019-reunion.announcements',
+        name: 'Announcements',
+      }, {
+        route: '2019-reunion.dates',
+        name: 'Dates & Itinerary',
+      }, {
+        route: '2019-reunion.accommodations',
+        name: 'Travel & Accommodations',
+      }, {
+        route: '2019-reunion.fees',
+        name: 'Fees',
+      }, {
+        route: '2019-reunion.t-shirts',
+        name: 'T-Shirts',
+      }, {
+        route: '2019-reunion.committee',
+        name: 'Planning Committee',
+      }, {
+        route: '2019-reunion.suggestions',
+        name: 'Suggestions',
+      }],
     }, {
       route: 'users',
       name: 'People',

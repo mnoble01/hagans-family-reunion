@@ -32,6 +32,7 @@
   text-transform: uppercase;
   letter-spacing: 1.4px;
   transition: opacity .3s;
+  text-align: center;
 }
 .menu-link:hover {
   opacity: 0.7;
@@ -75,6 +76,8 @@
 
 .dropdown-content .menu-link {
   font-size: 14px;
-  padding: 10px 20px;;
+  padding: 12px 20px;;
   text-transform: none;
+  text-align: left;
+  letter-spacing: initial;
 }

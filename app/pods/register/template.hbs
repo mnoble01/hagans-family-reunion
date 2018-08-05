@@ -8,15 +8,15 @@
   </div>
 
   <label local-class='input-label'> First Name </label>
-  <input local-class='input' oninput={{action (mut firstName) value='target.value'}} type='text' value={{firstName}}>
+  <input local-class='input' oninput={{action (mut firstName) value='target.value'}} type='text'>
   <label local-class='input-label'> Last Name </label>
-  <input local-class='input' oninput={{action (mut lastName) value='target.value'}} type='text' value={{lastName}}>
+  <input local-class='input' oninput={{action (mut lastName) value='target.value'}} type='text'>
   <label local-class='input-label'> Email </label>
-  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email' value={{email}}>
+  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email'>
   <label local-class='input-label'> Password </label>
-  <input local-class='input' oninput={{action (mut password) value='target.value'}} type='password' value={{password}}>
+  <input local-class='input' oninput={{action (mut password) value='target.value'}} type='password'>
   <label local-class='input-label'> Confirm Password </label>
-  <input local-class='input' oninput={{action (mut passwordConfirm) value='target.value'}} type='password' onkeydown={{action onEnter}} value={{passwordConfirm}}>
+  <input local-class='input' oninput={{action (mut passwordConfirm) value='target.value'}} type='password' onkeydown={{action onEnter}}>
 
   {{flash-messages scope='form' flashClass=(local-class 'flash-messages')}}
 

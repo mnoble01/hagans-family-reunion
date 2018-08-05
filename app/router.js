@@ -24,7 +24,15 @@ Router.map(function() {
     this.route('2011-reunion');
     this.route('2009-reunion');
   });
-  this.route('2019-reunion');
+  this.route('2019-reunion', function() {
+    this.route('announcements');
+    this.route('dates');
+    this.route('accommodations');
+    this.route('fees');
+    this.route('t-shirts');
+    this.route('committee');
+    this.route('suggestions');
+  });
   this.route('logout');
 });
 
