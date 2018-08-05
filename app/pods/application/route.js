@@ -17,6 +17,10 @@ export default Route.extend({
     }
   },
 
+  title(tokens = []) {
+    return [...tokens.reverse(), 'Hagans Family'].join(' - ');
+  },
+
   // afterModel({ model }, transition) {
   //   // The session endpoint will always return a minimal payload (e.g. CSRF info)
   //   // even if the user isn't actually signed in, so we need to force a logout

@@ -26,7 +26,7 @@ module.exports = function(environment) {
 
     googleFonts: [
       'Lato',
-      'Noto+Serif',
+      'Noto+Serif:400,700',
     ],
 
     APP: {
