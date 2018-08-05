@@ -1,0 +1,7 @@
+{{#if link}}
+  {{#link-to 'users.user' user.id}}
+    <img local-class='user-image' src={{imageUrl}} style={{sizeStyle}} />
+  {{/link-to}}
+{{else}}
+  <img local-class='user-image' src={{imageUrl}} style={{sizeStyle}} />
+{{/if}}

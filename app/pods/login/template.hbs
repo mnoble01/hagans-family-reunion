@@ -16,14 +16,14 @@
 
   <div local-class='buttons'>
     <button local-class='login' onclick={{perform login}} disabled={{or (not (and email password)) login.isRunning}}>
-      Login
-    </button>
-    {{#link-to 'register' local-class='register'}}
       {{#if login.isRunning}}
         Please wait...
       {{else}}
-        Register
+        Login
       {{/if}}
+    </button>
+    {{#link-to 'register' local-class='register'}}
+        Register
     {{/link-to}}
   </div>
 </div>

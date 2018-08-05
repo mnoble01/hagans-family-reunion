@@ -1,10 +1,11 @@
 @value light-gray, medium-gray, dark-gray from 'hagans-family/styles/shared';
+@value powder-blue, gold from 'hagans-family/styles/shared';
 
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
 }
 
-.info {
+.user-info {
   max-width: 600px;
   margin: 0 auto;
 }
@@ -30,7 +31,7 @@
   font-weight: bold;
   padding-bottom: 8px;
   margin-bottom: 8px;
-  border-bottom: 2px solid light-gray;
+  border-bottom: 1px solid light-gray;
 }
 
 .profile-header .icon {
@@ -44,4 +45,58 @@
 
 .loading {
   composes: loading from 'hagans-family/styles/shared';
+}
+
+.tab-nav {
+  display: flex;
+  background: powder-blue;
+  margin-bottom: 32px;
+  border-radius: 4px;
+  padding: 16px 0;
+}
+
+.tab {
+  font-size: 18px;
+  transition: all .3s;
+  padding: 0 16px;
+  border-bottom: 2px solid transparent;
+  border-right: 1px solid #466B95;
+}
+.tab.active {
+  /* border-bottom: 2px solid powder-blue; */
+}
+
+.tab-link {
+  composes: link from 'hagans-family/styles/shared';
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #EEF4FC;
+}
+.tab.active .tab-link,
+.tab:hover .tab-link {
+  color: gold;
+}
+.tab.active .tab-link {
+  text-shadow: 1px 1px 2px #466B95;
+}
+
+.relationships {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.user-link {
+  composes: link from 'hagans-family/styles/shared';
+  display: flex;
+  align-items: center;
+  color: dark-gray;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.user-link:hover {
+  color: gold;
+}
+.user-link img {
+  margin-right: 16px;
 }

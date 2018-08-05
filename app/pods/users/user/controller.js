@@ -5,11 +5,13 @@ import { readOnly } from '@ember/object/computed';
 import moment from 'moment';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import AirtableModel from 'hagans-family/pods/airtable/model';
 
 export default Controller.extend({
   ajax: service(),
-  queryParams: ['edit'],
+  queryParams: ['edit', 'tab'],
   edit: false,
+  tab: 'info',
 
   user: alias('model.user'),
 
@@ -36,6 +38,33 @@ export default Controller.extend({
 
   addressLat: readOnly('addressLocation.lat'),
   addressLong: readOnly('addressLocation.long'),
+
+  _loadRelationships: observer('tab', 'user', function() {
+    if (this.tab === 'relationships') {
+      this.loadRelationships.perform();
+    }
+  }),
+
+  loadRelationships: task(function*() {
+    if (this.user) {
+      const motherReqs = Promise.all((this.user.mother || []).map(id => this._fetchUser(id)));
+      const fatherReq = Promise.all((this.user.father || []).map(id => this._fetchUser(id)));
+      const siblingsReq = Promise.all((this.user.siblings || []).map(id => this._fetchUser(id)));
+      const childrenReq = Promise.all((this.user.childrenReq || []).map(id => this._fetchUser(id)));
+      const [mother, father, siblings, children] = yield Promise.all([motherReqs, fatherReq, siblingsReq, childrenReq]);
+      this.set('relationships', {
+        mother,
+        father,
+        siblings,
+        children,
+      });
+    }
+  }),
+
+  async _fetchUser(id) {
+    const user = await this.ajax.request(`/api/users/${id}`);
+    return new AirtableModel(user);
+  },
 
   // TODO edit mode
 });

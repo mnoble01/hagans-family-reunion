@@ -9,6 +9,9 @@ export default Route.extend({
     edit: {
       refreshModel: true,
     },
+    tab: {
+      refreshModel: false,
+    },
   },
 
   titleToken({ user }) {
@@ -18,5 +21,11 @@ export default Route.extend({
   async model(params) {
     const user = await this.get('ajax').request(`/api/users/${params.user_id}`);
     return { user: new AirtableModel(user) };
+  },
+
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      controller.set('tab');
+    }
   },
 });
