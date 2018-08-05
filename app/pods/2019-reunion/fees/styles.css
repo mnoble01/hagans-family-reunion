@@ -1,0 +1,17 @@
+@value medium-gray from 'hagans-family/styles/shared';
+
+.reunion-page-header {
+  font-size: 17px;
+  width: 450px; /* copied from login page? */
+  margin: 0 auto;
+  display: flex; /* TODO need when all content is flex? */
+  flex-direction: column;
+  text-align: center;
+  color: medium-gray;
+}
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+  color: black;
+  margin-bottom: 42px;
+}

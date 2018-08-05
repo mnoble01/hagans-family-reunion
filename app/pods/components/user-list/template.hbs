@@ -1,0 +1,8 @@
+<div local-class='users'>
+  {{#each users as |user|}}
+    {{#link-to 'users.user' user.id local-class='user-link'}}
+      {{user-photo user=user size=50}}
+      {{user.firstName}} {{user.lastName}}
+    {{/link-to}}
+  {{/each}}
+</div>

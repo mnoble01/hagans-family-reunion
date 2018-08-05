@@ -42,14 +42,7 @@
         <div local-class='profile-header'>
           Mother
         </div>
-        <div local-class='relationships'>
-          {{#each relationships.mother as |user|}}
-            {{#link-to 'users.user' user.id local-class='user-link'}}
-              {{user-photo user=user size=50}}
-              {{user.firstName}} {{user.lastName}}
-            {{/link-to}}
-          {{/each}}
-        </div>
+        {{user-list users=relationships.mother}}
       </div>
     {{/if}}
 
@@ -58,14 +51,7 @@
         <div local-class='profile-header'>
           Father
         </div>
-        <div local-class='relationships'>
-          {{#each relationships.father as |user|}}
-            {{#link-to 'users.user' user.id local-class='user-link'}}
-              {{user-photo user=user size=50}}
-              {{user.firstName}} {{user.lastName}}
-            {{/link-to}}
-          {{/each}}
-        </div>
+        {{user-list users=relationships.father}}
       </div>
     {{/if}}
 
@@ -74,14 +60,7 @@
         <div local-class='profile-header'>
           Sibings
         </div>
-        <div local-class='relationships'>
-          {{#each relationships.siblings as |user|}}
-            {{#link-to 'users.user' user.id local-class='user-link'}}
-              {{user-photo user=user size=50}}
-              {{user.firstName}} {{user.lastName}}
-            {{/link-to}}
-          {{/each}}
-        </div>
+        {{user-list users=relationships.siblings}}
       </div>
     {{/if}}
 
@@ -90,14 +69,7 @@
         <div local-class='profile-header'>
           Children
         </div>
-        <div local-class='relationships'>
-          {{#each relationships.children as |user|}}
-            {{#link-to 'users.user' user.id local-class='user-link'}}
-              {{user-photo user=user size=50}}
-              {{user.firstName}} {{user.lastName}}
-            {{/link-to}}
-          {{/each}}
-        </div>
+        {{user-list users=relationships.children}}
       </div>
     {{/if}}
 
