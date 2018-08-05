@@ -196,9 +196,7 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  // or res.redirect('/login');
-  // or res.redirect('/access-denied');
-  res.status(400).json({
+  res.status(401).json({
     message: 'access denied',
   });
 }
@@ -219,14 +217,15 @@ module.exports = function(app) {
     return res.json({ ...req.user });
   });
 
-  app.get('/api/user', isLoggedIn, function(req, res) {
-    return res.status(200).send({ ...req.user });
-  });
-
-  app.get('/api/logout', isLoggedIn, function(req, res) {
+  app.post('/api/logout', isLoggedIn, function(req, res) {
     req.logout();
     return res.status(200).json({
         message: 'successfully logout',
     });
   });
+
+  app.get('/api/user', isLoggedIn, function(req, res) {
+    return res.status(200).send({ ...req.user });
+  });
+
 };

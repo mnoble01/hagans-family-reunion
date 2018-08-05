@@ -1,7 +1,17 @@
 <div local-class='application'>
   <div local-class='app-header'>
-    {{app-header}}
+    {{app-header transitionTo=(action transitionTo)}}
   </div>
+
+  {{#if (eq router.currentRouteName 'index')}}
+    <div local-class='site-image'>
+      <div local-class='site-description-container'>
+        <div local-class='site-description'>
+          Every two years we gather to reconnect and celebrate each other and our shared history
+        </div>
+      </div>
+    </div>
+  {{/if}}
 
   <div local-class='content'>
     {{flash-messages}}

@@ -4,15 +4,36 @@
 
 <div local-class='menu'>
   {{#if session.isAuthenticated}}
-    TODO authenticated menu
+    {{#each menuItems as |item|}}
+      <div local-class='dropdown-container menu-item'>
+        {{#link-to item.route local-class='menu-link dropdown-trigger'}}
+          {{item.name}}
+        {{/link-to}}
+        {{#if item.children}}
+          <div local-class='dropdown-content'>
+            {{#each item.children as |child|}}
+              {{#if child.action}}
+                <a local-class='menu-link' onclick={{action child.action}}>
+                  {{child.name}}
+                </a>
+              {{else}}
+                {{#link-to child.route local-class='menu-link'}}
+                  {{child.name}}
+                {{/link-to}}
+              {{/if}}
+            {{/each}}
+          </div>
+        {{/if}}
+      </div>
+    {{/each}}
   {{else}}
-    {{#link-to 'login' local-class='menu-link'}}
+    {{#link-to 'login' local-class='menu-link menu-item'}}
       Login
     {{/link-to}}
-    {{#link-to 'register' local-class='menu-link'}}
+    {{#link-to 'register' local-class='menu-link menu-item'}}
       Register
     {{/link-to}}
-    {{#link-to 'contact' local-class='menu-link'}}
+    {{#link-to 'contact' local-class='menu-link menu-item'}}
       Contact
     {{/link-to}}
   {{/if}}

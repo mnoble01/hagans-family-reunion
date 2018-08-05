@@ -7,6 +7,8 @@
     Login
   </div>
 
+  {{flash-messages scope='login'}}
+
   <label local-class='input-label'> Email </label>
   <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email' autofocus>
   <label local-class='input-label'> Password </label>

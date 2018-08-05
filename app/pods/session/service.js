@@ -41,4 +41,9 @@ export default Service.extend({
     const user = new AirtableModel(response);
     this.set('user', user);
   },
+
+  async logout() {
+    await this.get('ajax').post('/api/logout');
+    this.set('user');
+  },
 });

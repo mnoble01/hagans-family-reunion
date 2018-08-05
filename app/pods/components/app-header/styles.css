@@ -1,3 +1,5 @@
+@value black from 'hagans-family/styles/shared';
+
 .link-to-index {
   composes: page-title from 'hagans-family/styles/shared';
   composes: gold-link from 'hagans-family/styles/shared';
@@ -13,17 +15,66 @@
 }
 
 .menu {
+  display: flex;
   margin-left: auto;
+}
+
+.menu-item {
+  display: block;
+  padding: 0 12px;
 }
 
 .menu-link {
   composes: link from 'hagans-family/styles/shared';
+  display: block;
   color: white;
   text-decoration: none;
   text-transform: uppercase;
-  padding: 0 12px;
   letter-spacing: 1.4px;
+  transition: opacity .3s;
 }
 .menu-link:hover {
-  color: #8C97A2;
+  opacity: 0.7;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-content {
+  position: absolute;
+  margin-top: 10px;
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  background: black;
+  width: 200px;
+  margin-left: -100px;
+}
+.dropdown-content:before {
+  border-color: transparent transparent black transparent;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  content: ' ';
+  height: 0;
+  left: 50%;
+  margin-left: -10px;
+  position: absolute;
+  top: -10px;
+  width: 0;
+}
+
+.dropdown-trigger + .dropdown-content {
+  display: none;
+}
+
+.dropdown-trigger:hover + .dropdown-content,
+.dropdown-content:hover {
+  display: block;
+}
+
+.dropdown-content .menu-link {
+  font-size: 14px;
+  padding: 10px 20px;;
+  text-transform: none;
 }

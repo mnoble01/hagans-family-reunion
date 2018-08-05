@@ -9,7 +9,11 @@ export default Route.extend({
   // TODO support deep linking
 
   async model() {
-    await this.get('session').authorize();
+    try {
+      await this.get('session').authorize();
+    } catch (e) {
+      // do nothing
+    }
   },
 
   // afterModel({ model }, transition) {

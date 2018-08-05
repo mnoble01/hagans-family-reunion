@@ -119,6 +119,7 @@ body {
 
 .link {
   transition: all .3s;
+  cursor: pointer;
 }
 .link:focus {
   outline: none;

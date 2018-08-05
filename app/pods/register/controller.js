@@ -43,7 +43,7 @@ export default Controller.extend({
       } else if (user.status === 'Inactive') {
         this.flashMessages.info('Your account is inactive.', { scope: 'form' });
       } else {
-        this.transitionToRoute('profile');
+        this.transitionToRoute('account');
       }
     } catch (e) {
       this.flashMessages.danger(e, { scope: 'form' });

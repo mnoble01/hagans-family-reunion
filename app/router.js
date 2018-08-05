@@ -9,7 +9,7 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('login');
   this.route('register');
-  this.route('profile');
+  this.route('account');
   this.route('users', function() {
     this.route('user', { path: ':user_id' });
   });
@@ -17,6 +17,15 @@ Router.map(function() {
   this.route('contact');
 
   this.route('not-found', { path: '/*path' });
+  this.route('past-years', function() {
+    this.route('2017-reunion');
+    this.route('2015-reunion');
+    this.route('2013-reunion');
+    this.route('2011-reunion');
+    this.route('2009-reunion');
+  });
+  this.route('2019-reunion');
+  this.route('logout');
 });
 
 export default Router;

@@ -7,4 +7,8 @@ export default Controller.extend({
   router: service(),
 
   fadeTransition,
+
+  transitionTo() {
+    this.transitionToRoute(...arguments);
+  },
 });
