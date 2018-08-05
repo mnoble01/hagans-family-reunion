@@ -1,13 +1,22 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+import AirtableModel from 'hagans-family/pods/airtable/model';
 
 export default Route.extend({
-  // titleToken({ model }) {
-    // return model.firstName; // TODO make sure this works
-  titleToken() {
-    return 'User';
+  ajax: service(),
+
+  queryParams: {
+    edit: {
+      refreshModel: true,
+    },
   },
 
-  model() {
-    console.log('GET USER');
+  titleToken({ user }) {
+    return `${user.firstName} ${user.lastName}`;
+  },
+
+  async model(params) {
+    const user = await this.get('ajax').request(`/api/users/${params.user_id}`);
+    return { user: new AirtableModel(user) };
   },
 });

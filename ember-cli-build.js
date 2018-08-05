@@ -8,6 +8,16 @@ module.exports = function(defaults) {
     babel: {
       plugins: ['transform-object-rest-spread'],
     },
+    fingerprint: {
+      exclude: [
+        // for ember-leaflet
+        'images/layers-2x.png',
+        'images/layers.png',
+        'images/marker-icon-2x.png',
+        'images/marker-icon.png',
+        'images/marker-shadow.png',
+      ],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated

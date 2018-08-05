@@ -1,4 +1,4 @@
-@value dark-gray, gold from 'hagans-family/styles/shared';
+@value light-gray, dark-gray, gold from 'hagans-family/styles/shared';
 
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
@@ -13,17 +13,17 @@
 .user {
   max-width: 200px;
   text-align: center;
-  margin: 0 16px 16px;
+  margin: 0 16px 32px;
 }
 
 .user-link {
   text-decoration: none;
+  color: dark-gray;
 }
 
 .user-name {
   font-size: 17px;
   line-height: 26px;
-  color: dark-gray;
   font-weight: bold;
   margin: 16px 0 16px;
   transition: all .3s;
@@ -39,4 +39,19 @@
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+.status {
+  display: inline-block;
+  padding: 2px 16px;
+  border-radius: 16px;
+}
+
+.status.member {
+  background: #E09AfE;
+  color: white;
+}
+
+.status.inactive {
+  background: light-gray;
 }

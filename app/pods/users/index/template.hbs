@@ -12,6 +12,9 @@
         <div local-class='user-name'>
           {{user.firstName}} {{user.lastName}}
         </div>
+        <div local-class='status {{lowercase (dasherize user.status)}}'>
+          {{user.status}}
+        </div>
       {{/link-to}}
     </div>
   {{/each}}

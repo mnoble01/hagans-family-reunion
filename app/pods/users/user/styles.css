@@ -1,0 +1,35 @@
+@value light-gray, medium-gray, dark-gray from 'hagans-family/styles/shared';
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+}
+
+.user-image {
+  display: flex;
+  margin: 0 auto 32px;
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.profile-item {
+  font-size: 15px;
+  color: dark-gray;
+  margin-bottom: 32px;
+}
+
+.profile-header {
+  font-weight: bold;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid light-gray;
+}
+
+.address-map {
+  height: 300px;
+}
+
+.loading {
+  composes: loading from 'hagans-family/styles/shared';
+}

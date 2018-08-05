@@ -19,7 +19,11 @@
       Login
     </button>
     {{#link-to 'register' local-class='register'}}
-      Register
+      {{#if login.isRunning}}
+        Please wait...
+      {{else}}
+        Register
+      {{/if}}
     {{/link-to}}
   </div>
 </div>

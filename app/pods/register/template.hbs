@@ -26,7 +26,11 @@
       onclick={{perform register}}
       disabled={{or (not (and firstName lastName email password passwordConfirm)) register.isRunning}}
     >
-      Register
+      {{#if register.isRunning}}
+        Please wait...
+      {{else}}
+        Register
+      {{/if}}
     </button>
     {{#link-to 'login' local-class='login'}}
       Login

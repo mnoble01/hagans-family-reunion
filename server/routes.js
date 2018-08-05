@@ -5,6 +5,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 
+// google maps
+const googleMapsClient = require('@google/maps').createClient({
+  key: process.env.GOOGLE_MAPS_API_KEY,
+});
+
 // airtable
 const Airtable = require('airtable');
 const AirtableModel = require('./airtable-model');
@@ -258,6 +263,30 @@ module.exports = function(app) {
       onError:() => {
         res.status(500).json({ message: 'Something went wrong' });
       },
+    });
+  });
+
+  app.get('/api/users/:id', function(req, res) {
+    findAirtableUserById({
+      id: req.params.id,
+      onSuccess: (airtableUser) => {
+        res.status(200).json(airtableUser.serialize());
+      },
+      onError: () => {
+        res.status(404).json({ message: 'Not found' });
+      },
+    });
+  });
+
+  app.get('/api/location/:address', function(req, res) {
+    googleMapsClient.geocode({
+      address: req.params.address,
+    }, function(error, response) {
+      if (error) {
+        res.status(500).json(error);
+      } else {
+        res.json(response && response.json && response.json.results && response.json.results[0]);
+      }
     });
   });
 };
