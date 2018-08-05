@@ -1,12 +1,29 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
+import { getOwner } from '@ember/application';
 
 export default Component.extend({
   localClassNames: 'app-header',
   session: service(),
 
-  menuItems: computed(function() {
+  pastYearRoutes: computed(function() {
+    const router = getOwner(this).lookup('router:main');
+    const routes = get(router, '_routerMicrolib.recognizer.names');
+    const pastYearRoutes = Object.keys(routes).reduce((memo, route) => {
+      if (/^past-years.\d{4}-reunion$/.test(route)) {
+        memo.push({
+          route,
+          name: route.match(/\d{4}/)[0],
+        });
+      }
+      return memo;
+    }, []);
+    return pastYearRoutes.sortBy('name').reverse();
+  }),
+
+  menuItems: computed('pastYearRoutes', function() {
+    // TODO lock down by account status
     return [{
       route: '2019-reunion',
       name: '2019 Reunion',
@@ -38,7 +55,7 @@ export default Component.extend({
     }, {
       route: 'past-years',
       name: 'Past Years',
-      children: [], // TODO generate
+      children: this.pastYearRoutes,
     }, {
       route: 'account',
       name: 'Account',
