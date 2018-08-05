@@ -9,6 +9,8 @@ export default Route.extend({
     },
   },
 
+  titleToken: 'Login',
+
   async model() {
     const { logout } = this.paramsFor(this.routeName);
     if (this.session.isAuthenticated) {
