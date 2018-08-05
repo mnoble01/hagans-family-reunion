@@ -1,5 +1,10 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  titleToken: 'Account', // TODO might want to add user's name?
+  session: service(),
+
+  beforeModel() {
+    this.transitionTo('users.user', this.get('session.user.id'));
+  },
 });

@@ -8,6 +8,12 @@ export default Route.extend({
   ajax: service(),
   session: service(),
 
+  beforeModel() {
+    if (this.session.userIsPending) {
+      this.transitionTo('account');
+    }
+  },
+
   async model() {
     const users = await this.get('ajax').request('/api/users');
     return { users: users.map(u => new AirtableModel(u)) };

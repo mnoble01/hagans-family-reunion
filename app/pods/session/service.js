@@ -1,12 +1,13 @@
 import Service, { inject as service } from '@ember/service';
 import AirtableModel from 'hagans-family/pods/airtable/model';
-import { bool } from '@ember/object/computed';
+import { bool, equal } from '@ember/object/computed';
 
 export default Service.extend({
   ajax: service(),
 
   isAuthenticated: bool('user.id'),
   user: null,
+  userIsPending: equal('user.status', 'Pending Review'),
 
   async authorize() {
     const response = await this.get('ajax').request('/api/user');

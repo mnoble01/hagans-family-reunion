@@ -23,47 +23,57 @@ export default Component.extend({
   }),
 
   menuItems: computed('pastYearRoutes', function() {
-    // TODO lock down by account status
-    return [{
-      route: '2019-reunion',
-      name: '2019 Reunion',
-      children: [{
-        route: '2019-reunion.announcements',
-        name: 'Announcements',
+    if (this.get('session.user.status') === 'Pending Review') {
+      return [{
+        route: 'account',
+        name: 'Account',
+        children: [{
+          action: this.logout,
+          name: 'Logout',
+        }],
+      }];
+    } else {
+      return [{
+        route: '2019-reunion',
+        name: '2019 Reunion',
+        children: [{
+          route: '2019-reunion.announcements',
+          name: 'Announcements',
+        }, {
+          route: '2019-reunion.dates',
+          name: 'Dates & Itinerary',
+        }, {
+          route: '2019-reunion.accommodations',
+          name: 'Travel & Accommodations',
+        }, {
+          route: '2019-reunion.fees',
+          name: 'Fees',
+        }, {
+          route: '2019-reunion.t-shirts',
+          name: 'T-Shirts',
+        }, {
+          route: '2019-reunion.committee',
+          name: 'Planning Committee',
+        }, {
+          route: '2019-reunion.suggestions',
+          name: 'Suggestions',
+        }],
       }, {
-        route: '2019-reunion.dates',
-        name: 'Dates & Itinerary',
+        route: 'users',
+        name: 'People',
       }, {
-        route: '2019-reunion.accommodations',
-        name: 'Travel & Accommodations',
+        route: 'past-years',
+        name: 'Past Years',
+        children: this.pastYearRoutes,
       }, {
-        route: '2019-reunion.fees',
-        name: 'Fees',
-      }, {
-        route: '2019-reunion.t-shirts',
-        name: 'T-Shirts',
-      }, {
-        route: '2019-reunion.committee',
-        name: 'Planning Committee',
-      }, {
-        route: '2019-reunion.suggestions',
-        name: 'Suggestions',
-      }],
-    }, {
-      route: 'users',
-      name: 'People',
-    }, {
-      route: 'past-years',
-      name: 'Past Years',
-      children: this.pastYearRoutes,
-    }, {
-      route: 'account',
-      name: 'Account',
-      children: [{
-        action: this.logout,
-        name: 'Logout',
-      }],
-    }];
+        route: 'account',
+        name: 'Account',
+        children: [{
+          action: this.logout,
+          name: 'Logout',
+        }],
+      }];
+    }
   }),
 
   logout() {

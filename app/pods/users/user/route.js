@@ -4,6 +4,7 @@ import AirtableModel from 'hagans-family/pods/airtable/model';
 
 export default Route.extend({
   ajax: service(),
+  session: service(),
 
   queryParams: {
     tab: {
@@ -19,6 +20,13 @@ export default Route.extend({
     const user = await this.get('ajax').request(`/api/users/${params.user_id}`);
     return { user: new AirtableModel(user) };
   },
+
+  afterModel(model) {
+    if (this.session.userIsPending && model.user.id !== this.session.user.id) {
+      this.transitionTo('account');
+    }
+  },
+
 
   resetController(controller, isExiting) {
     if (isExiting) {

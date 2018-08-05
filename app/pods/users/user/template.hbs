@@ -4,6 +4,12 @@
   {{user.firstName}} {{user.lastName}}
 </div>
 
+{{#if session.userIsPending}}
+  <div local-class='pending-review-message'>
+    Your account is pending review
+  </div>
+{{/if}}
+
 <img local-class='user-image' src={{or user.profileImage.firstObject.url '/images/avatar.jpg'}} />
 
 <div local-class='user-info'>
@@ -13,17 +19,19 @@
         Info
       {{/link-to}}
     </div>
-    <div local-class='tab {{if (eq tab 'relationships') 'active'}}'>
-      {{#link-to 'users.user' user.id (query-params tab='relationships') local-class='tab-link'}}
-        Family Relationships
-      {{/link-to}}
-    </div>
-    {{#if (eq user.id session.user.id)}}
-      <div local-class='tab {{if (eq tab 'edit') 'active'}}'>
-        {{#link-to 'users.user' user.id (query-params tab='edit') local-class='tab-link'}}
-          Edit
+    {{#if (not session.userIsPending)}}
+      <div local-class='tab {{if (eq tab 'relationships') 'active'}}'>
+        {{#link-to 'users.user' user.id (query-params tab='relationships') local-class='tab-link'}}
+          Family Relationships
         {{/link-to}}
       </div>
+      {{#if (eq user.id session.user.id)}}
+        <div local-class='tab {{if (eq tab 'edit') 'active'}}'>
+          {{#link-to 'users.user' user.id (query-params tab='edit') local-class='tab-link'}}
+            Edit
+          {{/link-to}}
+        </div>
+      {{/if}}
     {{/if}}
   </div>
 

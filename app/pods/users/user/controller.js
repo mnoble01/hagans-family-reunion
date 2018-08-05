@@ -3,7 +3,6 @@ import { alias } from '@ember/object/computed';
 import { computed, observer, get } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import moment from 'moment';
-import { getOwner } from '@ember/application';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import AirtableModel from 'hagans-family/pods/airtable/model';
