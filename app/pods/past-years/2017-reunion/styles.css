@@ -1,3 +1,4 @@
+/* copied from 2019 */
 @value medium-gray, black from 'hagans-family/styles/shared';
 
 .reunion-page-header {
@@ -22,7 +23,11 @@
 
 .page-links {
   /* copied from login page - make a shared css rule */
-  /* font-size: 17px; */
+  /* display: flex; /* TODO need when all content is flex? */
+  /* flex-direction: column;
+  width: 450px;
+  margin: 0 auto;
+  text-align: center; */
 }
 
 .link {
@@ -30,3 +35,4 @@
   text-decoration: underline;
   height: 30px;
 }
+/* copied from 2019 */

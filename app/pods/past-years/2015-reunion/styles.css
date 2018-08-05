@@ -10,10 +10,6 @@
   color: medium-gray;
 }
 
-.p {
-  padding-bottom: 24px;
-}
-
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
   color: black;
