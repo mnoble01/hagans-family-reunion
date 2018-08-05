@@ -12,7 +12,8 @@ export default Route.extend({
     try {
       await this.get('session').authorize();
     } catch (e) {
-      // do nothing
+      // do nothing,
+      // swallow model hook to error
     }
   },
 

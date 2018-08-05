@@ -24,6 +24,11 @@ module.exports = function(environment) {
       destroyOnClick: false,
     },
 
+    googleFonts: [
+      'Lato',
+      'Noto+Serif',
+    ],
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created

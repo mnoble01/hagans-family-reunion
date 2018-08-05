@@ -14,7 +14,6 @@
 body {
   color: black;
   margin: 0;
-  /* TODO get Lato font */
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -24,7 +23,6 @@ body {
   font-size: 40px;
   margin: 16px 0;
   text-align: center;
-  /* TODO get Noto Serif font */
   font-family: 'Noto Serif', Georgia, serif;
   font-weight: 700;
 }
