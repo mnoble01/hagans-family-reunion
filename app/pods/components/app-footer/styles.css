@@ -1,5 +1,26 @@
+@value medium-gray from 'hagans-family/styles/shared';
+
 .app-footer {
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 /* For larger screens: */
 /* max-width: 80%; */
+
+.link {
+  composes: link from 'hagans-family/styles/shared';
+  text-decoration: none;
+  color: medium-gray;
+}
+.link:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+
+.heart {
+  color: #A70125;
+  padding: 0 4px;
+  font-size: larger;
+  vertical-align: middle;
+}
