@@ -34,6 +34,7 @@ Router.map(function() {
     this.route('suggestions');
   });
   this.route('logout');
+  this.route('post', { path: '/post/:post_id' });
 });
 
 export default Router;

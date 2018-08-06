@@ -5,6 +5,7 @@
   flex-flow: row wrap;
   justify-content: space-between;
 }
+
 .user-link {
   composes: link from 'hagans-family/styles/shared';
   display: flex;
@@ -14,9 +15,11 @@
   font-weight: bold;
   margin-bottom: 16px;
 }
+
 .user-link:hover {
   color: gold;
 }
+
 .user-link img {
   margin-right: 16px;
 }

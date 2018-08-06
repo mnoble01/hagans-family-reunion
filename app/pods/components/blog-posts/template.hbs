@@ -1,1 +1,22 @@
-{{yield}}
+{{#each postsToRender as |post|}}
+  <div local-class='post'>
+    <div local-class='post-image'>
+      <img src={{post.featuredImageUrl}} />
+    </div>
+    <div local-class='post-summary'>
+      <i class='genericon genericon-standard' local-class='icon'></i>
+      <div local-class='post-summary-content'>
+        <div local-class='post-title'>
+          {{post.title}}
+        </div>
+        {{post.summary}}{{if post.hasMoreContent '…'}}
+
+        <button local-class='read-more-button'>
+          Read More
+        </button>
+      </div>
+    </div>
+    {{#link-to 'post' post.id local-class='post-link'}}
+    {{/link-to}}
+  </div>
+{{/each}}

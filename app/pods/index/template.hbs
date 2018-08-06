@@ -1,9 +1,1 @@
-<div local-class='index-content'>
-  {{#if session.user}}
-    Logged in as {{session.user.email}}
-  {{/if}}
-
-  {{#link-to 'login'}}
-    Login
-  {{/link-to}}
-</div>
+{{blog-posts posts=model.posts authors=model.authors}}

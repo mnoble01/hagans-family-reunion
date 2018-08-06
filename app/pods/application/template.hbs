@@ -13,7 +13,7 @@
     </div>
   {{/if}}
 
-  <div local-class='content'>
+  <div local-class='content {{if onIndexPage 'index-page'}}'>
     {{flash-messages}}
     {{#if loading}}
       <div local-class='loading'></div>

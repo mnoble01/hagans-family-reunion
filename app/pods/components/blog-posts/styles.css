@@ -1,0 +1,88 @@
+@value medium-gray, dark-gray, black from 'hagans-family/styles/shared';
+
+.posts {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.post {
+  font-size: 16px;
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  /* display: flex;
+  flex-direction: row;
+  position: relative; */
+}
+
+.post:hover {
+
+}
+
+.post-link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: border-color 0.3s, border-width 0.3s;
+  box-sizing: border-box;
+}
+.post-link:hover {
+  border-color: rgba(0,0,0,0.2);
+  border-width: 15px;
+}
+
+.post-image {
+  width: 50%;
+}
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-summary {
+  width: 50%;
+  color: dark-gray;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.post-summary .icon {
+  position: absolute;
+  left: -25px;
+  top: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 35px;
+  border-radius: 100%;
+  background: white;
+  color: medium-gray;
+  color: #ABB7C3;
+  text-align: center;
+}
+
+.post-summary-content {
+  display: flex;
+  flex-direction: column;
+  font-size: 17px;
+  line-height: 30px;
+  padding: 0 10%;
+}
+
+.post-title {
+  composes: page-title from 'hagans-family/styles/shared';
+  font-size: 28px;
+  color: black;
+  margin: 0 0 32px;
+}
+
+.read-more-button {
+  composes: primary-button from 'hagans-family/styles/shared';
+  border-radius: 0;
+  text-transform: uppercase;
+  margin: 32px auto 0;
+  width: 140px;
+}

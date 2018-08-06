@@ -7,6 +7,8 @@
   flex-direction: column;
 }
 
+/* TODO do parallax scrolly thing */
+
 .app-header {
   background: rgba(36,38,41,0.8) ;
   /* TODO only for wider screens: */
@@ -39,6 +41,10 @@
   /* TODO only for wider screens: */
   margin-top: 90px;
   /* position: relative; */
+}
+
+.content.index-page {
+  padding: 0;
 }
 
 @keyframes -rotate {

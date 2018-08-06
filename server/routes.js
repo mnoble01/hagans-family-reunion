@@ -25,6 +25,7 @@ const airtableBase = new Airtable({
 }).base('appTLUN9CFH4IhugP');
 
 const USER_TABLE = 'users';
+const POST_TABLE = 'posts';
 
 function fetchAirtableUsers({ onSuccess, onError }) {
   const airtableRecords = [];
@@ -35,7 +36,33 @@ function fetchAirtableUsers({ onSuccess, onError }) {
     for (const record of records) {
       const airtableModel = new AirtableModel(record);
       if (airtableModel.status === 'Member' || airtableModel.status === 'Inactive') {
-        airtableRecords.push(new AirtableModel(record));
+        airtableRecords.push(airtableModel);
+      }
+    }
+    fetchNextPage();
+  }, (error) => {
+    if (error) {
+     onError(error);
+    } else {
+      onSuccess(airtableRecords);
+    }
+  });
+}
+
+function fetchAirtablePosts({ status, onSuccess, onError }) {
+  const airtableRecords = [];
+  airtableBase(POST_TABLE).select({
+      pageSize: 100,
+      view: 'Grid view',
+  }).eachPage((records, fetchNextPage) => {
+    for (const record of records) {
+      const airtableModel = new AirtableModel(record);
+      if (status) {
+        if (airtableModel.status === status) {
+          airtableRecords.push(airtableModel);
+        }
+      } else {
+        airtableRecords.push(airtableModel);
       }
     }
     fetchNextPage();
@@ -316,4 +343,17 @@ module.exports = function(app) {
       }
     });
   });
+
+  app.get('/api/posts', function(req, res) {
+    fetchAirtablePosts({
+      status: req.query.status,
+      onSuccess: (airtablePosts) => {
+        res.status(200).json(airtablePosts.map(post => post.serialize()));
+      },
+      onError:(error) => {
+        res.status(error.statusCode).json(error);
+      },
+    });
+  });
+
 };

@@ -19,7 +19,7 @@ export default Controller.extend({
       });
     } else if (this.redirect && !this.session.isAuthenticated) {
       scheduleOnce('afterRender', () => {
-        this.flashMessages.info('Login to see that page', { scope: 'login' });
+        this.flashMessages.info('Please sign in', { scope: 'login' });
       });
     }
   },
