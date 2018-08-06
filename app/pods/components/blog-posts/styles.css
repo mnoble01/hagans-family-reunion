@@ -10,13 +10,17 @@
   position: relative;
   min-height: 500px;
   display: flex;
-  /* display: flex;
-  flex-direction: row;
-  position: relative; */
+  width: 50%;
 }
-
-.post:hover {
-
+@media (max-width: 1200px) {
+  .post {
+    width: 100%;
+  }
+}
+@media (min-width: 1600px) {
+  .post {
+    width: 33.33%;
+  }
 }
 
 .post-link {
