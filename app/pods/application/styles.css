@@ -1,6 +1,7 @@
 @value dark-gray, black from 'hagans-family/styles/shared';
 @value powder-blue from 'hagans-family/styles/shared';
 @value footer-height: 60px;
+@value fixed-post-image-width from 'hagans-family/styles/shared';
 
 .application {
   display: flex;
@@ -11,7 +12,7 @@
 /* TODO do parallax scrolly thing */
 
 .app-header {
-  background: rgba(36,38,41,0.8) ;
+  background: rgba(36,38,41,0.8);
   /* TODO make absolute for small screens */
   /* TODO only for wider screens: */
   position: fixed;
@@ -37,6 +38,9 @@
   z-index: 10;
   height: footer-height;
 }
+.app-footer.post-page {
+  display: none;
+}
 
 .content {
   display: flex;
@@ -45,7 +49,19 @@
   padding: 75px 0;
   /* TODO only for wider screens: */
   margin-top: 90px;
-  /* position: relative; */
+  position: relative;
+}
+
+.content .app-footer {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin-left: fixed-post-image-width;
+}
+.content.post-page .app-footer {
+  display: block;
 }
 
 .content.index-page {

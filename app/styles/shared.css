@@ -13,6 +13,8 @@
 
 @value powder-blue: #678DB8;
 
+@value fixed-post-image-width: 700px;
+
 body {
   color: black;
   margin: 0;

@@ -16,4 +16,8 @@ export default Controller.extend({
   onIndexPage: computed('router.currentRouteName', function() {
     return this.router.currentRouteName === 'index';
   }),
+
+  onPostPage: computed('router.currentRouteName', function() {
+    return this.router.currentRouteName === 'post';
+  }),
 });

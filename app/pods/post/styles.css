@@ -1,8 +1,8 @@
 @value dark-gray from 'hagans-family/styles/shared';
 @value powder-blue from 'hagans-family/styles/shared';
 @value footer-height from 'hagans-family/pods/application/styles';
+@value fixed-post-image-width from 'hagans-family/styles/shared';
 
-@value fixed-post-image-width: 700px;
 .fixed-post-image {
   position: fixed;
   top: 0;

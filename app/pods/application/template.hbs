@@ -13,7 +13,7 @@
     </div>
   {{/if}}
 
-  <div local-class='content {{if onIndexPage 'index-page'}}'>
+  <div local-class='content {{if onIndexPage 'index-page'}} {{if onPostPage 'post-page'}}'>
     {{flash-messages}}
     {{#if loading}}
       <div local-class='loading'></div>
@@ -26,9 +26,12 @@
         {{outlet}}
       {{/animated-value}}
     {{/animated-container}} -->
+    <div local-class='app-footer'>
+      {{app-footer}}
+    </div>
   </div>
 
-  <div local-class='app-footer'>
+  <div local-class='app-footer {{if onPostPage 'post-page'}}'>
     {{app-footer}}
   </div>
 </div>

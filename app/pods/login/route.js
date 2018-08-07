@@ -15,10 +15,12 @@ export default Route.extend({
   titleToken: 'Login',
 
   async model() {
-    const { logout } = this.paramsFor(this.routeName);
+    const { logout, redirect } = this.paramsFor(this.routeName);
     if (this.session.isAuthenticated) {
       if (logout) {
         await this.session.logout();
+      } else if (redirect) {
+        window.location = this.redirect;
       } else {
         this.transitionTo('account');
       }
