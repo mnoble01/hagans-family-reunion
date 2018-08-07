@@ -7,16 +7,7 @@
 }
 
 .login-form {
-  display: flex; /* TODO need when all content is flex? */
-  flex-direction: column;
-  width: 450px;
-  margin: 0 auto;
-}
-@media (max-width: 800px) {
-  .login-form {
-    margin: 0 16px;
-    width: auto;
-  }
+  composes: centered-content from 'hagans-family/styles/shared';
 }
 
 .page-title {

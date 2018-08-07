@@ -1,14 +1,5 @@
 .register-form {
-  display: flex; /* TODO need when all content is flex? */
-  flex-direction: column;
-  width: 450px;
-  margin: auto;
-}
-@media (max-width: 800px) {
-  .register-form {
-    width: auto;
-    margin: 0 16px;
-  }
+  composes: centered-content from 'hagans-family/styles/shared';
 }
 
 .decoration {
