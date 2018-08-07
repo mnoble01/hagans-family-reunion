@@ -5,7 +5,7 @@ import { readOnly } from '@ember/object/computed';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import AirtableModel from 'hagans-family/pods/airtable/model';
+import UserModel from 'hagans-family/pods/airtable/user-model';
 
 export default Controller.extend({
   ajax: service(),
@@ -68,10 +68,21 @@ export default Controller.extend({
 
   async _fetchUser(id) {
     const user = await this.ajax.request(`/api/users/${id}`);
-    return new AirtableModel(user);
+    return new UserModel(user);
   },
 
-  editedFields: computed('model.user', 'formattedAddress', function() {
+  _loadEditSupport: observer('tab', function() {
+    if (this.tab === 'edit') {
+      this.loadUsers.perform();
+    }
+  }),
+
+  loadUsers: task(function*() {
+    const users = yield this.get('ajax').request('/api/users');
+    this.set('allUsers', users.map(u => new UserModel(u)));
+  }),
+
+  editedFields: computed('user', 'formattedAddress', 'allUsers', function() {
     return {
       birthDate: this.user.birthDate,
       contactMethods: this.user.contactMethods,
@@ -80,9 +91,24 @@ export default Controller.extend({
     };
   }),
 
+  editedRelationships: computed('user', 'allUsers', function() {
+    const allUsers = this.allUsers || [];
+    return {
+      mother: allUsers.filter(user => (this.user.mother || []).includes(user.id)),
+      father: allUsers.filter(user => (this.user.father || []).includes(user.id)),
+      siblings: allUsers.filter(user => (this.user.siblings || []).includes(user.id)),
+      spouse: allUsers.filter(user => (this.user.spouse || []).includes(user.id)),
+      children: allUsers.filter(user => (this.user.children || []).includes(user.id)),
+    };
+  }),
+
   updateUser: task(function*() {
     for (const key of Object.keys(this.editedFields)) {
       this.user.set(key, this.editedFields[key]);
+    }
+    for (const key of Object.keys(this.editedRelationships)) {
+      const userIds = this.editedRelationships[key].mapBy('id');
+      this.user.set(key, userIds);
     }
 
     try {

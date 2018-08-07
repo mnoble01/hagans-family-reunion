@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import AirtableModel from 'hagans-family/pods/airtable/model';
+import UserModel from 'hagans-family/pods/airtable/user-model';
 
 export default Route.extend({
   titleToken: 'People',
@@ -16,6 +16,6 @@ export default Route.extend({
 
   async model() {
     const users = await this.get('ajax').request('/api/users');
-    return { users: users.map(u => new AirtableModel(u)) };
+    return { users: users.map(u => new UserModel(u)) };
   },
 });

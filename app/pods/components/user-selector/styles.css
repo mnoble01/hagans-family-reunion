@@ -1,0 +1,8 @@
+.user-option {
+  display: flex;
+  align-items: center;
+}
+
+.user-option img {
+  margin-right: 8px;
+}

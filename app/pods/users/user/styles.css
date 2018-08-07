@@ -54,6 +54,17 @@
   font-size: 24px;
 }
 
+.profile-edit-header {
+  composes: profile-header;
+  font-size: 17px;
+  color: dark-gray;
+  text-transform: uppercase;
+}
+
+.profile-edit-section {
+  margin-left: 36px;
+}
+
 .address-map {
   height: 300px;
 }

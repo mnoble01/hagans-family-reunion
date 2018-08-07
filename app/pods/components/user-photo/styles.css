@@ -1,3 +1,7 @@
+.user-photo {
+  display: flex;
+}
+
 .user-image {
   border-radius: 100%;
   object-fit: cover;

@@ -317,8 +317,6 @@ module.exports = function(app) {
 
   app.put('/api/users/:id', function(req, res) {
     const attrs = req.body;
-    delete attrs['Table ID'];
-    delete attrs['Created At'];
 
     updateAirtableRecord(USER_TABLE, {
       id: req.params.id,

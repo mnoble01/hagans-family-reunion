@@ -3,6 +3,8 @@ import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
+  localClassNames: 'user-photo',
+
   imageUrl: computed('user.profileImage.firstObject.url', function() {
     return this.get('user.profileImage.firstObject.url') || '/images/avatar.jpg';
   }),

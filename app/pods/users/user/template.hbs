@@ -84,40 +84,105 @@
 
   {{else if (eq tab 'edit')}}
 
-    <div local-class='profile-item'>
-      <div local-class='profile-header no-border'>
-        Birth Date
+    <div local-class='profile-edit-header'>
+      Info
+    </div>
+    <div local-class='profile-edit-section'>
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Birth Date
+        </div>
+        <input local-class='input' type='date' value={{editedFields.birthDate}} onchange={{action (mut editedFields.birthDate) value='target.value'}} />
       </div>
-      <input local-class='input' type='date' value={{editedFields.birthDate}} onchange={{action (mut editedFields.birthDate) value='target.value'}} />
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Preferred Methods of Contact
+        </div>
+        {{#power-select-multiple
+          options=(array 'Email' 'SMS Text' 'Snail Mail')
+          onchange=(action (mut editedFields.contactMethods))
+          selected=editedFields.contactMethods
+        as |name|}}
+          {{name}}
+        {{/power-select-multiple}}
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          <i class='genericon genericon-phone' local-class='icon'></i>
+          Phone Number
+        </div>
+        <input local-class='input' type='tel' value={{editedFields.phone}} oninput={{action (mut editedFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}' />
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          <i class='genericon genericon-location' local-class='icon'></i>
+          Address
+        </div>
+        <input local-class='input' type='text' value={{editedFields.address}} oninput={{action (mut editedFields.address) value='target.value'}} />
+      </div>
     </div>
 
-    <div local-class='profile-item'>
-      <div local-class='profile-header no-border'>
-        Preferred Methods of Contact
-      </div>
-      {{#power-select-multiple
-        options=(array 'Email' 'SMS Text' 'Snail Mail')
-        onchange=(action (mut editedFields.contactMethods))
-        selected=editedFields.contactMethods
-      as |name|}}
-        {{name}}
-      {{/power-select-multiple}}
+    <div local-class='profile-edit-header'>
+      Relationships
     </div>
-
-    <div local-class='profile-item'>
-      <div local-class='profile-header no-border'>
-        <i class='genericon genericon-phone' local-class='icon'></i>
-        Phone Number
+    <div local-class='profile-edit-section'>
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Mother
+        </div>
+        {{user-selector
+          users=allUsers
+          onchange=(action (mut editedRelationships.mother))
+          selected=editedRelationships.mother
+        }}
       </div>
-      <input local-class='input' type='tel' value={{editedFields.phone}} oninput={{action (mut editedFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}' />
-    </div>
 
-    <div local-class='profile-item'>
-      <div local-class='profile-header no-border'>
-        <i class='genericon genericon-location' local-class='icon'></i>
-        Address
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Father
+        </div>
+        {{user-selector
+          users=allUsers
+          onchange=(action (mut editedRelationships.father))
+          selected=editedRelationships.father
+        }}
       </div>
-      <input local-class='input' type='text' value={{editedFields.address}} oninput={{action (mut editedFields.address) value='target.value'}} />
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Sibings
+        </div>
+        {{user-selector
+          users=allUsers
+          onchange=(action (mut editedRelationships.siblings))
+          selected=editedRelationships.siblings
+        }}
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Spouse
+        </div>
+        {{user-selector
+          users=allUsers
+          onchange=(action (mut editedRelationships.spouse))
+          selected=editedRelationships.spouse
+        }}
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Children
+        </div>
+        {{user-selector
+          users=allUsers
+          onchange=(action (mut editedRelationships.children))
+          selected=editedRelationships.children
+        }}
+      </div>
     </div>
 
     {{flash-messages scope='update-user'}}

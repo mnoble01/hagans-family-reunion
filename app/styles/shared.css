@@ -144,3 +144,45 @@ body {
   color: medium-gray;
   font-style: italic;
 }
+
+/* power select styles - match other inputs */
+:global(.ember-power-select-trigger) {
+  color: input-color;
+  border-radius: 2px;
+  border: 2px solid #DDD;
+  padding: 0 12px;
+  height: 40px;
+  font-size: 15px;
+}
+:global(.ember-power-select-trigger--active) {
+  border-color: #BBB;
+}
+:global(.ember-power-select-multiple-option) {
+  line-height: 32px;
+  color: input-color;
+  background: white;
+  border-color: #DDD;
+  border-width: 2px;
+  display: flex;
+  padding: 0 8px;
+}
+:global(.ember-power-select-multiple-option .ember-power-select-multiple-remove-btn) {
+  margin-right: 8px;
+}
+:global(.ember-power-select-options .ember-power-select-option) {
+  line-height: 32px;
+  padding: 4px 16px;
+  cursor: pointer;
+}
+:global(.ember-power-select-option[aria-selected=true]) {
+  background: light-gray;
+  color: inherit;
+}
+:global(.ember-power-select-option[aria-current=true]) {
+  background: powder-blue;
+  color: white;
+}
+:global(.ember-power-select-trigger-multiple-input) {
+  line-height: 32px;
+  padding: 4px 0;
+}

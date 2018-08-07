@@ -1,0 +1,10 @@
+{{#power-select-multiple
+  options=options
+  onchange=(action onchange)
+  selected=selected
+as |user|}}
+  <div local-class='user-option'>
+    {{user-photo user=user size=28}}
+    <span>{{user.firstName}} {{user.lastName}}</span>
+  </div>
+{{/power-select-multiple}}
