@@ -97,8 +97,8 @@ function findAirtableUserByEmail({ email, onSuccess, onError }) {
   });
 }
 
-function findAirtableUserById({ id, onSuccess, onError }) {
-  airtableBase(USER_TABLE).find(id, (err, record) => {
+function findAirtableRecordById(tableName, { id, onSuccess, onError }) {
+  airtableBase(tableName).find(id, (err, record) => {
     if (err) {
       return onError(err);
     } else {
@@ -107,8 +107,8 @@ function findAirtableUserById({ id, onSuccess, onError }) {
   });
 }
 
-function createAirtableUser({ attrs, onSuccess, onError }) {
-  airtableBase(USER_TABLE).create(attrs, (err, record) => {
+function createAirtableRecord(tableName, { attrs, onSuccess, onError }) {
+  airtableBase(tableName).create(attrs, (err, record) => {
     if (err) {
       return onError(err);
     } else {
@@ -117,8 +117,8 @@ function createAirtableUser({ attrs, onSuccess, onError }) {
   });
 }
 
-function updateAirtableUser({ id, attrs, onSuccess, onError }) {
-  airtableBase(USER_TABLE).update(id, attrs, (err, record) => {
+function updateAirtableRecord(tableName, { id, attrs, onSuccess, onError }) {
+  airtableBase(tableName).update(id, attrs, (err, record) => {
     if (err) {
       return onError(err);
     } else {
@@ -158,7 +158,7 @@ passport.use('local-login', new LocalStrategy({
         message: 'Incorrect password',
       });
     } else {
-      findAirtableUserById({
+      findAirtableRecordById(USER_TABLE, {
         id: dbUser.airtableId,
         onSuccess(airtableUser) {
           done(null, airtableUser.serialize());
@@ -203,7 +203,7 @@ passport.use('local-register', new LocalStrategy({
     },
     onError: (airtableError) => {
       // create airtable user
-      createAirtableUser({
+      createAirtableRecord(USER_TABLE, {
         attrs: {
           Status: 'Pending Review',
           Email: email,
@@ -242,7 +242,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   // called on all requests to confirm session status
   // The id comes from same storage as serializeUser
-  findAirtableUserById({
+  findAirtableRecordById(USER_TABLE, {
     id,
     onSuccess(airtableUser) {
       done(null, airtableUser.serialize());
@@ -304,7 +304,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/users/:id', function(req, res) {
-    findAirtableUserById({
+    findAirtableRecordById(USER_TABLE, {
       id: req.params.id,
       onSuccess: (airtableUser) => {
         res.status(200).json(airtableUser.serialize());
@@ -320,7 +320,7 @@ module.exports = function(app) {
     delete attrs['Table ID'];
     delete attrs['Created At'];
 
-    updateAirtableUser({
+    updateAirtableRecord(USER_TABLE, {
       id: req.params.id,
       attrs,
       onSuccess: (airtableUser) => {
@@ -356,4 +356,45 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/api/posts/:id', function(req, res) {
+    findAirtableRecordById(POST_TABLE, {
+      id: req.params.id,
+      onSuccess: (airtablePost) => {
+        res.status(200).json(airtablePost.serialize());
+      },
+      onError: (error) => {
+        res.status(error.statusCode).json(error);
+      },
+    });
+  });
+
+  app.put('/api/posts/:id', function(req, res) {
+    const attrs = req.body;
+
+    updateAirtableRecord(POST_TABLE, {
+      id: req.params.id,
+      attrs,
+      onSuccess: (airtableUser) => {
+        res.status(200).json(airtableUser.serialize());
+      },
+      onError: (error) => {
+        res.status(error.statusCode).json(error);
+      },
+    });
+  });
+
+  app.post('/api/posts', function(req, res) {
+    const attrs = req.body;
+
+    updateAirtableRecord(POST_TABLE, {
+      id: req.params.id,
+      attrs,
+      onSuccess: (airtableUser) => {
+        res.status(200).json(airtableUser.serialize());
+      },
+      onError: (error) => {
+        res.status(error.statusCode).json(error);
+      },
+    });
+  });
 };
