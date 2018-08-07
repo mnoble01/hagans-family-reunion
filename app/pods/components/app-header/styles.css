@@ -56,7 +56,6 @@
 .dropdown-content {
   position: absolute;
   margin-top: 10px;
-  position: absolute;
   z-index: 10;
   left: 50%;
   background: black;

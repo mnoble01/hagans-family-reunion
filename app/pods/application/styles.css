@@ -99,9 +99,6 @@
 
 .site-image {
   background: url(/images/family-photo.jpg);
-  /* position: absolute;
-  top: 0;
-  left: 0; */
   height: 530px;
   background-position: center center;
   background-size: cover;

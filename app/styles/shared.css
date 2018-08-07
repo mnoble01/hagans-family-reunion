@@ -193,3 +193,23 @@ body {
 :global(.liquid-child) {
   overflow: visible;
 }
+
+.centered-content {
+  display: flex; /* TODO need when all content is flex? */
+  flex-direction: column;
+  width: 450px;
+  margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .centered-content {
+    margin: 0 16px;
+    width: auto;
+  }
+}
+
+.reunion-page-header {
+  composes: centered-content;
+  font-size: 17px;
+  text-align: center;
+  color: medium-gray;
+}

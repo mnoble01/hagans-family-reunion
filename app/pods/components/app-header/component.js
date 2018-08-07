@@ -1,13 +1,20 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed, get } from '@ember/object';
+import { computed, get, observer } from '@ember/object';
 import { getOwner } from '@ember/application';
 
 export default Component.extend({
   localClassNames: 'app-header',
   session: service(),
+  router: service(),
 
   showMenu: false,
+
+  // TODO when route changes, hide menu
+  _hideMenu: observer('router.currentRouteName', function() {
+    console.log(this.get('router.currentRouteName'));
+    this.set('showMenu', false);
+  }),
 
   pastYearRoutes: computed(function() {
     const router = getOwner(this).lookup('router:main');
