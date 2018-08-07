@@ -18,6 +18,11 @@ module.exports = function(environment) {
         Date: false,
       },
     },
+    // moment
+    moment: {
+      // outputFormat: 'MMMM Do YYYY',
+      outputFormat: 'LL',
+    },
 
     flashMessageDefaults: {
       sticky: true,

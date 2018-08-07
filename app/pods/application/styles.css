@@ -1,5 +1,6 @@
 @value dark-gray, black from 'hagans-family/styles/shared';
 @value powder-blue from 'hagans-family/styles/shared';
+@value footer-height: 60px;
 
 .application {
   display: flex;
@@ -34,6 +35,7 @@
   color: dark-gray;
   border-bottom: 24px black;
   z-index: 10;
+  height: footer-height;
 }
 
 .content {

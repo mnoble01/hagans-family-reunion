@@ -1,5 +1,20 @@
-<div local-class='post-image'>
+<div local-class='fixed-post-image'>
   <img src={{featuredImageUrl}} alt='Feature Image' />
+  <div local-class='post-info'>
+    <div local-class='post-categories'>
+      {{categoriesForDisplay}}
+    </div>
+
+    <div local-class='post-title'>
+      {{post.title}}
+    </div>
+    <div local-class='post-meta'>
+      Posted by
+      <span local-class='post-author'>{{author.firstName}} {{author.lastName}}</span>
+      on
+      <span local-class='post-date'>{{moment-format post.publishedOn}}</span>
+    </div>
+  </div>
 </div>
 
 <div local-class='post-content-wrapper'>
@@ -10,4 +25,7 @@
   <div local-class='post-content'>
     {{post.content}}
   </div>
+  {{article-footer}}
+  {{!-- TODO previous post --}}
+  {{!-- TODO next post --}}
 </div>
