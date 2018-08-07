@@ -64,6 +64,15 @@
       </div>
     {{/if}}
 
+    {{#if relationships.spouse.length}}
+      <div local-class='profile-item'>
+        <div local-class='profile-header'>
+          Spouse
+        </div>
+        {{user-list users=relationships.spouse}}
+      </div>
+    {{/if}}
+
     {{#if relationships.children.length}}
       <div local-class='profile-item'>
         <div local-class='profile-header'>

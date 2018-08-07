@@ -53,12 +53,14 @@ export default Controller.extend({
       const motherReqs = Promise.all((this.user.mother || []).map(id => this._fetchUser(id)));
       const fatherReq = Promise.all((this.user.father || []).map(id => this._fetchUser(id)));
       const siblingsReq = Promise.all((this.user.siblings || []).map(id => this._fetchUser(id)));
-      const childrenReq = Promise.all((this.user.childrenReq || []).map(id => this._fetchUser(id)));
-      const [mother, father, siblings, children] = yield Promise.all([motherReqs, fatherReq, siblingsReq, childrenReq]);
+      const spouseReq = Promise.all((this.user.spouse || []).map(id => this._fetchUser(id)));
+      const childrenReq = Promise.all((this.user.children || []).map(id => this._fetchUser(id)));
+      const [mother, father, siblings, spouse, children] = yield Promise.all([motherReqs, fatherReq, siblingsReq, spouseReq, childrenReq]);
       this.set('relationships', {
         mother,
         father,
         siblings,
+        spouse,
         children,
       });
     }
