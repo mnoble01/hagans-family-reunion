@@ -23,6 +23,15 @@
   padding: 64px;
 }
 
+.post-content-wrapper .post-info {
+  text-align: center;
+  margin: 48px auto;
+}
+
+.post-content-wrapper .post-info .post-title {
+  margin: 24px 0;
+}
+
 .fixed-post-image .post-info {
   background: rgba(0,0,0,.4);
   padding: 0 40px 40px;
@@ -47,17 +56,12 @@
   color: white;
   background: powder-blue;
   padding: 10px 15px;
-  text-transform: uppercase;
-  font-size: 13px;
-  line-height: 21px;
-  letter-spacing: 1.4px;
   min-height: 41px;
   position: relative;
   top: -20px;
   box-sizing: border-box;
   display: inline-block;
 }
-
 
 .post-title {
   composes: page-title from 'hagans-family/styles/shared';
@@ -66,6 +70,14 @@
 .post-content {
   font-size: 17px;
   line-height: 30px;
+  color: dark-gray;
+}
+
+.post-categories {
+  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 21px;
+  letter-spacing: 1.4px;
   color: dark-gray;
 }
 
@@ -78,4 +90,22 @@
   font-style: normal;
   text-transform: uppercase;
   letter-spacing: 1.4px;
+}
+
+@media (max-width: 1100px) {
+  .fixed-post-image {
+    display: none;
+  }
+  .post-content-wrapper {
+    margin-left: 0;
+  }
+  .post-content-wrapper .post-info {
+    display: block;
+  }
+}
+
+@media (min-width: 1101px) {
+  .post-content-wrapper .post-info {
+    display: none;
+  }
 }

@@ -63,6 +63,11 @@
 .content.post-page .app-footer {
   display: block;
 }
+@media (max-width: 1100px) {
+  .content .app-footer {
+    margin-left: 0;
+  }
+}
 
 .content.index-page {
   padding: 0;
