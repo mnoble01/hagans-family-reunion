@@ -11,16 +11,29 @@
   min-height: 400px;
   max-height: 500px;
   display: flex;
+  flex-direction: row;
   width: 50%;
+}
+.post:nth-child(4n+3),
+.post:nth-child(4n+4) {
+  flex-direction: row-reverse;
 }
 @media (max-width: 1200px) {
   .post {
     width: 100%;
   }
+  .post:nth-child(2n+1) {
+    flex-direction: row-reverse;
+  }
 }
 @media (min-width: 1600px) {
   .post {
     width: 33.33%;
+  }
+  .post:nth-child(6n+4),
+  .post:nth-child(6n+5),
+  .post:nth-child(6n+6) {
+    flex-direction: row-reverse;
   }
 }
 
