@@ -19,6 +19,11 @@
   padding: 28px 40px;
   flex-flow: wrap;
 }
+@media (max-width: 600px) {
+  .app-header {
+    padding: 16px 32px;
+  }
+}
 
 .menu {
   display: flex;
