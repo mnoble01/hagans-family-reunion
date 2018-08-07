@@ -1,13 +1,5 @@
-<div local-class='reunion-page-header'>
-  {{article-header}}
-
-  <div local-class='page-title'>
-    2015
+{{#reunion-index reunionYear=reunionYear posts=model.posts authors=model.authors}}
+  <div local-class='p'>
+    The 2015 reunion was held on July 10 – 12 in Gulfport, MS.
   </div>
-
-  The 2015 reunion was held on July 10 – 12 in Gulfport, MS.
-
-  <!-- <div local-class='page-links'>
-  </div> -->
-</div>
-<!-- TODO show all 2015 posts -->
+{{/reunion-index}}

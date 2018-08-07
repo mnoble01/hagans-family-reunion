@@ -1,0 +1,11 @@
+<div local-class='reunion-page-header'>
+  {{article-header}}
+
+  <div local-class='page-title'>
+    {{reunionYear}}
+  </div>
+
+  {{yield (hash linkClass=(local-class 'link') pClass=(local-class 'p'))}}
+</div>
+
+{{blog-posts posts=posts authors=authors}}

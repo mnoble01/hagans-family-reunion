@@ -1,32 +1,3 @@
-/* copied from 2019 */
-@value medium-gray, black from 'hagans-family/styles/shared';
-
-.reunion-page-header {
-  composes: reunion-page-header from 'hagans-family/styles/shared';
-}
-
 .p {
   padding-bottom: 24px;
 }
-
-.page-title {
-  composes: page-title from 'hagans-family/styles/shared';
-  color: black;
-  margin-bottom: 42px;
-}
-
-.page-links {
-  /* copied from login page - make a shared css rule */
-  /* display: flex; /* TODO need when all content is flex? */
-  /* flex-direction: column;
-  width: 450px;
-  margin: 0 auto;
-  text-align: center; */
-}
-
-.link {
-  composes: gray-link from 'hagans-family/styles/shared';
-  text-decoration: underline;
-  height: 30px;
-}
-/* copied from 2019 */

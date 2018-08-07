@@ -1,5 +1,5 @@
-import Route from '@ember/routing/route';
+import PastYearRoute from 'hagans-family/pods/shared/past-year-route';
 
-export default Route.extend({
-  titleToken: '2015',
+export default PastYearRoute.extend({
+  reunionYear: '2015',
 });

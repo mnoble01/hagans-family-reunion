@@ -1,8 +1,5 @@
-import Route from '@ember/routing/route';
+import PastYearRoute from 'hagans-family/pods/shared/past-year-route';
 
-export default Route.extend({
-  titleToken: '2017',
-
-  // TODO make a route to extend from for past year routes
-  // and show all posts on index pages from past years
+export default PastYearRoute.extend({
+  reunionYear: '2017',
 });
