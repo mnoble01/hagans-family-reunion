@@ -30,6 +30,6 @@ export default Component.extend({
   }),
 
   _postSummary(post) {
-    return post.content.substr(0, 500).split(' ').slice(0, 30).join(' ');
+    return post.content.substr(0, 500).split(' ').slice(0, 25).join(' ');
   },
 });
