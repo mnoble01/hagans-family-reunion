@@ -161,6 +161,12 @@
   top: 0;
   width: 120px;
 }
+@media (max-width: 600px) {
+  .site-description:before {
+    margin: -4px 0 0 -30px;
+    width: 60px;
+  }
+}
 
 @media (max-width: 800px) {
   .site-description-container {
