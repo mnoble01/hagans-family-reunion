@@ -25,7 +25,7 @@ export default Controller.extend({
         lastName: this.lastName,
       });
       const user = this.session.user;
-      if (user.status === 'Pending Review') {
+      if (user.status === 'Pending Review') { // TODO go to 'account' route
         this.flashMessages.success('Thanks! Your account is pending review.', {
           scope: 'form',
         });

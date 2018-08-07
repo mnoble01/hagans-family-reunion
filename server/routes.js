@@ -196,7 +196,21 @@ passport.use('local-register', new LocalStrategy({
             if (err) {
               return done(err);
             }
-            return done(null, airtableUser.serialize());
+            updateAirtableRecord(USER_TABLE, {
+              id: airtableUser.id,
+              attrs: {
+                ['In Database']: true,
+                ['Status']: 'Member',
+                ['First Name']: req.body.firstName,
+                ['Last Name']: req.body.lastName,
+              },
+              onSuccess: (airtableUser) => {
+                done(null, airtableUser.serialize());
+              },
+              onError: (error) => {
+                done(err);
+              },
+            });
           });
         }
       });
@@ -209,6 +223,7 @@ passport.use('local-register', new LocalStrategy({
           Email: email,
           ['First Name']: req.body.firstName,
           ['Last Name']: req.body.lastName,
+          ['In Database']: true,
         },
         onSuccess(airtableUser) {
           // Create db user
@@ -281,7 +296,7 @@ module.exports = function(app) {
     return res.json({ ...req.user });
   });
 
-  app.post('/api/logout', isLoggedIn, function(req, res) {
+  app.post('/api/logout', function(req, res) {
     req.logout();
     return res.status(200).json({
         message: 'successfully logout',
