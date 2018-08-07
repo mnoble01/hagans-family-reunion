@@ -162,6 +162,22 @@
   width: 120px;
 }
 
+@media (max-width: 800px) {
+  .site-description-container {
+    font-size: 32px;
+  }
+}
+@media (max-width: 500px) {
+  .site-description-container {
+    font-size: 24px;
+  }
+}
+@media (max-width: 500px) {
+  .site-description-container {
+    font-size: 20px;
+  }
+}
+
 .site-image + .content {
   margin-top: 0;
 }
