@@ -19,6 +19,7 @@ const mongoose = require('mongoose');
 require('./db/models/user');
 const Users = mongoose.model('Users');
 
+// TODO move this stuff out of this file
 const airtableBase = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
   endpointUrl: 'https://api.airtable.com',
