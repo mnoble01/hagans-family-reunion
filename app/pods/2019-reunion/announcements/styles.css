@@ -1,11 +1,5 @@
 .reunion-page-header {
-  font-size: 17px;
-  width: 450px; /* copied from login page? */
-  margin: 0 auto;
-  display: flex; /* TODO need when all content is flex? */
-  flex-direction: column;
-  text-align: center;
-  color: medium-gray;
+  composes: reunion-page-header from 'hagans-family/styles/shared';
 }
 
 .page-title {

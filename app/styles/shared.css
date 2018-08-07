@@ -29,6 +29,7 @@ body {
   text-align: center;
   font-family: 'Noto Serif', Georgia, serif;
   font-weight: 700;
+  word-wrap: break-word;
 }
 
 .box-shadow {
@@ -195,7 +196,7 @@ body {
 }
 
 .centered-content {
-  display: flex; /* TODO need when all content is flex? */
+  display: flex;
   flex-direction: column;
   width: 450px;
   margin: 0 auto;
