@@ -2,7 +2,11 @@
   Hagans Family
 {{/link-to}}
 
-<div local-class='menu'>
+<div local-class='menu-trigger menu-link' onclick={{action (mut showMenu) (not showMenu)}}>
+  <i class='genericon genericon-menu' local-class='icon'></i>
+  Menu
+</div>
+<div local-class='menu {{if showMenu 'show-mobile-menu'}}'>
   {{#if session.isAuthenticated}}
     {{#each menuItems as |item|}}
       <div local-class='dropdown-container menu-item'>

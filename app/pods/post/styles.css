@@ -33,7 +33,7 @@
 }
 
 .post-image {
-  margin-top: -68px; /* TODO calculate this */
+  margin-top: -165px; /* TODO can this be calculated?? */
 }
 .post-image img {
   width: 100%;
