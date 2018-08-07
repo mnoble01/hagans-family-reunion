@@ -7,6 +7,8 @@ export default Component.extend({
   localClassNames: 'app-header',
   session: service(),
 
+  showMenu: false,
+
   pastYearRoutes: computed(function() {
     const router = getOwner(this).lookup('router:main');
     const routes = get(router, '_routerMicrolib.recognizer.names');
