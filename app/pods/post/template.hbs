@@ -1,2 +1,13 @@
-Single post
-{{model.post.title}}
+<div local-class='post-image'>
+  <img src={{featuredImageUrl}} alt='Feature Image' />
+</div>
+
+<div local-class='post-content-wrapper'>
+  {{article-header}}
+  <div local-class='post-title'>
+    {{post.title}}
+  </div>
+  <div local-class='post-content'>
+    {{post.content}}
+  </div>
+</div>

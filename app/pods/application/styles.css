@@ -11,11 +11,13 @@
 
 .app-header {
   background: rgba(36,38,41,0.8) ;
+  /* TODO make absolute for small screens */
   /* TODO only for wider screens: */
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   flex: 1;
+  z-index: 10;
 }
 .app-header.index-page {
   background: rgba(36,38,41,0.4);
@@ -31,6 +33,7 @@
   background: black;
   color: dark-gray;
   border-bottom: 24px black;
+  z-index: 10;
 }
 
 .content {

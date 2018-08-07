@@ -1,0 +1,30 @@
+@value dark-gray from 'hagans-family/styles/shared';
+
+.post-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 600px;
+}
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-content-wrapper {
+  margin-left: 600px;
+  padding: 64px;
+}
+
+.post-title {
+  composes: page-title from 'hagans-family/styles/shared';
+}
+
+.post-content {
+  font-size: 22px;
+  line-height: 32px;
+  color: dark-gray;
+}
