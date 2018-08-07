@@ -2,8 +2,12 @@
   Hagans Family
 {{/link-to}}
 
-<div local-class='menu-trigger menu-link' onclick={{action (mut showMenu) (not showMenu)}}>
-  <i class='genericon genericon-menu' local-class='icon'></i>
+<div local-class='menu-trigger menu-link {{if showMenu 'show-mobile-menu'}}' onclick={{action (mut showMenu) (not showMenu)}}>
+  {{#if showMenu}}
+    <i class='genericon genericon-close-alt' local-class='icon'></i>
+  {{else}}
+    <i class='genericon genericon-menu' local-class='icon'></i>
+  {{/if}}
   Menu
 </div>
 <div local-class='menu {{if showMenu 'show-mobile-menu'}}'>
