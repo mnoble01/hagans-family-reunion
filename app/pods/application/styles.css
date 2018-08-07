@@ -50,9 +50,13 @@
   flex-direction: column;
   flex: 1;
   padding: 75px 0;
-  /* TODO only for wider screens: */
   margin-top: 90px;
   position: relative;
+}
+@media (max-width: 1100px) {
+  .content {
+    margin-top: 0;
+  }
 }
 
 .content .app-footer {

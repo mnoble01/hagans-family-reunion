@@ -9,8 +9,13 @@
 .login-form {
   display: flex; /* TODO need when all content is flex? */
   flex-direction: column;
-  width: 450px;
+  min-width: 450px;
   margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .login-form {
+    margin: 0 16px;
+  }
 }
 
 .page-title {
