@@ -331,6 +331,7 @@ module.exports = function(app) {
   app.use(wwwRedirect);
   // app.get('/', requireHttps);
   // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
+  console.log('ports', app.get('httpPort'), app.get('httpsPort'));
 
 
   // Static files should come before session
