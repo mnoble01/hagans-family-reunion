@@ -4,6 +4,8 @@ import { computed } from '@ember/object';
 export default Component.extend({
   localClassNames: 'posts',
 
+  // TODO do we actually need authors here?
+  // I don't think so
   postsToRender: computed('posts', 'authors', function() {
     const authors = this.authors || [];
     const posts = this.posts || [];

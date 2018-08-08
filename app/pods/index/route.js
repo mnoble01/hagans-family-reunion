@@ -15,10 +15,16 @@ export default Route.extend({
     });
     const posts = response.slice(0, 12).map(post => new PostModel(post));
     const authorIds = posts.map(post => post.author).uniq();
-    const authorsResponses = await Promise.all(authorIds.map((authorId) => {
-      return this.get('ajax').request(`/api/users/${authorId}`);
-    }));
-    const authors = authorsResponses.map(author => new UserModel(author));
-    return { posts, authors };
+
+    try {
+      // author request can fail for unauthorized users
+      const authorsResponses = await Promise.all(authorIds.map((authorId) => {
+        return this.get('ajax').request(`/api/users/${authorId}`);
+      }));
+      const authors = authorsResponses.map(author => new UserModel(author));
+      return { posts, authors };
+    } catch (e) {
+      return { posts };
+    }
   },
 });

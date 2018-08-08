@@ -356,7 +356,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/users/:id', function(req, res) {
+  app.get('/api/users/:id', isLoggedIn, function(req, res) {
     findAirtableRecordById(USER_TABLE, {
       id: req.params.id,
       onSuccess: (airtableUser) => {
@@ -368,7 +368,7 @@ module.exports = function(app) {
     });
   });
 
-  app.put('/api/users/:id', function(req, res) {
+  app.put('/api/users/:id', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
     updateAirtableRecord(USER_TABLE, {
@@ -383,7 +383,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/location/:address', function(req, res) {
+  app.get('/api/location/:address', isLoggedIn, function(req, res) {
     googleMapsClient.geocode({
       address: req.params.address,
     }, function(error, response) {
@@ -395,6 +395,7 @@ module.exports = function(app) {
     });
   });
 
+  // Purposefully open to non logged-in users
   app.get('/api/posts', function(req, res) {
     fetchAirtablePosts({
       status: req.query.status,
@@ -407,7 +408,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/posts/:id', function(req, res) {
+  app.get('/api/posts/:id', isLoggedIn, function(req, res) {
     findAirtableRecordById(POST_TABLE, {
       id: req.params.id,
       onSuccess: (airtablePost) => {
@@ -419,7 +420,7 @@ module.exports = function(app) {
     });
   });
 
-  app.put('/api/posts/:id', function(req, res) {
+  app.put('/api/posts/:id', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
     updateAirtableRecord(POST_TABLE, {
