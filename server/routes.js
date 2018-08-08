@@ -331,11 +331,11 @@ module.exports = function(app) {
   // the "X-Forwarded-Proto" header field to be trusted so its
   // value can be used to determine the protocol. See
   // http://expressjs.com/api#app-settings for more details.
-  app.enable('trust proxy');
+  // app.enable('trust proxy');
   // app.use(wwwRedirect);
-  // app.get('*', requireHttps);
-  // app.use(sslExpressWww);
-  app.use(sslRedirect());
+  // app.use(requireHttps);
+
+  // not work:
   // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
   // app.use(enforce.HTTPS({ trustProtoHeader: true }));
   // trustXForwardedHostHeader: true
