@@ -14,8 +14,15 @@ export default Route.extend({
 
   beforeModel() {
     if (ENV.environment === 'production') {
+      let newLocation = window.location.href;
       if (window.location.protocol === 'http:') {
-        window.location = window.location.href.replace('http', 'https');
+        newLocation = newLocation.replace('http', 'https');
+      }
+      if (window.location.host.startsWith('www.')) {
+        newLocation = newLocation.replace('www.', '');
+      }
+      if (newLocation !== window.location.href) {
+        window.location = newLocation;
       }
     }
     console.log(ENV.environment);
