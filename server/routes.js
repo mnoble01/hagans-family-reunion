@@ -329,7 +329,7 @@ module.exports = function(app) {
   // http://expressjs.com/api#app-settings for more details.
   app.enable('trust proxy');
   app.use(wwwRedirect);
-  app.use(requireHttps);
+  app.get('/', requireHttps);
   // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
 
 
