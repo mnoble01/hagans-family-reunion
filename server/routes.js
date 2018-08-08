@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const sslExpressWww = require('ssl-express-www');
+const sslRedirect = require('heroku-ssl-redirect');
+// const sslExpressWww = require('ssl-express-www');
 // const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 // const enforce = require('express-sslify');
 
@@ -333,7 +334,8 @@ module.exports = function(app) {
   app.enable('trust proxy');
   // app.use(wwwRedirect);
   // app.get('*', requireHttps);
-  app.use(sslExpressWww);
+  // app.use(sslExpressWww);
+  app.use(sslRedirect());
   // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
   // app.use(enforce.HTTPS({ trustProtoHeader: true }));
   // trustXForwardedHostHeader: true
