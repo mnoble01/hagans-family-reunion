@@ -306,6 +306,10 @@ function wwwRedirect(req, res, next) {
 module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
+
+  app.use(express.static('dist'));
+
+  // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
   app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
   app.use(passport.initialize());
   app.use(passport.session());
@@ -317,8 +321,6 @@ module.exports = function(app) {
   app.enable('trust proxy');
   app.use(ensureHttps);
   app.use(wwwRedirect);
-
-  app.use(express.static('dist'));
 
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
     return res.json({ ...req.user });
