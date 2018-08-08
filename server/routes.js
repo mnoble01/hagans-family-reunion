@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
+const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+
 
 // google maps
 const googleMapsClient = require('@google/maps').createClient({
@@ -281,19 +283,19 @@ function isLoggedIn(req, res, next) {
   });
 }
 
-function ensureHttps(req, res, next) {
-  console.log('secure?', req.secure, req.headers.host, req.protocol, req.headers.host.startsWith('localhost'));
-  console.log('url', req.url, req.url.startsWith('/api'));
-  if (req.secure || req.headers.host.startsWith('localhost') || req.url.startsWith('/api')) {
-    console.log('DO NOT redirect');
-    // request was via https, localhost, or api, so do no special handling
-    return next();
-  } else {
-    console.log('do redirect to https');
-    // request was via http, so redirect to https
-    return res.redirect('https://' + req.headers.host + req.url);
-  }
-}
+// function ensureHttps(req, res, next) {
+//   console.log('secure?', req.secure, req.headers.host, req.protocol, req.headers.host.startsWith('localhost'));
+//   console.log('url', req.url, req.url.startsWith('/api'));
+//   if (req.secure || req.headers.host.startsWith('localhost') || req.url.startsWith('/api')) {
+//     console.log('DO NOT redirect');
+//     // request was via https, localhost, or api, so do no special handling
+//     return next();
+//   } else {
+//     console.log('do redirect to https');
+//     // request was via http, so redirect to https
+//     return res.redirect('https://' + req.headers.host + req.url);
+//   }
+// }
 
 // redirect www to non-www
 function wwwRedirect(req, res, next) {
@@ -316,8 +318,11 @@ module.exports = function(app) {
   // http://expressjs.com/api#app-settings for more details.
   app.enable('trust proxy');
   app.use(wwwRedirect);
-  app.use(ensureHttps);
+  // app.use(ensureHttps);
+  app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
 
+
+  // Static files should come before session
   app.use(express.static('dist'));
 
   // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
@@ -326,6 +331,7 @@ module.exports = function(app) {
   app.use(passport.session());
 
 
+  // API
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
     return res.json({ ...req.user });
   });
@@ -435,7 +441,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/api/posts', function(req, res) {
+  app.post('/api/posts', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
     updateAirtableRecord(POST_TABLE, {
