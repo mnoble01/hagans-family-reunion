@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const session = require('express-session');
+// const session = require('express-session');
 
 // google maps
 const googleMapsClient = require('@google/maps').createClient({
@@ -281,12 +281,44 @@ function isLoggedIn(req, res, next) {
   });
 }
 
+function ensureHttps(req, res, next) {
+  console.log('secure?', req.secure, req.headers.host, req.protocol, req.headers.host.startsWith('localhost'));
+  if (req.secure || req.headers.host.startsWith('localhost')) {
+    // request was via https, so do no special handling
+    return next();
+  } else {
+    console.log('do redirect to https');
+    // request was via http, so redirect to https
+    return res.redirect('https://' + req.headers.host + req.url);
+  }
+}
+
+// redirect www to non-www
+function wwwRedirect(req, res, next) {
+  if (req.headers.host.slice(0, 4) === 'www.') {
+    console.log('www', req.headers.host);
+    const newHost = req.headers.host.slice(4);
+    return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+  }
+  next();
+}
+
 module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(session({ secret: 'woohoo-hagans' })); // TODO
+  // app.use(session({ secret: 'woohoo-hagans' })); // TODO
+
+  // Enable reverse proxy support in Express. This causes the
+  // the "X-Forwarded-Proto" header field to be trusted so its
+  // value can be used to determine the protocol. See
+  // http://expressjs.com/api#app-settings for more details.
+  app.enable('trust proxy');
+  app.use(ensureHttps);
+  app.use(wwwRedirect);
+
   app.use(passport.initialize());
   app.use(passport.session());
+
   app.use(express.static('dist'));
 
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
