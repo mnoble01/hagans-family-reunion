@@ -310,8 +310,6 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  app.use(express.static('dist'));
-
   // Enable reverse proxy support in Express. This causes the
   // the "X-Forwarded-Proto" header field to be trusted so its
   // value can be used to determine the protocol. See
@@ -319,6 +317,8 @@ module.exports = function(app) {
   app.enable('trust proxy');
   app.use(wwwRedirect);
   app.use(ensureHttps);
+
+  app.use(express.static('dist'));
 
   // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
   app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
