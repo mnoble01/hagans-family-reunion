@@ -34,7 +34,7 @@
                   {{child.name}}
                 </a>
               {{else}}
-                {{#link-to child.route local-class='menu-link'}}
+                {{#link-to child.route local-class=(concat 'menu-link ' (if (eq router.currentRouteName child.route) 'active'))}}
                   {{child.name}}
                 {{/link-to}}
               {{/if}}
