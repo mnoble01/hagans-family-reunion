@@ -69,6 +69,7 @@
     "bcrypt": "^3.0.0",
     "bcrypt-nodejs": "^0.0.3",
     "camelcase": "^5.0.0",
+    "connect-mongo": "^2.0.1",
     "dotenv": "^6.0.0",
     "ember-concurrency": "^0.8.19",
     "express": "^4.16.3",

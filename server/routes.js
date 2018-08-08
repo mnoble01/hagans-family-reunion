@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-
+const MongoStore = require('connect-mongo')(session);
 
 
 // google maps
@@ -317,7 +317,12 @@ module.exports = function(app) {
   app.use(express.static('dist'));
 
   // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
-  app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
+  app.use(session({
+    secret: 'woohoo-hagans', // TODO move this to .env vars
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  }));
   app.use(passport.initialize());
   app.use(passport.session());
 

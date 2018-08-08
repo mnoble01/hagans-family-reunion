@@ -15,10 +15,6 @@ export default Component.extend({
     this.set('showMenu', false);
   }),
 
-  onClick() {
-    console.log('onClick', e);
-  },
-
   pastYearRoutes: computed(function() {
     const router = getOwner(this).lookup('router:main');
     const routes = get(router, '_routerMicrolib.recognizer.names');
