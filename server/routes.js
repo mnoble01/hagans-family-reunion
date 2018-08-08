@@ -402,7 +402,7 @@ module.exports = function(app) {
 
     if (file.mimetype.startsWith('image')) {
       const imgurAuthHeader = {
-        Authorization: 'Client-ID 83cdf0fc61ff1f1', // TODO put in .env
+        Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
       };
 
       const imgurUploadOptions = {

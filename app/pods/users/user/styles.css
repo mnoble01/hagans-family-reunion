@@ -76,6 +76,7 @@
 .progress-bar .progress {
   background: gold;
   height: inherit;
+  transition: width .3s;
 }
 
 .pending-review-message {

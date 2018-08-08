@@ -56,7 +56,7 @@
 
 <div local-class='user-info'>
   {{flash-messages scope='user-profile-image'}}
-  
+
   <div local-class='tab-nav'>
     <div local-class='tab {{if (eq tab 'info') 'active'}}'>
       {{#link-to 'users.user' user.id (query-params tab='info') local-class='tab-link'}}
