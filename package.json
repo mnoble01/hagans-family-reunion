@@ -87,6 +87,7 @@
     "passport-session": "^1.0.2",
     "request": "^2.87.0",
     "rsvp": "^4.8.3",
-    "simple-oauth2": "^2.2.0"
+    "simple-oauth2": "^2.2.0",
+    "ssl-express-www": "^3.0.2"
   }
 }
