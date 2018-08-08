@@ -329,12 +329,12 @@ module.exports = function(app) {
   // http://expressjs.com/api#app-settings for more details.
   app.enable('trust proxy');
   app.use(wwwRedirect);
-  app.get('/', requireHttps);
+  // app.get('/', requireHttps);
   // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
 
 
   // Static files should come before session
-  app.use(express.static('dist'));
+  app.use(requireHttps, express.static('dist'));
 
   // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
   app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
