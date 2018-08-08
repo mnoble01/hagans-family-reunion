@@ -297,6 +297,8 @@ function requireHttps(req, res, next) {
 //   }
 
   // The 'x-forwarded-proto' check is for Heroku
+  console.log('secure?', req.secure);
+  console.log('https forwarded?', req.get('x-forwarded-proto'));
   if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== 'development' && !req.url.startsWith('/api')) {
     console.log('DO redirect', req.secure, req.host, req.url);
     return res.redirect('https://' + req.host + req.url);
