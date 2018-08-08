@@ -306,7 +306,7 @@ function wwwRedirect(req, res, next) {
 module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(session({ secret: 'woohoo-hagans' })); // TODO
+  app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
   app.use(passport.initialize());
   app.use(passport.session());
 
