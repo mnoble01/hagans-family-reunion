@@ -31,7 +31,6 @@
 }
 
 .menu-item {
-  display: block;
   padding: 0 12px;
 }
 
@@ -58,6 +57,7 @@
   margin-top: 10px;
   z-index: 10;
   left: 50%;
+  top: 100%;
   background: black;
   width: 200px;
   margin-left: -100px;
@@ -75,6 +75,13 @@
   width: 0;
 }
 
+.dropdown-trigger {
+  display: flex;
+  align-items: center;
+  min-height: 40px; /* larger trigger area for dropdowns */
+  margin-top: -10px; /* larger trigger area for dropdowns */
+  margin-bottom: -10px; /* larger trigger area for dropdowns */
+}
 .dropdown-trigger + .dropdown-content {
   display: none;
 }
