@@ -10,11 +10,14 @@ export default Component.extend({
 
   showMenu: false,
 
-  // TODO when route changes, hide menu
+  // When route changes, hide menu
   _hideMenu: observer('router.currentRouteName', function() {
-    console.log(this.get('router.currentRouteName'));
     this.set('showMenu', false);
   }),
+
+  onClick() {
+    console.log('onClick', e);
+  },
 
   pastYearRoutes: computed(function() {
     const router = getOwner(this).lookup('router:main');
@@ -31,7 +34,8 @@ export default Component.extend({
     return pastYearRoutes.sortBy('name').reverse();
   }),
 
-  menuItems: computed('pastYearRoutes', function() {
+  menuItems: computed('pastYearRoutes', 'session.user', 'router.currentRouteName', function() {
+    if (!this.session.isAuthenticated) return;
     if (this.get('session.user.status') === 'Pending Review') {
       return [{
         route: 'account',
@@ -77,6 +81,7 @@ export default Component.extend({
       }, {
         route: 'account',
         name: 'Account',
+        isActive: this.router.currentURL.endsWith(this.session.user.id),
         children: [{
           action: this.logout,
           name: 'Logout',
