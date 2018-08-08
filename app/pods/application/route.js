@@ -25,8 +25,6 @@ export default Route.extend({
         window.location = newLocation;
       }
     }
-    console.log(ENV.environment);
-    console.log(window.location);
   },
 
   async model() {

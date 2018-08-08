@@ -4,10 +4,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const sslRedirect = require('heroku-ssl-redirect');
-// const sslExpressWww = require('ssl-express-www');
-// const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
-// const enforce = require('express-sslify');
 
 
 
