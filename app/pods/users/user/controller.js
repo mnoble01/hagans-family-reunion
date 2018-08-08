@@ -18,6 +18,14 @@ export default Controller.extend({
 
   user: alias('model.user'),
 
+  isCurrentUser: computed('user.id', 'session.user.id', function() {
+    return this.user.id === this.session.user.id;
+  }),
+
+  userIsPending: computed('user.status', function() {
+    return this.user.status === 'Pending Review';
+  }),
+
   _loadAddress: observer('user.address', function() {
     this.loadAddressCoordinates.perform();
   }),
@@ -122,5 +130,49 @@ export default Controller.extend({
     } catch (e) {
       this.flashMessages.danger(e, { scope: 'update-user' });
     }
+  }),
+
+  uploadProfileImage: task(function*(file) {
+    console.log('uploadProfileImage', ...arguments);
+    // console.log('files', queue.files);
+    // let product = this.modelFor('product');
+    // let photo = this.store.createRecord('photo', {
+    //   product,
+    //   filename: get(file, 'name'),
+    //   filesize: get(file, 'size')
+    // });
+    const url = `/api/users/${this.user.id}/profile_image`;
+
+    try {
+      yield file.readAsDataURL();
+      // then(function(url) {
+      //   // if (get(photo, 'url') == null) {
+      //   //   set(photo, 'url', url);
+      //   // }
+      //   console.log('got back url');
+      // });
+
+      const response = yield file.upload(url);
+      // debugger;
+      console.log(response);
+      // debugger;
+      // console.log(response.headers.Location);
+      // set(photo, 'url', response.headers.Location);
+      // yield photo.save();
+    } catch (e) {
+      // photo.rollback();
+      this.flashMessages.danger(e, { scope: 'user-profile-image' });
+    }
+    // this.ajax.post(`/api/users/${this.user.id}/profile_image`, {
+    //   data: {
+    //     file: {
+    //       id: file.id,
+    //       extension: file.extension,
+    //       name: file.name,
+    //       size: file.size,
+    //       type: file.type,
+    //     },
+    //   },
+    // });
   }),
 });

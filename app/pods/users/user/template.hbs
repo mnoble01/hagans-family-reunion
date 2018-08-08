@@ -4,14 +4,56 @@
   {{user.firstName}} {{user.lastName}}
 </div>
 
-{{#if session.userIsPending}}
+{{#if (and isCurrentUser userIsPending)}}
   <div local-class='pending-review-message'>
     Your account is pending review
+  </div>
+{{else if userIsPending}}
+  <div local-class='pending-review-message'>
+    This account is pending review
   </div>
 {{/if}}
 
 <!-- TODO add a way to upload image -->
-<img local-class='user-image' src={{or user.profileImage.firstObject.url '/images/avatar.jpg'}} />
+<div local-class='user-image {{if isCurrentUser 'can-upload'}}'>
+  <img src={{or user.profileImage.firstObject.url '/images/avatar.jpg'}} />
+  {{#if isCurrentUser}}
+    {{#file-dropzone name='photos' local-class='file-upload' as |dropzone queue|}}
+      {{#if dropzone.active}}
+        {{#if dropzone.valid}}
+          Drop to upload
+        {{else}}
+          Invalid
+        {{/if}}
+      {{else if queue.files.length}}
+        <div local-class='profile-image-upload-progress'>
+          {{queue.progress}}%
+        </div>
+        <div local-class='progress-bar'>
+          <div local-class='progress' style={{html-safe (concat 'width: ' queue.progress '%;')}}></div>
+        </div>
+      {{else}}
+        {{#file-upload
+          name='photos'
+          for='upload-photo'
+          accept='image/*'
+          multiple=false
+          onfileadd=(perform uploadProfileImage)
+          local-class='file-upload-trigger'
+        }}
+          <i class='genericon genericon-image' local-class='icon'></i>
+          <a tabindex=0>
+            {{#if dropzone.supported}}
+              Drag and drop or
+            {{/if}}
+            click
+          </a>
+        {{/file-upload}}
+      {{/if}}
+    {{/file-dropzone}}
+  {{/if}}
+  {{flash-messages scope='user-profile-image'}}
+</div>
 
 <div local-class='user-info'>
   <div local-class='tab-nav'>
@@ -20,13 +62,13 @@
         Info
       {{/link-to}}
     </div>
-    {{#if (not session.userIsPending)}}
+    {{#if (not userIsPending)}}
       <div local-class='tab {{if (eq tab 'relationships') 'active'}}'>
         {{#link-to 'users.user' user.id (query-params tab='relationships') local-class='tab-link'}}
           Family Relationships
         {{/link-to}}
       </div>
-      {{#if (eq user.id session.user.id)}}
+      {{#if isCurrentUser}}
         <div local-class='tab {{if (eq tab 'edit') 'active'}}'>
           {{#link-to 'users.user' user.id (query-params tab='edit') local-class='tab-link'}}
             Edit
