@@ -133,46 +133,14 @@ export default Controller.extend({
   }),
 
   uploadProfileImage: task(function*(file) {
-    console.log('uploadProfileImage', ...arguments);
-    // console.log('files', queue.files);
-    // let product = this.modelFor('product');
-    // let photo = this.store.createRecord('photo', {
-    //   product,
-    //   filename: get(file, 'name'),
-    //   filesize: get(file, 'size')
-    // });
     const url = `/api/users/${this.user.id}/profile_image`;
 
     try {
       yield file.readAsDataURL();
-      // then(function(url) {
-      //   // if (get(photo, 'url') == null) {
-      //   //   set(photo, 'url', url);
-      //   // }
-      //   console.log('got back url');
-      // });
-
-      const response = yield file.upload(url);
-      // debugger;
-      console.log(response);
-      // debugger;
-      // console.log(response.headers.Location);
-      // set(photo, 'url', response.headers.Location);
-      // yield photo.save();
+      yield file.upload(url);
+      this.send('refreshModel');
     } catch (e) {
-      // photo.rollback();
       this.flashMessages.danger(e, { scope: 'user-profile-image' });
     }
-    // this.ajax.post(`/api/users/${this.user.id}/profile_image`, {
-    //   data: {
-    //     file: {
-    //       id: file.id,
-    //       extension: file.extension,
-    //       name: file.name,
-    //       size: file.size,
-    //       type: file.type,
-    //     },
-    //   },
-    // });
   }),
 });

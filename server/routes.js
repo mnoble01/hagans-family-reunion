@@ -6,12 +6,12 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const multer = require('multer');
-const path = require('path');
+const request = require('request');
 const fs = require('fs');
 
 // file upload
 const upload = multer({
-  dest: path.join(__dirname, '/../public/tmp'),
+  dest: '/tmp',
 });
 
 // google maps
@@ -21,7 +21,7 @@ const googleMapsClient = require('@google/maps').createClient({
 
 // airtable
 const Airtable = require('airtable');
-const AirtableModel = require('./airtable-model');
+const AirtableModel = require('./airtable/model');
 
 // database
 const mongoose = require('mongoose');
@@ -392,58 +392,75 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/api/users/:id/profile_image',
-    isLoggedIn,
-    upload.single('file' /* name attribute of <file> element in your form */),
-    function(req, res) {
-      // console.log('upload profile image', req.body);
-      // const file = req.body.file;
-      // console.log('req.file', req.file);
-      const file = req.file;
-      const filePath = file.path;
-      // TODO add user & date to upload?
-      // const targetPath = path.join(__dirname, '/../public/tmp/', file.originalname);
-      // path.join(__dirname, `./uploads/${file.originalname}`);
-      // console.log('targetPath', targetPath);
-      console.log('file', file);
+  // TODO create an object for managing uploads
+  app.post('/api/users/:id/profile_image', isLoggedIn, upload.single('file'), function(req, res) {
+    const file = req.file;
+    const filePath = file.path;
+    const BASE_IMGR_URL = 'https://api.imgur.com/3/image';
 
-      if (file.mimetype.startsWith('image')) {
-        // fs.rename(tempPath, targetPath, (err) => {
-        //   if (err) {
-        //     return res.status(err.statusCode).json(err);
-        //   }
+    if (file.mimetype.startsWith('image')) {
+      const imgurAuthHeader = {
+        Authorization: 'Client-ID 83cdf0fc61ff1f1', // TODO put in .env
+      };
 
-        console.log(req.protocol, req.hostname, req.url, req.port);
-        console.log('filePath', filePath);
-        console.log(file);
-        const publicRelativePath = filePath.replace(/^.*public\//, '');
-        const publicUrl = `${req.protocol}://${req.hostname}/${publicRelativePath}`;
-        console.log('publicUrl', publicUrl);
-        res.status(200).json({ message: 'uploaded' });
-        // updateAirtableRecord(USER_TABLE, {
-        //   id: req.params.id,
-        //   attrs: {
-        //     ['Profile Image']: [{url: }]
-        //   },
-        //   onSuccess: (airtableUser) => {
-        //     res.status(200).json(airtableUser.serialize());
-        //   },
-        //   onError: (error) => {
-        //     res.status(error.statusCode).json(error);
-        //   },
-        // });
-        // });
-      } else {
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            return res.status(err.statusCode).json(err);
-          }
+      const imgurUploadOptions = {
+        url: BASE_IMGR_URL,
+        method: 'POST',
+        headers: {
+          'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+          ...imgurAuthHeader,
+        },
+        formData: {
+          image: fs.createReadStream(filePath),
+        },
+      };
 
-          res.status(403).json({ error: 'Only image files are allowed!' });
+      request(imgurUploadOptions, (error, response) => {
+        if (error) {
+          return res.status(error.statusCode).json(error);
+        }
+        const responseJson = JSON.parse(response.body);
+        const imageLink = responseJson.data.link;
+        const deleteHash = responseJson.data.deletehash;
+        const deleteRequestOptions = {
+          url: `${BASE_IMGR_URL}/${deleteHash}`,
+          method: 'DELETE',
+          headers: {
+            ...imgurAuthHeader,
+          },
+        };
+        updateAirtableRecord(USER_TABLE, {
+          id: req.params.id,
+          attrs: {
+            ['Profile Image']: [{ url: imageLink }],
+          },
+          onSuccess: (airtableUser) => {
+            // delete imgur file
+            request(deleteRequestOptions);
+            // delete local file
+            fs.unlink(filePath, () => {});
+            res.status(200).json({ message: 'Successfully uploaded' });
+          },
+          onError: (error) => {
+            // delete imgur file
+            request(deleteRequestOptions);
+            // delete local file
+            fs.unlink(filePath, () => {});
+            res.status(error.statusCode).json(error);
+          },
         });
-      }
+      });
+    } else {
+      // delete local file
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          return res.status(err.statusCode).json(err);
+        }
+
+        res.status(403).json({ error: 'Only image files are allowed!' });
+      });
     }
-  );
+  });
 
   app.get('/api/location/:address', isLoggedIn, function(req, res) {
     googleMapsClient.geocode({

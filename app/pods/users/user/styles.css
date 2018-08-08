@@ -22,7 +22,6 @@
   margin: 0 auto 32px;
   border-radius: 100%;
   position: relative;
-  transition: opacity .3s;
 }
 .user-image img {
   width: inherit;
@@ -34,15 +33,14 @@
 .user-image.can-upload * {
   cursor: pointer;
 }
-.user-image.can-upload:hover {
-  opacity: 0.8;
-}
 .file-upload-trigger {
   display: none;
 }
 .user-image.can-upload:hover .file-upload-trigger {
-  opacity: 0.8;
   display: block;
+}
+.user-image.can-upload:hover .file-upload {
+  background: rgba(0,0,0,0.5);
 }
 .file-upload {
   position: absolute;
@@ -59,6 +57,7 @@
   font-weight: bold;
   padding: 16px;
   box-sizing: border-box;
+  transition: background 0.3s;
 }
 .file-upload .icon {
   width: 100%;
