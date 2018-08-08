@@ -16,7 +16,9 @@
 
 <!-- TODO add a way to upload image -->
 <div local-class='user-image {{if isCurrentUser 'can-upload'}}'>
-  <img src={{or user.profileImage.firstObject.url '/images/avatar.jpg'}} />
+  {{#animated-value user.profileImage.firstObject.url use=fade duration=500 as |url|}}
+    <img src={{or url '/images/avatar.jpg'}} />
+  {{/animated-value}}
   {{#if isCurrentUser}}
     {{#file-dropzone name='photos' local-class='file-upload' as |dropzone queue|}}
       {{#if dropzone.active}}

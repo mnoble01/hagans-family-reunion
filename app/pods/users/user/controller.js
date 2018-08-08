@@ -6,6 +6,7 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import UserModel from 'hagans-family/pods/airtable/user-model';
+import fade from 'ember-animated/transitions/fade';
 
 export default Controller.extend({
   ajax: service(),
@@ -15,6 +16,8 @@ export default Controller.extend({
   queryParams: ['edit', 'tab'],
   edit: false,
   tab: 'info',
+
+  fade,
 
   user: alias('model.user'),
 
