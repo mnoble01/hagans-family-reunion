@@ -283,7 +283,8 @@ function isLoggedIn(req, res, next) {
 
 function ensureHttps(req, res, next) {
   console.log('secure?', req.secure, req.headers.host, req.protocol, req.headers.host.startsWith('localhost'));
-  if (req.secure || req.headers.host.startsWith('localhost')) {
+  console.log('url', req.url);
+  if (req.secure || req.headers.host.startsWith('localhost') || req.url.startsWith('/api')) {
     // request was via https, so do no special handling
     return next();
   } else {
@@ -309,11 +310,6 @@ module.exports = function(app) {
 
   app.use(express.static('dist'));
 
-  // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
-  app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
-  app.use(passport.initialize());
-  app.use(passport.session());
-
   // Enable reverse proxy support in Express. This causes the
   // the "X-Forwarded-Proto" header field to be trusted so its
   // value can be used to determine the protocol. See
@@ -321,6 +317,12 @@ module.exports = function(app) {
   app.enable('trust proxy');
   app.use(ensureHttps);
   app.use(wwwRedirect);
+
+  // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
+  app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
+  app.use(passport.initialize());
+  app.use(passport.session());
+
 
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
     return res.json({ ...req.user });
