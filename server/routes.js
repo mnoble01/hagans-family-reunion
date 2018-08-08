@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-// const session = require('express-session');
+const session = require('express-session');
 
 // google maps
 const googleMapsClient = require('@google/maps').createClient({
@@ -306,7 +306,9 @@ function wwwRedirect(req, res, next) {
 module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  // app.use(session({ secret: 'woohoo-hagans' })); // TODO
+  app.use(session({ secret: 'woohoo-hagans' })); // TODO
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   // Enable reverse proxy support in Express. This causes the
   // the "X-Forwarded-Proto" header field to be trusted so its
@@ -315,9 +317,6 @@ module.exports = function(app) {
   app.enable('trust proxy');
   app.use(ensureHttps);
   app.use(wwwRedirect);
-
-  app.use(passport.initialize());
-  app.use(passport.session());
 
   app.use(express.static('dist'));
 
