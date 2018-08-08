@@ -283,9 +283,10 @@ function isLoggedIn(req, res, next) {
 
 function ensureHttps(req, res, next) {
   console.log('secure?', req.secure, req.headers.host, req.protocol, req.headers.host.startsWith('localhost'));
-  console.log('url', req.url);
+  console.log('url', req.url, req.url.startsWith('/api'));
   if (req.secure || req.headers.host.startsWith('localhost') || req.url.startsWith('/api')) {
-    // request was via https, so do no special handling
+    console.log('DO NOT redirect');
+    // request was via https, localhost, or api, so do no special handling
     return next();
   } else {
     console.log('do redirect to https');
@@ -296,12 +297,13 @@ function ensureHttps(req, res, next) {
 
 // redirect www to non-www
 function wwwRedirect(req, res, next) {
-  if (req.headers.host.slice(0, 4) === 'www.') {
+  if (req.headers.host.slice(0, 4) === 'www.' && !req.url.startsWith('/api')) {
     console.log('www', req.headers.host);
     const newHost = req.headers.host.slice(4);
     return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+  } else {
+    return next();
   }
-  next();
 }
 
 module.exports = function(app) {
@@ -315,8 +317,8 @@ module.exports = function(app) {
   // value can be used to determine the protocol. See
   // http://expressjs.com/api#app-settings for more details.
   app.enable('trust proxy');
-  app.use(ensureHttps);
   app.use(wwwRedirect);
+  app.use(ensureHttps);
 
   // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
   app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
