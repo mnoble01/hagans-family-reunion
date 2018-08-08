@@ -287,41 +287,23 @@ function isLoggedIn(req, res, next) {
   });
 }
 
-function requireHttps(req, res, next) {
-//   console.log('secure?', req.secure, req.headers.host, req.protocol, req.headers.host.startsWith('localhost'));
-//   console.log('url', req.url, req.url.startsWith('/api'));
-//   if (req.secure || req.headers.host.startsWith('localhost') || req.url.startsWith('/api')) {
-//     console.log('DO NOT redirect');
-//     // request was via https, localhost, or api, so do no special handling
-//     return next();
+// function requireHttps(req, res, next) {
+//   if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== 'development' && !req.url.startsWith('/api')) {
+//     return res.redirect('https://' + req.host + req.url);
 //   } else {
-//     console.log('do redirect to https');
-//     // request was via http, so redirect to https
-//     return res.redirect('https://' + req.headers.host + req.url);
+//     return next();
 //   }
-
-  // The 'x-forwarded-proto' check is for Heroku
-  console.log('secure?', req.secure, req.url, req.port);
-  console.log('https forwarded?', req.get('x-forwarded-proto'));
-  if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== 'development' && !req.url.startsWith('/api')) {
-    console.log('DO redirect', req.secure, req.host, req.url);
-    return res.redirect('https://' + req.host + req.url);
-  } else {
-    console.log('no redirect');
-    return next();
-  }
-}
+// }
 
 // redirect www to non-www
-function wwwRedirect(req, res, next) {
-  if (req.headers.host.slice(0, 4) === 'www.' && !req.url.startsWith('/api')) {
-    console.log('www', req.headers.host);
-    const newHost = req.headers.host.slice(4);
-    return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
-  } else {
-    return next();
-  }
-}
+// function wwwRedirect(req, res, next) {
+//   if (req.headers.host.slice(0, 4) === 'www.' && !req.url.startsWith('/api')) {
+//     const newHost = req.headers.host.slice(4);
+//     return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+//   } else {
+//     return next();
+//   }
+// }
 
 module.exports = function(app) {
   app.use(bodyParser.json());
@@ -334,12 +316,6 @@ module.exports = function(app) {
   // app.enable('trust proxy');
   // app.use(wwwRedirect);
   // app.use(requireHttps);
-
-  // not work:
-  // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
-  // app.use(enforce.HTTPS({ trustProtoHeader: true }));
-  // trustXForwardedHostHeader: true
-
 
   // Static files should come before session
   app.use(express.static('dist'));
