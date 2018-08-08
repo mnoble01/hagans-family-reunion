@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+// const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+const enforce = require('express-sslify');
+
 
 
 // google maps
@@ -331,11 +333,12 @@ module.exports = function(app) {
   app.use(wwwRedirect);
   // app.get('/', requireHttps);
   // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
-  console.log('ports', app.get('httpPort'), app.get('httpsPort'));
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  // trustXForwardedHostHeader: true
 
 
   // Static files should come before session
-  app.use(requireHttps, express.static('dist'));
+  app.use(express.static('dist'));
 
   // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
   app.use(session({ secret: 'woohoo-hagans' })); // TODO move this to .env vars
