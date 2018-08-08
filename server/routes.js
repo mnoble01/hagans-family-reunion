@@ -5,7 +5,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 // const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
-const enforce = require('express-sslify');
+// const enforce = require('express-sslify');
 
 
 
@@ -331,9 +331,9 @@ module.exports = function(app) {
   // http://expressjs.com/api#app-settings for more details.
   app.enable('trust proxy');
   app.use(wwwRedirect);
-  // app.get('/', requireHttps);
+  app.get('*', requireHttps);
   // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  // app.use(enforce.HTTPS({ trustProtoHeader: true }));
   // trustXForwardedHostHeader: true
 
 
