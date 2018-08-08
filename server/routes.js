@@ -283,7 +283,7 @@ function isLoggedIn(req, res, next) {
   });
 }
 
-// function ensureHttps(req, res, next) {
+function requireHttps(req, res, next) {
 //   console.log('secure?', req.secure, req.headers.host, req.protocol, req.headers.host.startsWith('localhost'));
 //   console.log('url', req.url, req.url.startsWith('/api'));
 //   if (req.secure || req.headers.host.startsWith('localhost') || req.url.startsWith('/api')) {
@@ -295,7 +295,13 @@ function isLoggedIn(req, res, next) {
 //     // request was via http, so redirect to https
 //     return res.redirect('https://' + req.headers.host + req.url);
 //   }
-// }
+
+  // The 'x-forwarded-proto' check is for Heroku
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== 'development') {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+}
 
 // redirect www to non-www
 function wwwRedirect(req, res, next) {
@@ -318,8 +324,8 @@ module.exports = function(app) {
   // http://expressjs.com/api#app-settings for more details.
   app.enable('trust proxy');
   app.use(wwwRedirect);
-  // app.use(ensureHttps);
-  app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
+  app.use(requireHttps);
+  // app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/api/], 301));
 
 
   // Static files should come before session
