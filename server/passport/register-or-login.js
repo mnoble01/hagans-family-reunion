@@ -12,11 +12,12 @@ const {
 } = airtableUtils;
 
 // TODO make this work with facebook
-module.exports = function({ done, email, password, airtableAttrs, registrationSource }) {
+module.exports = function({ done, email, password, firstName, lastName, profileImageUrl, registrationSource }) {
   findAirtableUserByEmail({
     email,
     onSuccess: (airtableUser) => {
       const updatedRegSource = (airtableUser.registrationSource || []).concat(registrationSource || []);
+      const updatedImageUrl = airtableUser.profileImage && airtableUser.profileImage[0] && airtableUser.profileImage[0].url || profileImageUrl;
 
       // find or create db user
       Users.findOne({ email }, (dbError, dbUser) => {
@@ -30,7 +31,9 @@ module.exports = function({ done, email, password, airtableAttrs, registrationSo
             attrs: {
               ['In Database']: true,
               ['Registration Source']: updatedRegSource,
-              ...airtableAttrs,
+              ['First Name']: airtableUser.firstName || firstName,
+              ['Last Name']: airtableUser.lastName || lastName,
+              ['Profile Image']: updatedImageUrl ? [{ url: updatedImageUrl }] : null,
             },
             onSuccess: (airtableUser) => {
               done(null, airtableUser.serialize());
@@ -57,7 +60,9 @@ module.exports = function({ done, email, password, airtableAttrs, registrationSo
                 ['In Database']: true,
                 ['Status']: 'Member',
                 ['Registration Source']: updatedRegSource,
-                ...airtableAttrs,
+                ['First Name']: firstName,
+                ['Last Name']: lastName,
+                ['Profile Image']: updatedImageUrl ? [{ url: updatedImageUrl }] : null,
               },
               onSuccess: (airtableUser) => {
                 done(null, airtableUser.serialize());
@@ -78,7 +83,9 @@ module.exports = function({ done, email, password, airtableAttrs, registrationSo
           Email: email,
           ['In Database']: true,
           ['Registration Source']: [registrationSource],
-          ...airtableAttrs,
+          ['First Name']: firstName,
+          ['Last Name']: lastName,
+          ['Profile Image']: profileImageUrl ? [{ url: profileImageUrl }] : null,
         },
         onSuccess(airtableUser) {
           // Create db user

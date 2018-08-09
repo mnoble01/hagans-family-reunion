@@ -11,18 +11,17 @@ passport.use(new GoogleStrategy({
     callbackURL: 'https://hagans.family/auth/google/callback',
   },
   function(accessToken, refreshToken, profile, done) {
-    // TODO maybe use profile.photos[0].value
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
+    const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
     registerOrLogin({
       done,
       email,
+      firstName,
+      lastName,
+      profileImageUrl,
       registrationSource: 'Google',
-      airtableAttrs: {
-        ['First Name']: firstName,
-        ['Last Name']: lastName,
-      },
     });
   }
 ));

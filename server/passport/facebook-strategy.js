@@ -12,18 +12,17 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'email', 'link', 'name'],
   },
   function(accessToken, refreshToken, profile, done) {
-    // TODO request user photo & use profile.photos[0].value
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
+    const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
     registerOrLogin({
       done,
       email,
+      firstName,
+      lastName,
+      profileImageUrl,
       registrationSource: 'Facebook',
-      airtableAttrs: {
-        ['First Name']: firstName,
-        ['Last Name']: lastName,
-      },
     });
   }
 ));

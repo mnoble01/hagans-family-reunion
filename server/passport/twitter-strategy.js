@@ -11,18 +11,18 @@ passport.use(new TwitterStrategy({
     callbackURL: 'https://hagans.family/auth/twitter/callback',
   },
   function(token, tokenSecret, profile, done) {
-    console.log('TWITTER PROFILE', profile);
-    const firstName = profile.name.givenName;
-    const lastName = profile.name.familyName;
+    const name = profile.split(' ');
+    const firstName = name[0];
+    const lastName = name[1];
     const email = profile.emails[0].value;
+    const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
     registerOrLogin({
       done,
       email,
-      registrationSource: 'Google',
-      airtableAttrs: {
-        ['First Name']: firstName,
-        ['Last Name']: lastName,
-      },
+      firstName,
+      lastName,
+      profileImageUrl,
+      registrationSource: 'Twitter',
     });
   }
 ));
