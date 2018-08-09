@@ -15,6 +15,7 @@ passport.use(new GoogleStrategy({
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
     const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
+    console.log('GOOGLE PROFILE', profile);
     registerOrLogin({
       done,
       email,

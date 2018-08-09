@@ -19,6 +19,7 @@ passport.use(new TwitterStrategy({
     const lastName = name[1];
     const email = profile.emails[0].value;
     const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
+    console.log('TWITTER PROFILE', profile);
     registerOrLogin({
       done,
       email,
