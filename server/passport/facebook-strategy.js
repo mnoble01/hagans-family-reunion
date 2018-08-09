@@ -4,6 +4,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const registerOrLogin = require('passport/register-or-login');
 const routeUtils = require('routes/utils');
 const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
+const logger = require('utils/logger');
 
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
@@ -16,7 +17,7 @@ passport.use(new FacebookStrategy({
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
     const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
-    console.log('FACEBOOK PROFILE', profile);
+    logger.log('info', 'FACEBOOK PROFILE %s', profile);
     registerOrLogin({
       done,
       email,

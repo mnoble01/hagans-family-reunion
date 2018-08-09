@@ -4,6 +4,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const registerOrLogin = require('passport/register-or-login');
 const routeUtils = require('routes/utils');
 const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
+const logger = require('utils/logger');
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -15,7 +16,7 @@ passport.use(new GoogleStrategy({
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
     const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
-    console.log('GOOGLE PROFILE', profile);
+    logger.log('info', 'GOOGLE PROFILE %s', profile);
     registerOrLogin({
       done,
       email,
