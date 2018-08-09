@@ -1,7 +1,7 @@
 /* eslint-env node */
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
-// const registerOrLogin = require('passport/register-or-login');
+const registerOrLogin = require('passport/register-or-login');
 
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
@@ -10,25 +10,18 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'email', 'link', 'name'],
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log('FACEBOOK PROFILE', profile);
-    console.log(Object.keys(profile));
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
-    console.log('firstName', firstName);
-    console.log('lastName', lastName);
     const email = profile.emails[0].value;
-    console.log('email', email);
-    // TODO should work for both registration and login
-    // registerOrLogin({
-    //   done,
-    //   email,
-    //   password,
-    //   registrationSource: 'Facebook',
-    //   airtableAttrs: {
-    //     ['First Name']: req.body.firstName,
-    //     ['Last Name']: req.body.lastName,
-    //   },
-    // });
+    registerOrLogin({
+      done,
+      email,
+      registrationSource: 'Facebook',
+      airtableAttrs: {
+        ['First Name']: firstName,
+        ['Last Name']: lastName,
+      },
+    });
   }
 ));
 
@@ -43,5 +36,5 @@ module.exports = function(app) {
   // authentication process by attempting to obtain an access token.  If
   // access was granted, the user will be logged in.  Otherwise,
   // authentication has failed.
-  app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/#/login' }));
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
 };
