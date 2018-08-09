@@ -26,7 +26,7 @@ passport.use('local-login', new LocalStrategy({
       });
     } else if (!dbUser.validPassword(password)) {
       return done(null, false, {
-        message: 'Incorrect password',
+        message: 'Incorrect password or no local login found',
       });
     } else {
       findAirtableRecordById(USER_TABLE, {

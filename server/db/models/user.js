@@ -21,9 +21,24 @@ usersSchema.methods.setPassword = function(password) {
 };
 
 usersSchema.methods.validPassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
+  if (!this.password) {
+    // Users can sign up with social login, so if they don't have a password
+    // then don't allow password comparison
+    return false;
+  } else {
+    return bcrypt.compareSync(password, this.password);
+  }
 };
 
 mongoose.model('Users', usersSchema);
+
+// Facebook (user id, facebook id)
+// Google (user id, google id)
+// Twitter (user id, twitter id)
+
+// OR
+
+// OpenIdAccount (user id, open id type, open id)
+// type === 'facebook' || 'google' || 'twitter'
 
 module.exports = usersSchema;
