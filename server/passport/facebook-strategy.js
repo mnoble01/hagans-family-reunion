@@ -1,6 +1,7 @@
 /* eslint-env node */
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+// const registerOrLogin = require('passport/register-or-login');
 
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
@@ -9,7 +10,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('FACEBOOK PROFILE', profile);
-    done(new Error('Testing'));
+    console.log(Object.keys(profile));
     // TODO should work for both registration and login
     // registerOrLogin({
     //   done,
@@ -29,7 +30,7 @@ module.exports = function(app) {
   // Redirect the user to Facebook for authentication.  When complete,
   // Facebook will redirect the user back to the application at
   //     /auth/facebook/callback
-  app.get('/auth/facebook', passport.authenticate('facebook'));
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 
   // Facebook will redirect the user to this URL after approval.  Finish the
   // authentication process by attempting to obtain an access token.  If
