@@ -6,6 +6,11 @@ const routeUtils = require('routes/utils');
 const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
 const logger = require('utils/logger');
 
+function imageUrl(url) {
+  if (!url) return;
+  return url.replace('_normal', '') ;
+}
+
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
@@ -19,8 +24,8 @@ passport.use(new TwitterStrategy({
     const firstName = name[0];
     const lastName = name[1];
     const email = profile.emails[0].value;
-    const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
-    logger.log('info', 'TWITTER PROFILE %s', profile);
+    const profileImageUrl = imageUrl(profile.photos && profile.photos[0] && profile.photos[0].value);
+    logger.log('info', 'TWITTER PROFILE', profile);
     registerOrLogin({
       done,
       email,

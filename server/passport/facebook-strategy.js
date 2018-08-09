@@ -6,18 +6,23 @@ const routeUtils = require('routes/utils');
 const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
 const logger = require('utils/logger');
 
+function imageUrl(userId) {
+  const size = 500;
+  return `http://graph.facebook.com/${userId}/picture?height=${size}&width=${size}`;
+}
+
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: 'https://hagans.family/auth/facebook/callback',
-    profileFields: ['id', 'email', 'link', 'name', 'photos'],
+    profileFields: ['id', 'email', 'link', 'name', 'photos', 'picture.type(large)', 'full_picture', 'images'],
   },
   function(accessToken, refreshToken, profile, done) {
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
-    const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
-    logger.log('info', 'FACEBOOK PROFILE %s', profile);
+    const profileImageUrl = imageUrl(profile.id);
+    logger.log('info', 'FACEBOOK PROFILE', profile);
     registerOrLogin({
       done,
       email,

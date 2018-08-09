@@ -6,6 +6,11 @@ const routeUtils = require('routes/utils');
 const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
 const logger = require('utils/logger');
 
+function imageUrl(url) {
+  if (!url) return;
+  return url.replace(/sz=\d+/, '');
+}
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -15,8 +20,8 @@ passport.use(new GoogleStrategy({
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
-    const profileImageUrl = profile.photos && profile.photos[0] && profile.photos[0].value;
-    logger.log('info', 'GOOGLE PROFILE %s', profile);
+    const profileImageUrl = imageUrl(profile.photos && profile.photos[0] && profile.photos[0].value);
+    logger.log('info', 'GOOGLE PROFILE', profile);
     registerOrLogin({
       done,
       email,
