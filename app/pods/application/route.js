@@ -38,7 +38,7 @@ export default Route.extend({
 
   afterModel() {
     // if not authenticated, transition to login with 'redirect' parameter
-    const onLoginPage = window.location.hash === '#/login';
+    const onLoginPage = window.location.hash.startsWith('#/login');
     const onIndexPage = window.location.hash === '';
     const hasRedirectParam = window.location.hash.indexOf('redirect') > -1;
     if (!this.session.isAuthenticated && !onLoginPage && !hasRedirectParam && !onIndexPage) {

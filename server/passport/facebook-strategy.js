@@ -15,7 +15,7 @@ passport.use(new FacebookStrategy({
     //   done,
     //   email,
     //   password,
-    //   registrationSource: 'Password',
+    //   registrationSource: 'Facebook',
     //   airtableAttrs: {
     //     ['First Name']: req.body.firstName,
     //     ['Last Name']: req.body.lastName,
