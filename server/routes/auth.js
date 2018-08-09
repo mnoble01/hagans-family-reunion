@@ -19,6 +19,7 @@ module.exports = function(app) {
 
   require('passport/local-strategy')(app);
   require('passport/facebook-strategy')(app);
+  require('passport/google-strategy')(app);
 
   app.post('/api/logout', function(req, res) {
     req.logout();
