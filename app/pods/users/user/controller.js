@@ -6,6 +6,7 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import UserModel from 'hagans-family/pods/airtable/user-model';
+import fade from 'ember-animated/transitions/fade';
 
 export default Controller.extend({
   ajax: service(),
@@ -16,7 +17,17 @@ export default Controller.extend({
   edit: false,
   tab: 'info',
 
+  fade,
+
   user: alias('model.user'),
+
+  isCurrentUser: computed('user.id', 'session.user.id', function() {
+    return this.user.id === this.session.user.id;
+  }),
+
+  userIsPending: computed('user.status', function() {
+    return this.user.status === 'Pending Review';
+  }),
 
   _loadAddress: observer('user.address', function() {
     this.loadAddressCoordinates.perform();
@@ -121,6 +132,18 @@ export default Controller.extend({
       this.transitionToRoute('users.user', this.user.id, { queryParams: { tab: 'info' } });
     } catch (e) {
       this.flashMessages.danger(e, { scope: 'update-user' });
+    }
+  }),
+
+  uploadProfileImage: task(function*(file) {
+    const url = `/api/users/${this.user.id}/profile_image`;
+
+    try {
+      yield file.readAsDataURL();
+      yield file.upload(url);
+      this.send('refreshModel');
+    } catch (e) {
+      this.flashMessages.danger(e, { scope: 'user-profile-image' });
     }
   }),
 });

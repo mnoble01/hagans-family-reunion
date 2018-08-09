@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import ENV from 'hagans-family/config/environment';
 
 export default Route.extend({
   session: service(),
@@ -9,6 +10,21 @@ export default Route.extend({
     this._super(...arguments);
     // Hack to work around ember-cli-document-title's use of the private `router`
     this.router.setTitle = (...params) => this._router.setTitle(...params);
+  },
+
+  beforeModel() {
+    if (ENV.environment === 'production') {
+      let newLocation = window.location.href;
+      if (window.location.protocol === 'http:') {
+        newLocation = newLocation.replace('http', 'https');
+      }
+      if (window.location.host.startsWith('www.')) {
+        newLocation = newLocation.replace('www.', '');
+      }
+      if (newLocation !== window.location.href) {
+        window.location = newLocation;
+      }
+    }
   },
 
   async model() {

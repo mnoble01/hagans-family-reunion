@@ -6,6 +6,7 @@ require('dotenv').config();
 
 // configure mongodb database
 const dbUri = process.env.MONGODB_URI || 'mongodb://localhost/hagans-family';
+mongoose.Promise = global.Promise; // make mongoose use global promise
 mongoose.promise = global.Promise; // make mongoose use global promise
 mongoose.connect(dbUri);
 mongoose.set('debug', process.env.environment === 'development');

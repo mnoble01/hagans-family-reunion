@@ -4,6 +4,17 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const multer = require('multer');
+const request = require('request');
+const fs = require('fs');
+const schedule = require('node-schedule');
+const moment = require('moment');
+
+// file upload
+const upload = multer({
+  dest: '/tmp',
+});
 
 // google maps
 const googleMapsClient = require('@google/maps').createClient({
@@ -12,7 +23,7 @@ const googleMapsClient = require('@google/maps').createClient({
 
 // airtable
 const Airtable = require('airtable');
-const AirtableModel = require('./airtable-model');
+const AirtableModel = require('./airtable/model');
 
 // database
 const mongoose = require('mongoose');
@@ -281,14 +292,51 @@ function isLoggedIn(req, res, next) {
   });
 }
 
+// function requireHttps(req, res, next) {
+//   if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== 'development' && !req.url.startsWith('/api')) {
+//     return res.redirect('https://' + req.host + req.url);
+//   } else {
+//     return next();
+//   }
+// }
+
+// redirect www to non-www
+// function wwwRedirect(req, res, next) {
+//   if (req.headers.host.slice(0, 4) === 'www.' && !req.url.startsWith('/api')) {
+//     const newHost = req.headers.host.slice(4);
+//     return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+//   } else {
+//     return next();
+//   }
+// }
+
 module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(session({ secret: 'woohoo-hagans' })); // TODO
-  app.use(passport.initialize());
-  app.use(passport.session());
+
+  // Enable reverse proxy support in Express. This causes the
+  // the "X-Forwarded-Proto" header field to be trusted so its
+  // value can be used to determine the protocol. See
+  // http://expressjs.com/api#app-settings for more details.
+  // app.enable('trust proxy');
+  // app.use(wwwRedirect);
+  // app.use(requireHttps);
+
+  // Static files should come before session
   app.use(express.static('dist'));
 
+  // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
+  app.use(session({
+    secret: 'woohoo-hagans', // TODO move this to .env vars
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+
+  // API
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
     return res.json({ ...req.user });
   });
@@ -319,7 +367,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/users/:id', function(req, res) {
+  app.get('/api/users/:id', isLoggedIn, function(req, res) {
     findAirtableRecordById(USER_TABLE, {
       id: req.params.id,
       onSuccess: (airtableUser) => {
@@ -331,7 +379,7 @@ module.exports = function(app) {
     });
   });
 
-  app.put('/api/users/:id', function(req, res) {
+  app.put('/api/users/:id', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
     updateAirtableRecord(USER_TABLE, {
@@ -346,7 +394,81 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/location/:address', function(req, res) {
+  // TODO create an object for managing uploads
+  app.post('/api/users/:id/profile_image', isLoggedIn, upload.single('file'), function(req, res) {
+    const file = req.file;
+    const filePath = file.path;
+    const BASE_IMGR_URL = 'https://api.imgur.com/3/image';
+
+    if (file.mimetype.startsWith('image')) {
+      const imgurAuthHeader = {
+        Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
+      };
+
+      const imgurUploadOptions = {
+        url: BASE_IMGR_URL,
+        method: 'POST',
+        headers: {
+          'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+          ...imgurAuthHeader,
+        },
+        formData: {
+          image: fs.createReadStream(filePath),
+        },
+      };
+
+      request(imgurUploadOptions, (error, response) => {
+        if (error) {
+          return res.status(error.statusCode).json(error);
+        }
+        const responseJson = JSON.parse(response.body);
+        const imageLink = responseJson.data.link;
+        const deleteHash = responseJson.data.deletehash;
+        const deleteRequestOptions = {
+          url: `${BASE_IMGR_URL}/${deleteHash}`,
+          method: 'DELETE',
+          headers: {
+            ...imgurAuthHeader,
+          },
+        };
+        updateAirtableRecord(USER_TABLE, {
+          id: req.params.id,
+          attrs: {
+            ['Profile Image']: [{ url: imageLink }],
+          },
+          onSuccess: (airtableUser) => {
+            // delete imgur file (schedule so airtable has time to fetch)
+            schedule.scheduleJob(moment(Date.now()).add(5, 'm').toDate(), () => {
+              request(deleteRequestOptions);
+            });
+            // delete local file
+            fs.unlink(filePath, () => {});
+            res.status(200).json({ message: 'Successfully uploaded' });
+          },
+          onError: (error) => {
+            // delete imgur file (schedule so airtable has time to fetch)
+            schedule.scheduleJob(moment(Date.now()).add(5, 'm').toDate(), () => {
+              request(deleteRequestOptions);
+            });
+            // delete local file
+            fs.unlink(filePath, () => {});
+            res.status(error.statusCode).json(error);
+          },
+        });
+      });
+    } else {
+      // delete local file
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          return res.status(err.statusCode).json(err);
+        }
+
+        res.status(403).json({ error: 'Only image files are allowed!' });
+      });
+    }
+  });
+
+  app.get('/api/location/:address', isLoggedIn, function(req, res) {
     googleMapsClient.geocode({
       address: req.params.address,
     }, function(error, response) {
@@ -358,6 +480,7 @@ module.exports = function(app) {
     });
   });
 
+  // Purposefully open to non logged-in users
   app.get('/api/posts', function(req, res) {
     fetchAirtablePosts({
       status: req.query.status,
@@ -370,7 +493,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/posts/:id', function(req, res) {
+  app.get('/api/posts/:id', isLoggedIn, function(req, res) {
     findAirtableRecordById(POST_TABLE, {
       id: req.params.id,
       onSuccess: (airtablePost) => {
@@ -382,7 +505,7 @@ module.exports = function(app) {
     });
   });
 
-  app.put('/api/posts/:id', function(req, res) {
+  app.put('/api/posts/:id', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
     updateAirtableRecord(POST_TABLE, {
@@ -397,7 +520,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/api/posts', function(req, res) {
+  app.post('/api/posts', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
     updateAirtableRecord(POST_TABLE, {

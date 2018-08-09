@@ -14,7 +14,16 @@
   {{#if session.isAuthenticated}}
     {{#each menuItems as |item|}}
       <div local-class='dropdown-container menu-item'>
-        {{#link-to item.route local-class='menu-link dropdown-trigger'}}
+        {{#link-to item.route
+          local-class=(concat
+            'menu-link dropdown-trigger '
+            (if (or
+              (eq router.currentRouteName item.route)
+              (eq router.currentRouteName (concat item.route '.index'))
+              item.isActive
+            ) 'active')
+          )
+        }}
           {{item.name}}
         {{/link-to}}
         {{#if item.children}}
@@ -25,7 +34,7 @@
                   {{child.name}}
                 </a>
               {{else}}
-                {{#link-to child.route local-class='menu-link'}}
+                {{#link-to child.route local-class=(concat 'menu-link ' (if (eq router.currentRouteName child.route) 'active'))}}
                   {{child.name}}
                 {{/link-to}}
               {{/if}}

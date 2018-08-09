@@ -5,7 +5,7 @@ module('Unit | Route | 2019-reunion/announcements', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:2019-reunion/announcements');
+    const route = this.owner.lookup('route:2019-reunion/announcements');
     assert.ok(route);
   });
 });

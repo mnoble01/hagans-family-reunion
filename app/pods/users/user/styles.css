@@ -3,20 +3,80 @@
 
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
+  margin: 32px 0;
 }
 
 .user-info {
-  max-width: 600px;
-  margin: 0 auto;
+  composes: centered-content from 'hagans-family/styles/shared';
+}
+@media (min-width: 800px) {
+  .user-info {
+    width: 600px;
+  }
 }
 
 .user-image {
   display: flex;
-  margin: 0 auto 32px;
   width: 150px;
   height: 150px;
+  margin: 0 auto 32px;
   border-radius: 100%;
+  position: relative;
+}
+.user-image img {
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
   object-fit: cover;
+}
+
+.user-image.can-upload * {
+  cursor: pointer;
+}
+.file-upload-trigger {
+  display: none;
+}
+.user-image.can-upload:hover .file-upload-trigger {
+  display: block;
+}
+.user-image.can-upload:hover .file-upload {
+  background: rgba(0,0,0,0.5);
+}
+.file-upload {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 16px;
+  box-sizing: border-box;
+  transition: background 0.3s;
+}
+.file-upload .icon {
+  width: 100%;
+  font-size: 38px;
+}
+.file-upload a {
+  text-decoration: none;
+}
+.file-upload a:focus {
+  outline: none;
+}
+.progress-bar {
+  height: 8px;
+  width: 100%;
+}
+.progress-bar .progress {
+  background: gold;
+  height: inherit;
+  transition: width .3s;
 }
 
 .pending-review-message {
