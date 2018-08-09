@@ -5,7 +5,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: 'https://hagans.family.com/auth/facebook/callback',
+    callbackURL: 'https://hagans.family/auth/facebook/callback',
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('FACEBOOK PROFILE', profile);
