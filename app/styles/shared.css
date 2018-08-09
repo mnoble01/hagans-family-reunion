@@ -48,6 +48,7 @@ body {
 .input:focus {
   border-color: #BBB;
   outline: none;
+  border-left: 4px solid gold;
 }
 
 .input-label {

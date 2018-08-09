@@ -1,7 +1,7 @@
 ---
 language: node_js
 node_js:
-  - "6"
+  - "10"
 
 sudo: false
 dist: trusty
@@ -16,14 +16,24 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
+  matrix:
+    # we recommend new addons test the current and previous LTS
+    # as well as latest stable release (bonus points to beta/canary)
+    - EMBER_TRY_SCENARIO=ember-release
+    - EMBER_TRY_SCENARIO=ember-beta
+    - EMBER_TRY_SCENARIO=ember-canary
+    - EMBER_TRY_SCENARIO=ember-default
 
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-
-install:
-  - yarn install --non-interactive
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: EMBER_TRY_SCENARIO=ember-canary
 
 script:
-  - yarn lint:js
-  - yarn test
+  - npm run lint:js
+  # Usually, it's ok to finish the test scenario without reverting
+  #  to the addon's original dependency state, skipping "cleanup".
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+
+after_failure:
+  - cat MSBuild_*.failure.txt
