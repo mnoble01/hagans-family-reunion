@@ -35,6 +35,7 @@ Router.map(function() {
   });
   this.route('logout');
   this.route('post', { path: '/post/:post_id' });
+  this.route('privacy');
 });
 
 export default Router;

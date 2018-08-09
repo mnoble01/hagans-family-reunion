@@ -1,0 +1,8 @@
+.privacy-policy {
+  margin: 0 16px;
+  text-align: center;
+}
+
+.link {
+  composes: gray-link from 'hagans-family/styles/shared';
+}
