@@ -29,6 +29,7 @@ module.exports = function(app) {
 
   // Static files should come before session/auth
   app.use(express.static('dist'));
+  app.use(express.static('public'));
 
   require('routes/auth')(app);
   require('routes/users-api')(app);
