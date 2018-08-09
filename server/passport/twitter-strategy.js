@@ -11,7 +11,7 @@ passport.use(new TwitterStrategy({
     callbackURL: 'https://hagans.family/auth/twitter/callback',
   },
   function(token, tokenSecret, profile, done) {
-    const name = profile.split(' ');
+    const name = profile.displayName.split(' ');
     const firstName = name[0];
     const lastName = name[1];
     const email = profile.emails[0].value;
