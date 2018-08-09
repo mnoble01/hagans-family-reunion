@@ -35,4 +35,8 @@ module.exports = function(app) {
   require('routes/users-api')(app);
   require('routes/posts-api')(app);
   require('routes/location-api')(app);
+
+  app.get('*', function(req, res) {
+    res.redirect('/');
+  });
 };
