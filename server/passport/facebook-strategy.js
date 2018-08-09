@@ -12,6 +12,12 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done) {
     console.log('FACEBOOK PROFILE', profile);
     console.log(Object.keys(profile));
+    const firstName = profile.name.givenName;
+    const lastName = profile.name.familyName;
+    console.log('firstName', firstName);
+    console.log('lastName', lastName);
+    const email = profile.emails[0].value;
+    console.log('email', email);
     // TODO should work for both registration and login
     // registerOrLogin({
     //   done,
