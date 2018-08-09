@@ -1,4 +1,4 @@
-# Hagans Family [![Build Status](https://api.travis-ci.org/mnoble01/hagans-family-reunion.svg?branch=master)(https://travis-ci.com/mnoble01/hagans-family-reunion)
+# Hagans Family [![Build Status](https://api.travis-ci.org/mnoble01/hagans-family-reunion.svg?branch=master)](https://travis-ci.com/mnoble01/hagans-family-reunion)
 
 
 This README outlines the details of collaborating on this Ember application.
