@@ -66,6 +66,7 @@
   "dependencies": {
     "@google/maps": "^0.5.5",
     "airtable": "^0.5.6",
+    "app-module-path": "^2.2.0",
     "babel-eslint": "^8.2.6",
     "bcrypt": "^3.0.0",
     "bcrypt-nodejs": "^0.0.3",
@@ -83,10 +84,13 @@
     "node-schedule": "^1.3.0",
     "oauth2-server": "^3.0.0",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-oauth": "^1.0.0",
     "passport-openid": "^0.4.0",
     "passport-session": "^1.0.2",
+    "passport-twitter": "^1.0.4",
     "request": "^2.87.0",
     "rsvp": "^4.8.3",
     "simple-oauth2": "^2.2.0"
