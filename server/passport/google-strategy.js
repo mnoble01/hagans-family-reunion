@@ -2,6 +2,8 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const registerOrLogin = require('passport/register-or-login');
+const routeUtils = require('routes/utils');
+const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -38,7 +40,9 @@ module.exports = function(app) {
   //   request.  If authentication fails, the user will be redirected back to the
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
-  app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/#/login' }), function(req, res) {
-    res.redirect('/#/account');
+  app.get('/auth/google/callback', passport.authenticate('google', {
+    failureRedirect: LOGIN_FAILURE_REDIRECT,
+  }), function(req, res) {
+    res.redirect(LOGIN_SUCCESS_REDIRECT);
   });
 };

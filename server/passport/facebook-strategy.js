@@ -2,6 +2,8 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const registerOrLogin = require('passport/register-or-login');
+const routeUtils = require('routes/utils');
+const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
 
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
@@ -37,5 +39,8 @@ module.exports = function(app) {
   // authentication process by attempting to obtain an access token.  If
   // access was granted, the user will be logged in.  Otherwise,
   // authentication has failed.
-  app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/#/account', failureRedirect: '/#/login' }));
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    successRedirect: LOGIN_SUCCESS_REDIRECT,
+    failureRedirect: LOGIN_FAILURE_REDIRECT,
+  }));
 };
