@@ -14,7 +14,6 @@ passport.use(new TwitterStrategy({
     includeEntities: false,
   },
   function(token, tokenSecret, profile, done) {
-    console.log(profile);
     const name = profile.displayName.split(' ');
     const firstName = name[0];
     const lastName = name[1];
