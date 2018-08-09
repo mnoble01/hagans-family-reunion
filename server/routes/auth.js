@@ -9,7 +9,7 @@ require('passport/serialization');
 module.exports = function(app) {
   // https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
   app.use(session({
-    secret: 'woohoo-hagans', // TODO move this to .env vars
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
@@ -20,6 +20,7 @@ module.exports = function(app) {
   require('passport/local-strategy')(app);
   require('passport/facebook-strategy')(app);
   require('passport/google-strategy')(app);
+  require('passport/twitter-strategy')(app);
 
   app.post('/api/logout', function(req, res) {
     req.logout();
