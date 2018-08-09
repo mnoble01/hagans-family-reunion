@@ -9,6 +9,9 @@ passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
     callbackURL: 'https://hagans.family/auth/twitter/callback',
+    includeEmail: true,
+    includeStatus: false,
+    includeEntities: false,
   },
   function(token, tokenSecret, profile, done) {
     console.log(profile);
