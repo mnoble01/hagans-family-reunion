@@ -8,7 +8,7 @@ const POST_TABLE = 'posts';
 const airtableBase = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
   endpointUrl: 'https://api.airtable.com',
-}).base('appTLUN9CFH4IhugP');
+}).base(process.env.AIRTABLE_BASE);
 
 function fetchAirtableUsers({ onSuccess, onError }) {
   const airtableRecords = [];
