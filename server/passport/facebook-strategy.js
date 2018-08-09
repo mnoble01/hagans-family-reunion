@@ -10,6 +10,7 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'email', 'link', 'name'],
   },
   function(accessToken, refreshToken, profile, done) {
+    // TODO request user photo & use profile.photos[0].value
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
