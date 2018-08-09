@@ -21,10 +21,6 @@ require('db/models/user');
 //   return res.status(statusCode).json(output);
 // }
 
-require('passport/serialization');
-require('passport/local-strategy');
-require('passport/facebook-strategy');
-
 module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));

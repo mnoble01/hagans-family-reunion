@@ -1,0 +1,54 @@
+@value facebook-color: #3B5998;
+@value facebook-light-color: #5270AF;
+@value google-color: #DB4437;
+@value google-light-color: #F25B4E;
+@value twitter-color: #1DA1F2;
+@value twitter-light-color: #34B8FF;
+
+.social-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.social-login-item {
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 4px;
+  color: white;
+  transition: background-color .3s, top .3s;
+  position: relative;
+  top: 0;
+}
+.social-login-item:not(:first-child) {
+  margin-left: 32px;
+}
+.social-login-item:hover {
+  top: -3px;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.facebook {
+  background-color: facebook-color;
+}
+.facebook:hover {
+  background-color: facebook-light-color;
+}
+
+.google {
+  background-color: google-color;
+}
+.google:hover {
+  background-color: google-light-color;
+}
+
+.twitter {
+  background-color: twitter-color;
+}
+.twitter:hover {
+  background-color: twitter-light-color;
+}

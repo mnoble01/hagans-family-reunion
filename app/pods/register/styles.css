@@ -13,6 +13,7 @@
 
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
+  margin: 32px 0;
 }
 
 .input-label {
