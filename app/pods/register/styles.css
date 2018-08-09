@@ -13,7 +13,8 @@
 
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
-  margin: 32px 0;
+  margin: 0 0 32px;
+  font-size: 34px;
 }
 
 .input-label {
