@@ -37,7 +37,10 @@ Router.map(function() {
   this.route('post', { path: '/post/:post_id' });
   this.route('privacy');
   this.route('admin', function() {
-    this.route('posts');
+    this.route('posts', function() {
+      this.route('new');
+      this.route('edit-post', { path: ':post_id/edit' });
+    });
   });
 });
 

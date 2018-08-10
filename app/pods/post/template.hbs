@@ -17,12 +17,22 @@
   </div>
 </div>
 
+<!-- TODO handle post.hideFeaturedImage -->
 <div local-class='post-image'>
   <img src={{featuredImageUrl}} alt='Feature Image' />
 </div>
 
 <div local-class='post-content-wrapper'>
   {{article-header}}
+
+  {{#if canEdit}}
+    <div local-class='edit-button-container'>
+      {{#link-to 'admin.posts.edit-post' post.id local-class='edit-button'}}
+        <i class='genericon genericon-edit' local-class='icon'></i>
+        Edit Post
+    {{/link-to}}
+    </div>
+  {{/if}}
 
   <div local-class='post-info'>
     <div local-class='post-categories'>
@@ -39,7 +49,7 @@
     </div>
   </div>
   <div local-class='post-content'>
-    {{post.content}}
+    {{{post.content}}}
   </div>
   {{article-footer}}
   {{!-- TODO previous post --}}

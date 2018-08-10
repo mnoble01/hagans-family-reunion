@@ -1,5 +1,6 @@
 import Service, { inject as service } from '@ember/service';
 import UserModel from 'hagans-family/pods/airtable/user-model';
+import { computed } from '@ember/object';
 import { bool, equal } from '@ember/object/computed';
 
 export default Service.extend({
@@ -8,6 +9,9 @@ export default Service.extend({
   isAuthenticated: bool('user.id'),
   user: null,
   userIsPending: equal('user.status', 'Pending Review'),
+  userPermissions: computed('user.permissions', function() {
+    return this.isAuthenticated && this.user.permissions || [];
+  }),
 
   async authorize() {
     const response = await this.get('ajax').request('/api/user');

@@ -97,13 +97,12 @@ export default Component.extend({
     }];
   }),
 
-  adminMenuItems: computed('this.session.isAuthenticated', 'session.user.permissions', function() {
-    const permissions = this.session.isAuthenticated && this.session.user.permissions || [];
+  adminMenuItems: computed('this.session.isAuthenticated', 'session.userPermissions', function() {
+    const permissions = this.session.userPermissions;
     const canPost = permissions.includes('can_post');
     // const canEmail = permissions.includes('can_email');
 
-    if (!permissions.includes('is_admin')) return;
-
+    // if (!permissions.includes('is_admin')) return;
     const children = [{
       route: 'admin.posts',
       name: 'My Posts',

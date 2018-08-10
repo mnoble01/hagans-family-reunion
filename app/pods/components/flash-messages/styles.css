@@ -1,3 +1,5 @@
+@value green from 'hagans-family/styles/shared';
+
 .flash-message {
   padding: 16px;
   border-radius: 4px;
@@ -16,7 +18,7 @@
 }
 
 .flash-message.success {
-  background: #4EA651;
+  background: green;
   color: white;
 }
 

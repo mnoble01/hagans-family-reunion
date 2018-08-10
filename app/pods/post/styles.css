@@ -119,3 +119,18 @@
     display: none;
   }
 }
+
+.edit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+  margin-bottom: 32px;
+}
+.edit-button {
+  composes: primary-button from 'hagans-family/styles/shared';
+  padding: 8px;
+  width: auto;
+}
+.edit-button .icon {
+  font-size: larger;
+}

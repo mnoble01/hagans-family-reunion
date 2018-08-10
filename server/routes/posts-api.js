@@ -6,6 +6,7 @@ const {
   fetchAirtablePosts,
   findAirtableRecordById,
   updateAirtableRecord,
+  createAirtableRecord,
   tables: {
     POST_TABLE,
   },
@@ -37,14 +38,15 @@ module.exports = function(app) {
     });
   });
 
+  // TODO check user permissions
   app.put('/api/posts/:id', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
     updateAirtableRecord(POST_TABLE, {
       id: req.params.id,
       attrs,
-      onSuccess: (airtableUser) => {
-        res.status(200).json(airtableUser.serialize());
+      onSuccess: (airtablePost) => {
+        res.status(200).json(airtablePost.serialize());
       },
       onError: (error) => {
         res.status(error.statusCode).json(error);
@@ -52,14 +54,14 @@ module.exports = function(app) {
     });
   });
 
+  // TODO check user permissions
   app.post('/api/posts', isLoggedIn, function(req, res) {
     const attrs = req.body;
 
-    updateAirtableRecord(POST_TABLE, {
-      id: req.params.id,
+    createAirtableRecord(POST_TABLE, {
       attrs,
-      onSuccess: (airtableUser) => {
-        res.status(200).json(airtableUser.serialize());
+      onSuccess: (airtablePost) => {
+        res.status(200).json(airtablePost.serialize());
       },
       onError: (error) => {
         res.status(error.statusCode).json(error);

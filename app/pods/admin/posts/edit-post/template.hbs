@@ -1,0 +1,22 @@
+<!-- TODO show post.status -->
+<!-- TODO show saving status -->
+<div local-class='post-edit-form'>
+  <div local-class='status'>
+    <div local-class='post-status {{dasherize post.status}}'>
+      {{post.status}}
+    </div>
+    <div local-class='save-status {{if savePost.isRunning 'saving' 'saved'}}'>
+      {{#if savePost.isRunning}}
+        Saving…
+      {{else}}
+        <i class='genericon genericon-checkmark' local-class='icon'></i>
+        Saved
+      {{/if}}
+    </div>
+  </div>
+  <label local-class='input-label'> Post Title </label>
+  <input local-class='input post-title-input' value={{post.title}} oninput={{action (mut post.title) value='target.value'}} type='text'>
+
+  <label local-class='input-label'> Post Content </label>
+  {{html-editor local-class='post-content-input' value=post.content onChange=(action (mut post.content))}}
+</div>

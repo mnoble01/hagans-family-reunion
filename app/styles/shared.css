@@ -13,11 +13,17 @@
 
 @value powder-blue: #678DB8;
 
+@value green: #4EA651;
+
 @value fixed-post-image-width: 700px;
+
+body,
+p {
+  margin: 0;
+}
 
 body {
   color: black;
-  margin: 0;
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 14px;

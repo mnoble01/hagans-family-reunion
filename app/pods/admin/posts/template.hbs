@@ -1,9 +1,0 @@
-<div local-class='post-edit-form'>
-  <label local-class='input-label'> Post Title </label>
-  <input local-class='input post-title-input' oninput={{action (mut postTitle) value='target.value'}} type='text' autofocus>
-
-  <label local-class='input-label'> Post Content </label>
-  {{html-editor local-class='post-content-input' value=postContent onChange=(action (mut postContent))}}
-
-  {{log 'postContent' postContent}}
-</div>

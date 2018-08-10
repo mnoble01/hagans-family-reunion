@@ -36,7 +36,7 @@ module.exports = function(app) {
   require('routes/posts-api')(app);
   require('routes/location-api')(app);
 
-  if (process.env !== 'development') {
+  if (process.env.EMBER_ENV !== 'development') {
     // This messes with livereload - TODO find another way to do this
     app.get('*', function(req, res) {
       res.redirect('/');
