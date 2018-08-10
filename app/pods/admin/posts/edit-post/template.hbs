@@ -1,7 +1,12 @@
-<!-- TODO show post.status -->
-<!-- TODO show saving status -->
 <div local-class='post-edit-form'>
-  <div local-class='status'>
+  {{#if showPublish}}
+    <div local-class='row'>
+      <button onclick={{perform publish}} local-class='publish-button'>
+        Publish
+      </button>
+    </div>
+  {{/if}}
+  <div local-class='row'>
     <div local-class='post-status {{dasherize post.status}}'>
       {{post.status}}
     </div>
@@ -19,4 +24,22 @@
 
   <label local-class='input-label'> Post Content </label>
   {{html-editor local-class='post-content-input' value=post.content onChange=(action (mut post.content))}}
+
+  {{log post.attachments}}
+  {{#if (or post.attachments.length showAddAttachment)}}
+    <label local-class='input-label attachment-label'> Attachments </label>
+    {{#if canEditAttachments}}
+      <!-- TODO add attachment button -->
+    {{/if}}
+    <div local-class='attachments'>
+      {{#each post.attachments as |file|}}
+        <a href={{file.url}} target='_blank' local-class='attachment {{if canEditAttachments 'can-edit'}}'>
+          {{#if canEditAttachments}}
+          {{else}}
+            <img src={{file.thumbnails.large.url}} />
+          {{/if}}
+        </a>
+      {{/each}}
+    </div>
+  {{/if}}
 </div>

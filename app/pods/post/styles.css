@@ -128,8 +128,7 @@
 }
 .edit-button {
   composes: primary-button from 'hagans-family/styles/shared';
-  padding: 8px;
-  width: auto;
+  composes: small-button from 'hagans-family/styles/shared';
 }
 .edit-button .icon {
   font-size: larger;

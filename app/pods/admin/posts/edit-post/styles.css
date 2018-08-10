@@ -1,5 +1,5 @@
 @value green from 'hagans-family/styles/shared';
-@value light-gray, dark-gray from 'hagans-family/styles/shared';
+@value light-gray, medium-gray, dark-gray from 'hagans-family/styles/shared';
 
 .input {
   composes: input from 'hagans-family/styles/shared';
@@ -20,13 +20,20 @@
 
 .post-edit-form {
   composes: centered-content from 'hagans-family/styles/shared';
+  width: 700px;
 }
 
-.status {
+.row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 32px;
+}
+
+.publish-button {
+  composes: primary-button from 'hagans-family/styles/shared';
+  composes: small-button from 'hagans-family/styles/shared';
+  margin-left: auto;
 }
 
 .save-status {
@@ -49,4 +56,36 @@
 .post-status.published {
   background: green;
   color: white;
+}
+
+.attachment-label {
+  margin-top: 16px;
+}
+.attachments {
+  display: flex;
+}
+.attachment {
+  margin-right: 16px;
+  margin-bottom: 16px;
+  border: 1px solid light-gray;
+  max-height: 250px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+.attachment img {
+  height: 100%;
+  object-fit: contain;
+}
+.attachment:hover:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: ' ';
+  background: rgba(0,0,0,0.05);
+  width: 100%;
+  height: 100%;
+}
+.attachment.can-edit {
+
 }

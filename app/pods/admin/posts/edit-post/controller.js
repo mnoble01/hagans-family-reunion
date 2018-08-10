@@ -1,39 +1,26 @@
 import Controller from '@ember/controller';
-import { alias } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { alias, equal, readOnly } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { camelize } from '@ember/string';
+import moment from 'moment';
 
 export default Controller.extend({
   ajax: service(),
   flashMessages: service(),
 
   post: alias('model.post'),
-  // Auto save
+  isDraft: equal('post.status', 'Draft'),
+  isPublished: equal('post.status', 'Publish'),
+
   // Maybe use airtable form for attachments?
-
-
-  // TODO get post content auto saving w/ save indicator
 
   // TODO add fields:
   // Featured image (upload)
   // Show featured image (checkbox)
   // Categories
 
-  // On initial save:
-  // Set 'author'
-
-  // On debounced save:
-  // Or debounce save each field separately??
-  // Set 'title'
-  // Set 'content'
-  // Set 'featuredImage'
-  // Set 'showFeaturedImage'
-  // Set 'categories'
-
-  // On publish:
-  // Set 'status' to 'Published'
-  // Set 'publishedOn'
   setup() {
     for (const field of this.post.editableFields) {
       const camelizedField = camelize(field);
@@ -58,4 +45,14 @@ export default Controller.extend({
       this.flashMessages.danger(e);
     }
   }).keepLatest(),
+
+  showPublish: readOnly('isDraft'),
+
+  publish: task(function*() {
+    // TODO choose whether or not to notify
+    this.post.set('status', 'Published');
+    this.post.set('publishedOn', moment().format('YYYY-MM-DD'));
+  }),
+
+  canEditAttachments: readOnly('isDraft'),
 });

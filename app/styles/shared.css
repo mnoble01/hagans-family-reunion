@@ -127,6 +127,11 @@ body {
   background: #E5E5E5;
 }
 
+.small-button {
+  padding: 8px;
+  width: auto;
+}
+
 .link {
   transition: all .3s;
   cursor: pointer;
@@ -211,7 +216,7 @@ body {
 @media (max-width: 800px) {
   .centered-content {
     margin: 0 16px;
-    width: auto;
+    width: auto !important;
   }
 }
 
