@@ -36,6 +36,9 @@ Router.map(function() {
   this.route('logout');
   this.route('post', { path: '/post/:post_id' });
   this.route('privacy');
+  this.route('admin', function() {
+    this.route('posts');
+  });
 });
 
 export default Router;

@@ -1,0 +1,12 @@
+@value medium-gray, black from 'hagans-family/styles/shared';
+
+.page-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  composes: gray-link from 'hagans-family/styles/shared';
+  text-decoration: underline;
+  height: 30px;
+}

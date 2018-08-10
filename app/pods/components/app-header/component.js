@@ -32,58 +32,91 @@ export default Component.extend({
 
   menuItems: computed('pastYearRoutes', 'session.user', 'router.currentRouteName', function() {
     if (!this.session.isAuthenticated) return;
+
     if (this.get('session.user.status') === 'Pending Review') {
-      return [{
-        route: 'account',
-        name: 'Account',
-        children: [{
-          action: this.logout,
-          name: 'Logout',
-        }],
-      }];
+      return this.pendingReviewMenuItems;
     } else {
-      return [{
-        route: '2019-reunion',
-        name: '2019 Reunion',
-        children: [{
-          route: '2019-reunion.announcements',
-          name: 'Announcements',
-        }, {
-          route: '2019-reunion.dates',
-          name: 'Dates & Itinerary',
-        }, {
-          route: '2019-reunion.accommodations',
-          name: 'Travel & Accommodations',
-        }, {
-          route: '2019-reunion.fees',
-          name: 'Fees',
-        }, {
-          route: '2019-reunion.t-shirts',
-          name: 'T-Shirts',
-        }, {
-          route: '2019-reunion.committee',
-          name: 'Planning Committee',
-        }, {
-          route: '2019-reunion.suggestions',
-          name: 'Suggestions',
-        }],
-      }, {
-        route: 'users',
-        name: 'People',
-      }, {
-        route: 'past-years',
-        name: 'Past Years',
-        children: this.pastYearRoutes,
-      }, {
-        route: 'account',
-        name: 'Account',
-        isActive: this.router.currentURL.endsWith(this.session.user.id),
-        children: [{
-          action: this.logout,
-          name: 'Logout',
-        }],
-      }];
+      return this.authenticatedMenuItems;
     }
+  }),
+
+  pendingReviewMenuItems: computed(function() {
+    return [{
+      route: 'account',
+      name: 'Account',
+      children: [{
+        action: this.logout,
+        name: 'Logout',
+      }],
+    }];
+  }),
+
+  authenticatedMenuItems: computed('this.session.currentURL', 'pastYearRoutes', 'adminMenuItems', function() {
+    return [{
+      route: '2019-reunion',
+      name: '2019 Reunion',
+      children: [{
+        route: '2019-reunion.announcements',
+        name: 'Announcements',
+      }, {
+        route: '2019-reunion.dates',
+        name: 'Dates & Itinerary',
+      }, {
+        route: '2019-reunion.accommodations',
+        name: 'Travel & Accommodations',
+      }, {
+        route: '2019-reunion.fees',
+        name: 'Fees',
+      }, {
+        route: '2019-reunion.t-shirts',
+        name: 'T-Shirts',
+      }, {
+        route: '2019-reunion.committee',
+        name: 'Planning Committee',
+      }, {
+        route: '2019-reunion.suggestions',
+        name: 'Suggestions',
+      }],
+    }, {
+      route: 'users',
+      name: 'People',
+    }, {
+      route: 'past-years',
+      name: 'Past Years',
+      children: this.pastYearRoutes,
+    },
+    ...this.adminMenuItems,
+    {
+      route: 'account',
+      name: 'Account',
+      isActive: this.router.currentURL.endsWith(this.session.user.id),
+      children: [{
+        action: this.logout,
+        name: 'Logout',
+      }],
+    }];
+  }),
+
+  adminMenuItems: computed('this.session.isAuthenticated', 'session.user.permissions', function() {
+    const permissions = this.session.isAuthenticated && this.session.user.permissions || [];
+    const canPost = permissions.includes('can_post');
+    // const canEmail = permissions.includes('can_email');
+
+    if (!permissions.includes('is_admin')) return;
+
+    const children = [{
+      route: 'admin.posts',
+      name: 'My Posts',
+      visible: canPost,
+    }];
+    const visibleChildren = children.filter(child => child.visible);
+    if (!visibleChildren.length) return;
+
+    return [{
+      route: 'admin',
+      name: 'Admin',
+      children: visibleChildren,
+    }];
   }),
 
   logout() {

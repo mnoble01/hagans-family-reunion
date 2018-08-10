@@ -1,0 +1,9 @@
+:global(.ql-toolbar.ql-snow),
+:global(.ql-container.ql-snow) {
+  border: 2px solid #DDD;
+  height: 100%;
+}
+
+:global(.ql-editor) {
+  min-height: 200px;
+}

@@ -1,0 +1,20 @@
+.input {
+  composes: input from 'hagans-family/styles/shared';
+}
+
+.input-label {
+  composes: input-label from 'hagans-family/styles/shared';
+}
+
+.post-title-input {
+  composes: page-title from 'hagans-family/styles/shared';
+  text-align: left;
+  margin: 0;
+}
+
+.post-content-input {
+}
+
+.post-edit-form {
+  composes: centered-content from 'hagans-family/styles/shared';
+}

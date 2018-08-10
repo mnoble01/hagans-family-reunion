@@ -52,6 +52,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-moment": "^7.7.0",
     "ember-power-select": "^2.0.4",
+    "ember-quill": "^0.0.15",
     "ember-resolver": "^5.0.1",
     "ember-sinon": "^2.2.0",
     "ember-source": "^3.3.1",
