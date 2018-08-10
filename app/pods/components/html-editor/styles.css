@@ -1,9 +1,11 @@
 :global(.ql-toolbar.ql-snow),
 :global(.ql-container.ql-snow) {
   border: 2px solid #DDD;
-  height: 100%;
+  font-family: inherit;
 }
 
 :global(.ql-editor) {
   min-height: 200px;
 }
+
+/* TODO add post styling to editor (or just let global styles take care of that) */

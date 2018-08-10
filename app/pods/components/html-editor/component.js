@@ -7,8 +7,7 @@ export default Component.extend({
       theme: 'snow',
       modules: {
         toolbar: [
-          // [{ header: [1, 2, 3, 4, false] }, 'font'],
-          ['header', 'font'],
+          [{ header: [1, 2, 3, false] }],
           ['bold', 'italic', 'strike'],
           ['blockquote', 'indent', 'align'],
           [{ list: 'ordered' }, { list: 'bullet' }],
