@@ -28,18 +28,6 @@
   {{log post.attachments}}
   {{#if (or post.attachments.length showAddAttachment)}}
     <label local-class='input-label attachment-label'> Attachments </label>
-    {{#if canEditAttachments}}
-      <!-- TODO add attachment button -->
-    {{/if}}
-    <div local-class='attachments'>
-      {{#each post.attachments as |file|}}
-        <a href={{file.url}} target='_blank' local-class='attachment {{if canEditAttachments 'can-edit'}}'>
-          {{#if canEditAttachments}}
-          {{else}}
-            <img src={{file.thumbnails.large.url}} />
-          {{/if}}
-        </a>
-      {{/each}}
-    </div>
+    {{post-attachments attachments=post.attachments canEdit=canEditAttachments}}
   {{/if}}
 </div>

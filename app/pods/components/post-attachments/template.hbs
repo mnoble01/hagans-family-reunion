@@ -1,0 +1,13 @@
+{{#if canEdit}}
+  <!-- TODO add attachment button -->
+{{/if}}
+<div local-class='attachments'>
+  {{#each attachments as |file|}}
+    <a href={{file.url}} target='_blank' local-class='attachment {{if canEdit 'can-edit'}}'>
+      {{#if canEdit}}
+      {{else}}
+        <img src={{file.thumbnails.large.url}} />
+      {{/if}}
+    </a>
+  {{/each}}
+</div>

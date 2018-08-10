@@ -1,0 +1,34 @@
+@value light-gray from 'hagans-family/styles/shared';
+
+.attachments {
+  display: flex;
+}
+.attachment {
+  margin-right: 16px;
+  margin-bottom: 16px;
+  border: 1px solid light-gray;
+  max-height: 250px;
+  max-width: 200px;
+  position: relative;
+  cursor: pointer;
+  /* display: block; */
+  flex: 1;
+  box-sizing: border-box;
+}
+.attachment img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.attachment:hover:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: ' ';
+  background: rgba(0,0,0,0.05);
+  width: 100%;
+  height: 100%;
+}
+.attachment.can-edit {
+
+}

@@ -32,6 +32,7 @@ export default Component.extend({
   }),
 
   _postSummary(post) {
-    return post.content.substr(0, 500).split(' ').slice(0, 25).join(' ');
+    const content = post.content.replace(/<{1}[^<>]{1,}>{1}/g, ' '); // remove html
+    return content.substr(0, 500).split(' ').slice(0, 25).join(' ');
   },
 });
