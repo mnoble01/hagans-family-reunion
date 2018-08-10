@@ -15,8 +15,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: 'https://hagans.family/auth/facebook/callback',
-    profileFields: ['id', 'email', 'link', 'name', 'images'],
-    // photos
+    profileFields: ['id', 'email', 'link', 'name', 'photos'],
   },
   function(accessToken, refreshToken, profile, done) {
     const firstName = profile.name.givenName;
