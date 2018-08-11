@@ -7,6 +7,10 @@ import AirtableModel from 'hagans-family/pods/airtable/model';
 export default Route.extend({
   ajax: service(),
 
+  titleToken({ post }) {
+    return post.title;
+  },
+
   async model(params) {
     const [postResponse, categories] = await Promise.all([
       this.get('ajax').request(`/api/posts/${params.post_id}`),
