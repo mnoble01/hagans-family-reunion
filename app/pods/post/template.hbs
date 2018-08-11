@@ -2,7 +2,7 @@
   <img src={{featuredImageUrl}} alt='Feature Image' />
   <div local-class='post-info'>
     <div local-class='post-categories'>
-      {{categoriesForDisplay}}
+      {{or categoriesForDisplay 'Uncategorized'}}
     </div>
 
     <div local-class='post-title'>

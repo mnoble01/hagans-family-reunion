@@ -48,6 +48,8 @@
   height: 245px;
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
 }
 .fixed-post-image .post-info .post-title {
   color: white;

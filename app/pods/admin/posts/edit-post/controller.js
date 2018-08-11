@@ -53,6 +53,8 @@ export default Controller.extend({
   showPublish: readOnly('isDraft'),
 
   publish: task(function*() {
+    // TODO validate -
+    // require categories, title, content
     // TODO choose whether or not to notify
     this.post.set('status', 'Published');
     this.post.set('publishedOn', moment().format('YYYY-MM-DD'));

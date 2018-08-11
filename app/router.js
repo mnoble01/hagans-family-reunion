@@ -34,7 +34,7 @@ Router.map(function() {
     this.route('suggestions');
   });
   this.route('logout');
-  this.route('post', { path: '/post/:post_id' });
+  this.route('post', { path: '/posts/:post_id' });
   this.route('privacy');
   this.route('admin', function() {
     this.route('posts', function() {
