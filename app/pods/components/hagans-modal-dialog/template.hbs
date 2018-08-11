@@ -1,0 +1,10 @@
+{{#modal-dialog local-class=(concat 'modal-dialog ' (if title 'has-title')) onClose=(action onClose)}}
+  {{#if title}}
+    <div local-class='title'>
+      {{title}}
+    </div>
+  {{/if}}
+  <div local-class='content'>
+    {{yield}}
+  </div>
+{{/modal-dialog}}

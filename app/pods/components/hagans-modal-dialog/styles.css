@@ -1,0 +1,27 @@
+@value light-gray, dark-gray from 'hagans-family/styles/shared';
+
+.title {
+  color: dark-gray;
+  font-size: 24px;
+  border-bottom: 1px solid light-gray;
+  padding: 8px 16px;
+  box-sizing: border-box;
+}
+
+.modal-dialog.has-title {
+  padding-top: 48px;
+}
+
+.content {
+  padding: 32px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+}
+
+@media (min-width: 800px) {
+  .content {
+    min-width: 500px;
+  }
+}

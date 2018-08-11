@@ -35,6 +35,7 @@ module.exports = function(app) {
   require('routes/users-api')(app);
   require('routes/posts-api')(app);
   require('routes/location-api')(app);
+  require('routes/upload-api')(app);
 
   if (process.env.EMBER_ENV !== 'development') {
     // This messes with livereload - TODO find another way to do this

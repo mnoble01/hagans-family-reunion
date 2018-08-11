@@ -8,7 +8,7 @@ export default EmberObject.extend({
     return [];
   }).readOnly(),
 
-  init(response) {
+  init(response = {}) {
     this.set('_source', response);
     for (const key of this.editableFields) {
        defineProperty(this, camelize(key), alias(`_source.${key}`));

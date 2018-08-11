@@ -10,14 +10,16 @@
     <div local-class='post-status {{dasherize post.status}}'>
       {{post.status}}
     </div>
-    <div local-class='save-status {{if savePost.isRunning 'saving' 'saved'}}'>
-      {{#if savePost.isRunning}}
-        Saving…
-      {{else}}
-        <i class='genericon genericon-checkmark' local-class='icon'></i>
-        Saved
-      {{/if}}
-    </div>
+    {{#if canEdit}}
+      <div local-class='save-status {{if savePost.isRunning 'saving' 'saved'}}'>
+        {{#if savePost.isRunning}}
+          Saving…
+        {{else}}
+          <i class='genericon genericon-checkmark' local-class='icon'></i>
+          Saved
+        {{/if}}
+      </div>
+    {{/if}}
   </div>
   <label local-class='input-label'> Post Title </label>
   <input local-class='input post-title-input' value={{post.title}} oninput={{action (mut post.title) value='target.value'}} type='text'>
@@ -25,9 +27,20 @@
   <label local-class='input-label'> Post Content </label>
   {{html-editor local-class='post-content-input' value=post.content onChange=(action (mut post.content))}}
 
-  {{log post.attachments}}
   {{#if (or post.attachments.length showAddAttachment)}}
     <label local-class='input-label attachment-label'> Attachments </label>
-    {{post-attachments attachments=post.attachments canEdit=canEditAttachments}}
+    {{post-attachments
+      attachments=post.attachments
+      canEdit=canEdit
+      onAdd=(perform addAttachment)
+      onRemove=(perform removeAttachment)
+    }}
   {{/if}}
 </div>
+
+{{#if showAddAttachmentModal}}
+  {{#hagans-modal-dialog title='Upload' onClose=(action (mut showAddAttachmentModal false))}}
+    {{flash-messages scope='add-attachment-modal'}}
+    {{upload-file local-class='upload-file' onUpload=(perform upload)}}
+  {{/hagans-modal-dialog}}
+{{/if}}

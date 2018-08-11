@@ -9,7 +9,7 @@ export default Component.extend({
       modules: {
         toolbar: [
           [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'strike'],
+          ['bold', 'italic', 'underline', 'strike'],
           ['blockquote', { align: [] }],
           // { indent: '-1' }, { indent: '+1' }, 'align'], // TODO fixme
           [{ list: 'ordered' }, { list: 'bullet' }],

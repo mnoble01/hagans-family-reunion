@@ -8,7 +8,8 @@ export default Route.extend({
 
   async model() {
     const userId = this.session.user.id;
-    const postModel = new PostModel({
+    const postModel = new PostModel();
+    postModel.setProperties({
       author: [userId],
       status: 'Draft',
     });

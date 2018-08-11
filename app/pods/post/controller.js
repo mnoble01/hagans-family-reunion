@@ -17,11 +17,13 @@ export default Controller.extend({
     return (this.post.categories || []).join(', ');
   }),
 
-  canEdit: computed('session{user.id,session.userPermissions}', 'author', function() {
+  canEdit: computed('session.{user.id,session.userPermissions}', 'author', 'post.status', function() {
     const permissions = this.session.userPermissions;
     const isAdmin = permissions.includes('is_admin');
     const canPost = permissions.includes('can_post');
     const author = this.author;
-    return this.session.user.id === author.id && canPost || isAdmin;
+    const isDraft = this.post.status === 'Draft';
+    const correctPermissions = this.session.user.id === author.id && canPost || isAdmin;
+    return correctPermissions && isDraft;
   }),
 });

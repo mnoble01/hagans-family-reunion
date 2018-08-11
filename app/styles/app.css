@@ -1,1 +1,11 @@
-/* TODO need??? */
+body,
+p {
+  margin: 0;
+}
+
+body {
+  color: black;
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}

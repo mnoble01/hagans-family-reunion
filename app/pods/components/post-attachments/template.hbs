@@ -1,13 +1,31 @@
 {{#if canEdit}}
-  <!-- TODO add attachment button -->
+  <button onclick={{action onAdd}} local-class='add-attachment'>
+    + Add Attachment
+  </button>
 {{/if}}
 <div local-class='attachments'>
   {{#each attachments as |file|}}
-    <a href={{file.url}} target='_blank' local-class='attachment {{if canEdit 'can-edit'}}'>
+    <div local-class='attachment'>
       {{#if canEdit}}
+        {{#if (not file.thumbnails)}}
+          Image uploaded, loading thumbnail
+        {{else}}
+          <img src={{file.thumbnails.large.url}} />
+        {{/if}}
+        <div local-class='actions'>
+          <a href={{file.url}} target='_blank' title='Download'>
+            <!-- ⇓ -->
+            <i class='genericon genericon-cloud-download' local-class='icon'></i>
+          </a>
+          <a onclick={{action onRemove file.id}} local-class='remove' title='Remove'>
+            <i class='genericon genericon-close' local-class='icon'></i>
+          </a>
+        </div>
       {{else}}
-        <img src={{file.thumbnails.large.url}} />
+        <a href={{file.url}} target='_blank' local-class='attachment-link'>
+          <img src={{file.thumbnails.large.url}} />
+        </a>
       {{/if}}
-    </a>
+    </div>
   {{/each}}
 </div>

@@ -103,27 +103,23 @@ module.exports = function(app) {
             ...imgurAuthHeader,
           },
         };
+
+        // delete imgur file (schedule so airtable has time to fetch)
+        schedule.scheduleJob(moment(Date.now()).add(5, 'm').toDate(), () => {
+          request(deleteRequestOptions);
+        });
+        // delete local file
+        fs.unlink(filePath, () => {});
+
         updateAirtableRecord(USER_TABLE, {
           id: req.params.id,
           attrs: {
             ['Profile Image']: [{ url: imageLink }],
           },
           onSuccess: (airtableUser) => {
-            // delete imgur file (schedule so airtable has time to fetch)
-            schedule.scheduleJob(moment(Date.now()).add(5, 'm').toDate(), () => {
-              request(deleteRequestOptions);
-            });
-            // delete local file
-            fs.unlink(filePath, () => {});
             res.status(200).json({ message: 'Successfully uploaded' });
           },
           onError: (error) => {
-            // delete imgur file (schedule so airtable has time to fetch)
-            schedule.scheduleJob(moment(Date.now()).add(5, 'm').toDate(), () => {
-              request(deleteRequestOptions);
-            });
-            // delete local file
-            fs.unlink(filePath, () => {});
             res.status(error.statusCode).json(error);
           },
         });
