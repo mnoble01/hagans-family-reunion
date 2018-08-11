@@ -72,3 +72,10 @@
 .upload-file:hover {
   transform: scale(1.1);
 }
+
+.add-featured-image {
+  composes: secondary-button from 'hagans-family/styles/shared';
+  composes: small-button from 'hagans-family/styles/shared';
+  font-size: 14px;
+  margin: 0 auto 16px 0;
+}

@@ -17,13 +17,11 @@ export default Controller.extend({
   canEdit: readOnly('isDraft'),
 
   // Maybe use airtable form for attachments?
+  // if only images are supported on imgur (which, they probably are)
+  // TODO try uploading pdf, docx
 
   // TODO add fields:
-  // Featured image (upload)
-  // Show featured image (checkbox)
   // Categories
-
-  // 'Add attachment'
 
   setup() {
     if (this.canEdit) {
@@ -58,6 +56,28 @@ export default Controller.extend({
     // TODO choose whether or not to notify
     this.post.set('status', 'Published');
     this.post.set('publishedOn', moment().format('YYYY-MM-DD'));
+  }),
+
+  setFeaturedImage: task(function*() {
+    this.set('showAddAttachmentModal', true);
+    this.set('uploadAttachmentCallback', (url) => {
+      const featuredImage = [{ url }];
+      this.post.set('featuredImage', featuredImage);
+      this.set('showAddAttachmentModal', false);
+      this._pollFeaturedImageChanges.perform();
+    });
+  }),
+
+  _pollFeaturedImageChanges: task(function*() {
+    yield timeout(1000);
+    const response = yield this.ajax.request(`/api/posts/${this.post.id}`);
+    const post = new PostModel(response);
+    const image = post.featuredImage || [];
+    if (image.find(a => !a.thumbnails)) {
+      this._pollFeaturedImageChanges.perform();
+    } else {
+      this.set('post', post);
+    }
   }),
 
   removeAttachment: task(function*(id) {

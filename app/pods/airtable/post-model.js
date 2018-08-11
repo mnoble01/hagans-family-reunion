@@ -8,7 +8,6 @@ export default AirtableModel.extend({
       'Content',
       'Status',
       'Featured Image',
-      'Show Featured Image',
       'Attachments',
       'Published On',
       'Author',

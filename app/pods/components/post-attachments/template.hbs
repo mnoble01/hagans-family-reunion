@@ -8,13 +8,12 @@
     <div local-class='attachment'>
       {{#if canEdit}}
         {{#if (not file.thumbnails)}}
-          Image uploaded, loading thumbnail
+          Loading thumbnail…
         {{else}}
           <img src={{file.thumbnails.large.url}} />
         {{/if}}
         <div local-class='actions'>
           <a href={{file.url}} target='_blank' title='Download'>
-            <!-- ⇓ -->
             <i class='genericon genericon-cloud-download' local-class='icon'></i>
           </a>
           <a onclick={{action onRemove file.id}} local-class='remove' title='Remove'>
@@ -23,7 +22,11 @@
         </div>
       {{else}}
         <a href={{file.url}} target='_blank' local-class='attachment-link'>
-          <img src={{file.thumbnails.large.url}} />
+          {{#if (not file.thumbnails)}}
+            Loading thumbnail…
+          {{else}}
+            <img src={{file.thumbnails.large.url}} />
+          {{/if}}
         </a>
       {{/if}}
     </div>

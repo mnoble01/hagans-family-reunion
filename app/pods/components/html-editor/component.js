@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { ImageResize } from 'quill-image-resize-module';
+import 'quill-image-resize-module';
 
 export default Component.extend({
   options: computed(function() {

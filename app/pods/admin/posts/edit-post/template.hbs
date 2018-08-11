@@ -21,6 +21,17 @@
       </div>
     {{/if}}
   </div>
+
+  <label local-class='input-label'> Featured Image </label>
+  <button onclick={{perform setFeaturedImage}} local-class='add-featured-image'>
+    {{#if post.featuredImage}}
+      Change
+    {{else}}
+      + Add Featured Image
+    {{/if}}
+  </button>
+  {{post-attachments attachments=post.featuredImage}}
+
   <label local-class='input-label'> Post Title </label>
   <input local-class='input post-title-input' value={{post.title}} oninput={{action (mut post.title) value='target.value'}} type='text'>
 

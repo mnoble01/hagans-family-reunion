@@ -24,7 +24,13 @@
   object-fit: contain;
 }
 .attachment-link {
+  composes: gray-link from 'hagans-family/styles/shared';
+  text-decoration: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 .attachment-link:hover:after {
   position: absolute;
