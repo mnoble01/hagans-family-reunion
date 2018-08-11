@@ -29,11 +29,14 @@
   justify-content: space-between;
   margin-bottom: 32px;
 }
+.row.right-align {
+  justify-content: flex-end;
+}
 
+.view-button,
 .publish-button {
   composes: primary-button from 'hagans-family/styles/shared';
   composes: small-button from 'hagans-family/styles/shared';
-  margin-left: auto;
 }
 
 .save-status {
@@ -78,4 +81,9 @@
   composes: small-button from 'hagans-family/styles/shared';
   font-size: 14px;
   margin: 0 auto 16px 0;
+}
+
+.preview-button {
+  composes: gray-link from 'hagans-family/styles/shared';
+  margin-right: 16px;
 }

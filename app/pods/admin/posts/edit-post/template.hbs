@@ -1,9 +1,18 @@
 <div local-class='post-edit-form'>
   {{#if showPublish}}
-    <div local-class='row'>
+    <div local-class='row right-align'>
+      {{#link-to 'post' post.id target='_blank' local-class='preview-button'}}
+        Preview
+      {{/link-to}}
       <button onclick={{perform publish}} local-class='publish-button'>
         Publish
       </button>
+    </div>
+  {{else if isPublished}}
+    <div local-class='row right-align'>
+      {{#link-to 'post' post.id target='_blank' local-class='view-button'}}
+        View
+      {{/link-to}}
     </div>
   {{/if}}
   <div local-class='row'>
