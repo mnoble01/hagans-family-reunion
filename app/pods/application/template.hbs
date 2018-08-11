@@ -25,9 +25,11 @@
         {{outlet}}
       {{/animated-value}}
     {{/animated-container}} -->
-    <div local-class='app-footer'>
-      {{app-footer}}
-    </div>
+    {{#if (not loading)}}
+      <div local-class='app-footer'>
+        {{app-footer}}
+      </div>
+    {{/if}}
   </div>
 
   <div local-class='app-footer {{if onPostPage 'post-page'}}'>

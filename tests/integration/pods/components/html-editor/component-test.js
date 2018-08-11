@@ -13,14 +13,5 @@ module('Integration | Component | html-editor', function(hooks) {
     await render(hbs`{{html-editor}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#html-editor}}
-        template block text
-      {{/html-editor}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

@@ -13,14 +13,5 @@ module('Integration | Component | post-attachments', function(hooks) {
     await render(hbs`{{post-attachments}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#post-attachments}}
-        template block text
-      {{/post-attachments}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
