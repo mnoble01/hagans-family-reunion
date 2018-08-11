@@ -13,8 +13,10 @@ export default Controller.extend({
     return this.get('post.featuredImage.firstObject.url') || '/images/watercolor.jpg';
   }),
 
-  categoriesForDisplay: computed('post.categories', function() {
-    return (this.post.categories || []).join(', ');
+  categoriesForDisplay: computed('post.categories', 'model.categories', function() {
+    const allCategories = this.model.categories;
+    const postCategoryIds = this.post.categories;
+    return allCategories.filter(cat => postCategoryIds.includes(cat.id)).mapBy('name').join(', ');
   }),
 
   canEdit: computed('session.{user.id,session.userPermissions}', 'author', 'post.status', function() {

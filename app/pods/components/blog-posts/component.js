@@ -7,7 +7,7 @@ export default Component.extend({
   // TODO do we actually need authors here?
   // I don't think so
   postsToRender: computed('posts', 'authors', function() {
-    const authors = this.authors || [];
+    // const authors = this.authors || [];
     const posts = this.posts || [];
 
     return posts.map((post) => {
@@ -15,15 +15,11 @@ export default Component.extend({
       if (post.featuredImage && post.featuredImage[0]) {
         featuredImageUrl = post.featuredImage[0].url;
       }
-      const author = authors.findBy('id', post.author && post.author[0]);
+      // const author = authors.findBy('id', post.author && post.author[0]);
       const summary = this._postSummary(post);
       return {
         id: post.id,
-        author,
-        categories: post.categories,
-        publishedOn: post.publishedOn,
         title: post.title,
-        content: post.content,
         summary,
         hasMoreContent: post.content.length > summary.length,
         featuredImageUrl,
