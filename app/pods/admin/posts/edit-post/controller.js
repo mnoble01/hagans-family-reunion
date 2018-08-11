@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import { alias, equal, readOnly } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
@@ -19,9 +20,6 @@ export default Controller.extend({
   // Maybe use airtable form for attachments?
   // if only images are supported on imgur (which, they probably are)
   // TODO try uploading pdf, docx
-
-  // TODO add fields:
-  // Categories
 
   setup() {
     if (this.canEdit) {
@@ -58,6 +56,18 @@ export default Controller.extend({
     // TODO choose whether or not to notify
     this.post.set('status', 'Published');
     this.post.set('publishedOn', moment().format('YYYY-MM-DD'));
+  }),
+
+  allCategories: readOnly('model.categories'),
+
+  selectedCategories: computed('post.categories', 'allCategories', function() {
+    const all = this.get('allCategories');
+    const categories = this.post.categories || [];
+    return categories.map(catId => all.findBy('id', catId));
+  }),
+
+  setCategories: task(function*(categories) {
+    this.post.set('categories', categories.mapBy('id'));
   }),
 
   setFeaturedImage: task(function*() {

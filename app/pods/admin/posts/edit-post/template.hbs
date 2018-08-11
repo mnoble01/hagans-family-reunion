@@ -41,10 +41,23 @@
   </button>
   {{post-attachments attachments=post.featuredImage}}
 
-  <label local-class='input-label'> Post Title </label>
+  <label local-class='input-label'> Categories </label>
+  {{#power-select-multiple
+    options=allCategories
+    onchange=(perform setCategories)
+    selected=selectedCategories
+  as |category|}}
+    {{category.name}}
+    <!-- <div local-class='user-option'>
+      {{user-photo user=user size=28}}
+      <span>{{user.firstName}} {{user.lastName}}</span>
+    </div> -->
+  {{/power-select-multiple}}
+
+  <label local-class='input-label'> Title </label>
   <input local-class='input post-title-input' value={{post.title}} oninput={{action (mut post.title) value='target.value'}} type='text'>
 
-  <label local-class='input-label'> Post Content </label>
+  <label local-class='input-label'> Content </label>
   {{html-editor local-class='post-content-input' value=post.content onChange=(action (mut post.content))}}
 
   {{#if (or post.attachments.length showAddAttachment)}}

@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import PostModel from 'hagans-family/pods/airtable/post-model';
+import AirtableModel from 'hagans-family/pods/airtable/model';
 import { inject as service } from '@ember/service';
 
 export default Route.extend({
@@ -10,8 +11,14 @@ export default Route.extend({
   },
 
   async model(params) {
-    const post = await this.get('ajax').request(`/api/posts/${params.post_id}`);
-    return { post: new PostModel(post) };
+    const [post, categories] = await Promise.all([
+      this.get('ajax').request(`/api/posts/${params.post_id}`),
+      this.get('ajax').request(`/api/post_categories`),
+    ]);
+    return {
+      post: new PostModel(post),
+      categories: categories.map(cat => new AirtableModel(cat)),
+    };
   },
 
   setupController() {

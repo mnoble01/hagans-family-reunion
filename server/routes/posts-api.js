@@ -7,8 +7,10 @@ const {
   findAirtableRecordById,
   updateAirtableRecord,
   createAirtableRecord,
+  fetchAirtableRecords,
   tables: {
     POST_TABLE,
+    POST_CATEGORY_TABLE,
   },
 } = airtableUtils;
 
@@ -64,6 +66,17 @@ module.exports = function(app) {
         res.status(200).json(airtablePost.serialize());
       },
       onError: (error) => {
+        res.status(error.statusCode).json(error);
+      },
+    });
+  });
+
+  app.get('/api/post_categories', function(req, res) {
+    fetchAirtableRecords(POST_CATEGORY_TABLE, {
+      onSuccess: (airtableCategories) => {
+        res.status(200).json(airtableCategories.map(post => post.serialize()));
+      },
+      onError:(error) => {
         res.status(error.statusCode).json(error);
       },
     });

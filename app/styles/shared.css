@@ -150,6 +150,10 @@
 }
 
 /* power select styles - match other inputs */
+
+.input-label + div :global(.ember-power-select-trigger)  {
+  margin-bottom: 16px;
+}
 :global(.ember-power-select-trigger) {
   color: input-color;
   border-radius: 2px;
