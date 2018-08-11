@@ -65,6 +65,7 @@
     "leaflet": "^1.0.0",
     "liquid-fire": "^0.29.5",
     "loader.js": "^4.2.3",
+    "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
     "qunit-dom": "^0.6.2"
   },
