@@ -20,7 +20,7 @@ export default Route.extend({
       if (logout) {
         await this.session.logout();
       } else if (redirect) {
-        window.location = this.redirect;
+        window.location = redirect;
       } else {
         this.transitionTo('account');
       }
