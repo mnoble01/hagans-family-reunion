@@ -18,7 +18,6 @@ export default Controller.extend({
   canEdit: readOnly('isDraft'),
 
   // Maybe use airtable form for attachments?
-  // if only images are supported on imgur (which, they probably are)
   // TODO try uploading pdf, docx
 
   setup() {
@@ -93,6 +92,7 @@ export default Controller.extend({
   }),
 
   removeAttachment: task(function*(id) {
+    // TODO confirm first
     const attachments = [...this.post.attachments];
     this.post.set('attachments', attachments.reject(a => a.id === id));
   }),

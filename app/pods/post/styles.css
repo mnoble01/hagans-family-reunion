@@ -85,6 +85,10 @@
   color: dark-gray;
 }
 
+.post-content img {
+  max-width: 100%;
+}
+
 .post-categories {
   text-transform: uppercase;
   font-size: 13px;
