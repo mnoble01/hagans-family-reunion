@@ -135,6 +135,20 @@
     <div local-class='profile-edit-section'>
       <div local-class='profile-item'>
         <div local-class='profile-header no-border'>
+          First Name
+        </div>
+        <input local-class='input' type='text' value={{editedFields.firstName}} oninput={{action (mut editedFields.firstName) value='target.value'}} />
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Last Name
+        </div>
+        <input local-class='input' type='text' value={{editedFields.lastName}} oninput={{action (mut editedFields.lastName) value='target.value'}} />
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
           Birth Date
         </div>
         <input local-class='input' type='date' value={{editedFields.birthDate}} onchange={{action (mut editedFields.birthDate) value='target.value'}} />

@@ -109,7 +109,9 @@ export default Component.extend({
       visible: canPost,
     }];
     const visibleChildren = children.filter(child => child.visible);
-    if (!visibleChildren.length) return;
+    if (!visibleChildren.length) {
+      return [];
+    }
 
     return [{
       route: 'admin',

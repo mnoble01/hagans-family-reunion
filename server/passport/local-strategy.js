@@ -54,10 +54,8 @@ passport.use('local-register', new LocalStrategy({
     email,
     password,
     registrationSource: 'Password',
-    airtableAttrs: {
-      ['First Name']: req.body.firstName,
-      ['Last Name']: req.body.lastName,
-    },
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
   });
 }));
 
