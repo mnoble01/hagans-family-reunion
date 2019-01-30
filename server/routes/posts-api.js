@@ -28,7 +28,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/posts/:id', isLoggedIn, function(req, res) {
+  app.get('/api/posts/:id', function(req, res) {
     findAirtableRecordById(POST_TABLE, {
       id: req.params.id,
       onSuccess: (airtablePost) => {

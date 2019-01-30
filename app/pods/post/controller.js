@@ -25,7 +25,8 @@ export default Controller.extend({
     const canPost = permissions.includes('can_post');
     const author = this.author;
     const correctStatus = ['Draft', 'Published'].includes(this.post.status);
-    const correctPermissions = this.session.user.id === author.id && canPost || isAdmin;
+    const sessionUserId = this.get('session.user.id');
+    const correctPermissions = sessionUserId && sessionUserId === author.id && canPost || isAdmin;
     return correctPermissions && correctStatus;
   }),
 });
