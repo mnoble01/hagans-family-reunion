@@ -56,7 +56,7 @@
   <label local-class='input-label'> Content </label>
   {{html-editor local-class='post-content-input' value=post.content onChange=(action (mut post.content))}}
 
-  {{#if (or post.attachments.length showAddAttachment)}}
+  {{#if (or post.attachments.length canAddAttachment)}}
     <label local-class='input-label attachment-label'> Attachments </label>
     {{post-attachments
       attachments=post.attachments

@@ -91,6 +91,8 @@ export default Controller.extend({
     }
   }),
 
+  canAddAttachment: true,
+
   removeAttachment: task(function*(id) {
     // TODO confirm first
     const attachments = [...this.post.attachments];
