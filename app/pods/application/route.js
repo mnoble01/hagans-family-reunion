@@ -40,8 +40,9 @@ export default Route.extend({
     // if not authenticated, transition to login with 'redirect' parameter
     const onLoginPage = window.location.hash.startsWith('#/login');
     const onIndexPage = window.location.hash === '';
+    const onPostPage = window.location.hash.startsWith('#/posts/');
     const hasRedirectParam = window.location.hash.indexOf('redirect') > -1;
-    if (!this.session.isAuthenticated && !onLoginPage && !hasRedirectParam && !onIndexPage) {
+    if (!this.session.isAuthenticated && !onLoginPage && !hasRedirectParam && !onIndexPage && !onPostPage) {
       this.transitionTo('login', { queryParams: { redirect: window.location.href } });
     }
   },
