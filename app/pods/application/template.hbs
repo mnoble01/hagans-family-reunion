@@ -16,7 +16,7 @@
   <div local-class='content {{if onIndexPage 'index-page'}} {{if onPostPage 'post-page'}}'>
     {{flash-messages}}
     {{#if loading}}
-      <div local-class='loading'></div>
+      {{site-loader local-class='loading'}}
     {{else}}
       {{outlet}}
     {{/if}}

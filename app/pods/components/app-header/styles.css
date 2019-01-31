@@ -6,6 +6,11 @@
   text-decoration: none;
   font-size: 30px !important;
   margin: 0 !important;
+  display: flex;
+  align-items: center;
+}
+.tree-icon {
+  margin-right: 8px;
 }
 @media (max-width: 600px) {
   .link-to-index {

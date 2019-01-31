@@ -1,0 +1,34 @@
+@value light-gold from 'hagans-family/styles/shared' ;
+
+.family-tree-icon {
+  display: inline-block;
+}
+
+.svg {
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.tree {
+  fill: light-gold;
+}
+
+.circle-mask {
+  transform-origin: 50% 90%;
+}
+.svg.animate .circle-mask {
+  animation: scale 5s infinite ease-out;
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: scale(0.0);
+  }
+  7%, 90% {
+    transform: scale(0.4);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
