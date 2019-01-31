@@ -16,10 +16,18 @@ const {
 
 module.exports = function(app) {
   // Purposefully open to non logged-in users
+  // TODO Might want to limit the fields that are returned to unauth users
   app.get('/api/posts', function(req, res) {
     fetchAirtablePosts({
       status: req.query.status,
       onSuccess: (airtablePosts) => {
+        // Sort by publishedOn or createdAt, depending on which is defined
+        // with most recent being first
+        airtablePosts = airtablePosts.sort((a, b) => {
+          const aDate = a.publishedOn || a.createdAt;
+          const bDate = b.publishedOn || b.createdAt;
+          return new Date(bDate) - new Date(aDate);
+        });
         res.status(200).json(airtablePosts.map(post => post.serialize()));
       },
       onError:(error) => {
@@ -28,6 +36,8 @@ module.exports = function(app) {
     });
   });
 
+  // Purposefully open to non logged-in users
+  // TODO Might want to limit the fields that are returned to unauth users
   app.get('/api/posts/:id', function(req, res) {
     findAirtableRecordById(POST_TABLE, {
       id: req.params.id,

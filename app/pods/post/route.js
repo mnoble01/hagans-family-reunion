@@ -24,7 +24,7 @@ export default Route.extend({
     if (this.session.isAuthenticated) {
       author = await this.get('ajax').request(`/api/users/${authorId}`);
     } else {
-      // We can now fetch posts by id when not authenticated, but we don't want to expose users
+      // We can now fetch posts by id when not authenticated, but we cannot fetch users
       author = { ['First Name']: 'A User' };
     }
 
