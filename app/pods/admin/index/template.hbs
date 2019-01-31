@@ -12,17 +12,19 @@ Posts w/ most recent 5 (just drafts?) -->
 </div>
 
 <div local-class='centered-content centered-text'>
-  <div local-class='page-links'>
-    <div local-class='title'>
-      Posts
+  {{#if canPost}}
+    <div local-class='page-links'>
+      <div local-class='title'>
+        Posts
+      </div>
+      {{#link-to 'admin.posts' local-class='link'}}
+        My Posts
+      {{/link-to}}
+      {{#link-to 'admin.posts.new' local-class='link'}}
+        New Post
+      {{/link-to}}
     </div>
-    {{#link-to 'admin.posts' local-class='link'}}
-      My Posts
-    {{/link-to}}
-    {{#link-to 'admin.posts.new' local-class='link'}}
-      New Post
-    {{/link-to}}
-  </div>
+  {{/if}}
 
   <div local-class='page-links'>
     <div local-class='title'>
