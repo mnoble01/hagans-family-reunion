@@ -17,6 +17,14 @@
     font-size: 24px !important;
   }
 }
+@media (max-width: 400px) {
+  .link-to-index {
+    font-size: 20px;
+  }
+  .tree-icon {
+    height: 25px !important;
+  }
+}
 
 .app-header {
   display: flex;
