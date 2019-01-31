@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { alias, equal, readOnly } from '@ember/object/computed';
+import { alias, equal, readOnly, or } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { camelize } from '@ember/string';
@@ -15,7 +15,7 @@ export default Controller.extend({
   isDraft: equal('post.status', 'Draft'),
   isPublished: equal('post.status', 'Publish'),
 
-  canEdit: readOnly('isDraft'),
+  canEdit: or('isDraft', 'isPublished'),
 
   // Maybe use airtable form for attachments?
   // TODO try uploading pdf, docx
@@ -90,8 +90,6 @@ export default Controller.extend({
       this.set('post', post);
     }
   }),
-
-  canAddAttachment: true,
 
   removeAttachment: task(function*(id) {
     // TODO confirm first
