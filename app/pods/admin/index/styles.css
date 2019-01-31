@@ -1,12 +1,33 @@
 @value medium-gray, black from 'hagans-family/styles/shared';
 
+.reunion-page-header {
+  composes: reunion-page-header from 'hagans-family/styles/shared';
+}
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+}
+
 .page-links {
   display: flex;
   flex-direction: column;
+}
+.page-links .title {
+  font-weight: bold;
+  font-size: larger;
+  margin-bottom: 16px;
 }
 
 .link {
   composes: gray-link from 'hagans-family/styles/shared';
   text-decoration: underline;
-  height: 30px;
+  height: 40px;
+}
+
+.centered-content {
+  composes: centered-content from 'hagans-family/styles/shared';
+}
+
+.centered-text {
+  text-align: center;  
 }

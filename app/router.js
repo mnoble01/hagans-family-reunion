@@ -41,6 +41,10 @@ Router.map(function() {
       this.route('new');
       this.route('edit-post', { path: ':post_id/edit' });
     });
+
+    this.route('users', function() {
+      this.route('database');
+    });
   });
 });
 
