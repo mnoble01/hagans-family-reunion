@@ -99,10 +99,11 @@ export default Component.extend({
 
   adminMenuItems: computed('this.session.isAuthenticated', 'session.userPermissions', function() {
     const permissions = this.session.userPermissions;
+    if (!permissions.includes('is_admin')) return [];
+
     const canPost = permissions.includes('can_post');
     // const canEmail = permissions.includes('can_email');
 
-    if (!permissions.includes('is_admin')) return;
     const children = [{
       route: 'admin.posts',
       name: 'My Posts',
