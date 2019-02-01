@@ -9,3 +9,11 @@
   color: black;
   margin-bottom: 42px;
 }
+
+.p {
+  padding-bottom: 24px;
+}
+
+.offset-block {
+  composes: offset-block from 'hagans-family/styles/shared';
+}
