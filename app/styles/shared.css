@@ -203,7 +203,7 @@
 .centered-content {
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 50%;
   margin: 0 auto;
 }
 @media (max-width: 800px) {
@@ -230,4 +230,16 @@
   to {
     transform: scale3d(1, 1, 1);
   }
+}
+
+.offset-block {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  line-height: 24px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.offset-block a[href^=tel] {
+  margin-top: 12px;
 }

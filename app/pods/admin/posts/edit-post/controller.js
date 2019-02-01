@@ -13,7 +13,7 @@ export default Controller.extend({
 
   post: alias('model.post'),
   isDraft: equal('post.status', 'Draft'),
-  isPublished: equal('post.status', 'Publish'),
+  isPublished: equal('post.status', 'Published'),
 
   canEdit: or('isDraft', 'isPublished'),
 
