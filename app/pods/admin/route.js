@@ -5,7 +5,7 @@ export default Route.extend({
   session: service(),
 
   beforeModel() {
-    if (!this.session.userPermissions.includes('admin')) {
+    if (!this.session.userPermissions.includes('is_admin')) {
       this.transitionTo('account');
     }
   },
