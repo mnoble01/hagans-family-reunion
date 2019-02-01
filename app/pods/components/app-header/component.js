@@ -102,7 +102,7 @@ export default Component.extend({
     const canPost = permissions.includes('can_post');
     // const canEmail = permissions.includes('can_email');
 
-    // if (!permissions.includes('is_admin')) return;
+    if (!permissions.includes('is_admin')) return;
     const children = [{
       route: 'admin.posts',
       name: 'My Posts',
