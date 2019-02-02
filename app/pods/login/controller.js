@@ -8,7 +8,7 @@ export default Controller.extend({
   session: service(),
   flashMessages: service(),
 
-  queryParams: ['logout'],
+  queryParams: ['logout', 'redirect'],
   logout: false,
 
   setup() {

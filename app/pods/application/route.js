@@ -38,11 +38,16 @@ export default Route.extend({
 
   afterModel() {
     // if not authenticated, transition to login with 'redirect' parameter
-    const onLoginPage = window.location.hash.startsWith('#/login');
-    const onIndexPage = window.location.hash === '';
-    const onPostPage = window.location.hash.startsWith('#/posts/');
+    const unauthRoutes = [
+      'index',
+      'login',
+      'post',
+      'reunion-registration',
+    ];
+    const onWhitelistedPage = unauthRoutes.some(route => this.router.isActive(route));
     const hasRedirectParam = window.location.hash.indexOf('redirect') > -1;
-    if (!this.session.isAuthenticated && !onLoginPage && !hasRedirectParam && !onIndexPage && !onPostPage) {
+
+    if (!this.session.isAuthenticated && !hasRedirectParam && !onWhitelistedPage) {
       this.transitionTo('login', { queryParams: { redirect: window.location.href } });
     }
   },

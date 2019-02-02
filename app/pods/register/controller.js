@@ -7,6 +7,8 @@ export default Controller.extend({
   flashMessages: service(),
   session: service(),
 
+  queryParams: ['redirect'],
+
   register: task(function*() {
     this.flashMessages.clearMessages();
 
@@ -34,7 +36,11 @@ export default Controller.extend({
       } else if (user.status === 'Inactive') {
         this.flashMessages.info('Your account is inactive.', { scope: 'form' });
       } else {
-        this.transitionToRoute('account');
+        if (this.redirect) {
+          window.location = this.redirect;
+        } else {
+          this.transitionToRoute('account');
+        }
       }
     } catch (e) {
       this.flashMessages.danger(e, { scope: 'form' });

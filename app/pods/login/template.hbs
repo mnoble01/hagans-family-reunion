@@ -24,7 +24,7 @@
         Login
       {{/if}}
     </button>
-    {{#link-to 'register' local-class='register'}}
+    {{#link-to 'register' (query-params redirect=redirect) local-class='register'}}
         Register
     {{/link-to}}
   </div>
