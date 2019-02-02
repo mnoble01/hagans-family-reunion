@@ -41,7 +41,7 @@ module.exports = function(app) {
   //   will redirect the user back to this application at /auth/google/callback
   // app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email', 'openid'] }));
   app.get('/auth/google', function(req, res, next) {
-    console.log('QUERY', req.query);
+    logger.log('info', 'auth QUERY', req.query);
     // passport.authenticate('google', { successReturnToOrRedirect : "http://example.net/auth/google/return/" + encodedReturnUrl })(req, res, next);
     passport.authenticate('google', { scope: ['profile', 'email', 'openid'], successRedirect: 'http://google.com?whatup=true' })(...arguments);
   });

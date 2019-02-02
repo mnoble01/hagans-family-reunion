@@ -21,7 +21,7 @@ export default Controller.extend({
         firstName: this.firstName,
         lastName: this.lastName,
       });
-      const user = this.session.user;
+      // const user = this.session.user;
       // if (user.status === 'Pending Review') {
       //   this.transitionToRoute('account');
       // } else if (user.status === 'Rejected') {
@@ -42,7 +42,7 @@ export default Controller.extend({
   createReunionRegistration: task(function*() {
     this.clearFlashMessages();
     try {
-      console.log('create reunion registration');
+      // console.log('create reunion registration');
     } catch (e) {
       this.handleError(e);
     }
@@ -51,7 +51,7 @@ export default Controller.extend({
   createTshirtOrder: task(function*() {
     this.clearFlashMessages();
     try {
-      console.log('create t-shirt order');
+      // console.log('create t-shirt order');
     } catch (e) {
       this.handleError(e);
     }
