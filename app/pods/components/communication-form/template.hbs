@@ -1,0 +1,30 @@
+{{flash-messages scope='communication-form'}}
+
+{{#if (not success)}}
+  <div local-class='form-input'>
+    <div local-class='label'>
+      Subject
+    </div>
+    <input local-class='input' type='text' value={{editedFields.subject}} oninput={{action (mut editedFields.subject) value='target.value'}}>
+  </div>
+  <div local-class='form-input'>
+    <div local-class='label'>
+      Content
+    </div>
+    {{textarea local-class='input' autoresize=true rows=8 value=editedFields.content}}
+  </div>
+
+  <div local-class='buttons'>
+    <button
+      local-class='submit'
+      onclick={{perform submit}}
+      disabled={{or submit.isRunning (not (and editedFields.content))}}
+    >
+      {{#if submit.isRunning}}
+        Please wait...
+      {{else}}
+        Submit
+      {{/if}}
+    </button>
+  </div>
+{{/if}}

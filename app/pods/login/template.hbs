@@ -8,11 +8,11 @@
   </div>
 
   {{social-login}}
-  
+
   {{flash-messages scope='login'}}
 
   <label local-class='input-label'> Email </label>
-  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email' autofocus>
+  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email'>
   <label local-class='input-label'> Password </label>
   <input local-class='input' oninput={{action (mut password) value='target.value'}} type='password' onkeydown={{action onEnter}}>
 

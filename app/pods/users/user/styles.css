@@ -1,4 +1,4 @@
-@value light-gray, medium-gray, dark-gray from 'hagans-family/styles/shared';
+@value light-gray, dark-gray from 'hagans-family/styles/shared';
 @value powder-blue, gold from 'hagans-family/styles/shared';
 
 .page-title {
@@ -170,7 +170,6 @@
 
 .input {
   composes: input from 'hagans-family/styles/shared';
-  width:
 }
 
 .buttons {

@@ -1,1 +1,13 @@
-Suggestions form
+<div local-class='reunion-page-header'>
+  {{article-header}}
+
+  <div local-class='page-title'>
+    Suggestions
+  </div>
+</div>
+
+{{communication-form
+  deliveryMethod='Zapier Admin Notification'
+  type='Form - Suggestion'
+  fromUser=session.user.id
+}}

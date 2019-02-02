@@ -32,6 +32,9 @@
 }
 
 /* TODO get a css reset */
+textarea.input {
+  padding: 12px;
+}
 .input {
   color: input-color;
   border-radius: 2px;

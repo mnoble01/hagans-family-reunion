@@ -6,6 +6,7 @@ const USER_TABLE = 'users';
 const POST_TABLE = 'posts';
 const POST_CATEGORY_TABLE = 'post_categories';
 const UPLOAD_TABLE = 'uploads';
+const COMMUNICATION_TABLE = 'communications';
 
 const airtableBase = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -174,5 +175,6 @@ module.exports = {
     POST_TABLE,
     POST_CATEGORY_TABLE,
     UPLOAD_TABLE,
+    COMMUNICATION_TABLE,
   },
 };

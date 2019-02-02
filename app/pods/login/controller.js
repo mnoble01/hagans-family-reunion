@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import keycode from 'keycode';
-import { scheduleOnce } from '@ember/runloop';
+import { scheduleOnce, run } from '@ember/runloop';
 
 export default Controller.extend({
   session: service(),
@@ -22,6 +22,9 @@ export default Controller.extend({
         this.flashMessages.info('Please sign in', { scope: 'login' });
       });
     }
+    scheduleOnce('afterRender', () => {
+      run(() => document.querySelector('input').focus());
+    });
   },
 
   login: task(function*() {

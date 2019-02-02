@@ -2063,6 +2063,13 @@ broccoli-middleware@^1.2.1:
     handlebars "^4.0.4"
     mime-types "^2.1.18"
 
+broccoli-module-alchemist-install@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/broccoli-module-alchemist-install/-/broccoli-module-alchemist-install-0.1.6.tgz#d3cf490e7f63350a3fd5efb32cbbeee4561ba943"
+  integrity sha1-089JDn9jNQo/1e+zLLvu5FYbqUM=
+  dependencies:
+    debug "^2.2.0"
+
 broccoli-module-normalizer@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/broccoli-module-normalizer/-/broccoli-module-normalizer-1.3.0.tgz#f9982d9cbb776b4ed754161cc6547784d3eb19de"
@@ -3420,6 +3427,13 @@ doctrine@^2.0.2, doctrine@^2.1.0:
   dependencies:
     esutils "^2.0.2"
 
+dom-ruler@^0.2.5:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/dom-ruler/-/dom-ruler-0.2.6.tgz#f86ae9227c1ec2edb0463c5e21009eb11ab7c87a"
+  integrity sha1-+GrpInwewu2wRjxeIQCesRq3yHo=
+  dependencies:
+    broccoli-module-alchemist-install "^0.1.6"
+
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
@@ -3547,6 +3561,17 @@ ember-auto-import@^1.2.5:
     symlink-or-copy "^1.2.0"
     walk-sync "^0.3.2"
     webpack "^4.12.0"
+
+ember-autoresize@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-1.3.2.tgz#f5a2f6ecad38337675fd82c0acccab69710b6ba1"
+  integrity sha512-lfaCRsHGUwCdnnIAZ88t46jtXtVvU/wavSG82UgDsD97eH8y8rcJB0z0rl4smjb6mUSsNuEuvgbTp3Q+yBCxVQ==
+  dependencies:
+    dom-ruler "^0.2.5"
+    ember-cli-babel "^6.6.0"
+    ember-cli-version-checker "^2.1.0"
+    ember-copy "^1.0.0"
+    ember-get-config "^0.2.4"
 
 ember-basic-dropdown@^1.0.0, ember-basic-dropdown@^1.0.2:
   version "1.0.2"
@@ -4108,7 +4133,7 @@ ember-file-upload@^2.5.0:
     ember-cli-babel "^6.12.0"
     ember-cli-htmlbars "^2.0.1"
 
-ember-get-config@^0.2.3:
+ember-get-config@^0.2.3, ember-get-config@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/ember-get-config/-/ember-get-config-0.2.4.tgz#118492a2a03d73e46004ed777928942021fe1ecd"
   integrity sha1-EYSSoqA9c+RgBO13eSiUICH+Hs0=

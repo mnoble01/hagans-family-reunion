@@ -1,0 +1,30 @@
+@value dark-gray from 'hagans-family/styles/shared';
+
+.communication-form {
+  composes: centered-content from 'hagans-family/styles/shared';
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  color: dark-gray;
+  margin-bottom: 32px;
+}
+
+.label {
+  composes: input-label from 'hagans-family/styles/shared';
+}
+
+.input {
+  composes: input from 'hagans-family/styles/shared';
+}
+
+.buttons {
+  composes: button-container from 'hagans-family/styles/shared';
+}
+
+.submit {
+  composes: primary-button from 'hagans-family/styles/shared';
+  max-width: 150px;
+}
