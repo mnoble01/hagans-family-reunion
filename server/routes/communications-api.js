@@ -14,7 +14,7 @@ module.exports = function(app) {
     const attrs = req.body;
 
     try {
-      const airtableCommunication = await createAirtableRecord(COMMUNICATION_TABLE, attrs);
+      const airtableCommunication = await createAirtableRecord(COMMUNICATION_TABLE, { attrs });
       res.status(200).json(airtableCommunication.serialize());
     } catch (error) {
       res.status(error.statusCode).json(error);
