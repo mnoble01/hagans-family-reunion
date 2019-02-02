@@ -7,7 +7,20 @@
     Login
   </div>
 
+  {{#if handhold}}
+    <h2 local-class='subtitle'>
+      using social account
+    </h2>
+  {{/if}}
+
   {{social-login}}
+
+  {{#if handhold}}
+    {{article-header}}
+    <h2 local-class='subtitle'>
+      or using password
+    </h2>
+  {{/if}}
 
   {{flash-messages scope='login'}}
 

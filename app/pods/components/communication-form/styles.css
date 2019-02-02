@@ -30,6 +30,7 @@
 }
 
 .link {
-  composes: link from 'hagans-family/styles/shared';
+  composes: gray-link from 'hagans-family/styles/shared';
+  font-size: x-large;
   text-align: center;
 }

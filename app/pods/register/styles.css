@@ -1,3 +1,5 @@
+@value medium-gray from 'hagans-family/styles/shared';
+
 .register-form {
   composes: centered-content from 'hagans-family/styles/shared';
 }
@@ -15,6 +17,12 @@
   composes: page-title from 'hagans-family/styles/shared';
   margin: 0 0 32px;
   font-size: 34px;
+}
+
+.subtitle {
+  color: medium-gray;
+  text-align: center;
+  margin-bottom: 36px;
 }
 
 .input-label {

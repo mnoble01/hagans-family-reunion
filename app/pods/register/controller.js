@@ -7,7 +7,8 @@ export default Controller.extend({
   flashMessages: service(),
   session: service(),
 
-  queryParams: ['redirect'],
+  queryParams: ['redirect', 'handhold'],
+  handhold: false,
 
   register: task(function*() {
     this.flashMessages.clearMessages();
