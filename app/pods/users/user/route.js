@@ -22,6 +22,7 @@ export default Route.extend({
   },
 
   afterModel(model) {
+    this._super(...arguments);
     if (this.session.userIsPending && model.user.id !== this.session.user.id) {
       this.transitionTo('account');
     }

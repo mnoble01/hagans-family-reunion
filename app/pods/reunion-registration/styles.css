@@ -1,0 +1,38 @@
+@value medium-gray from 'hagans-family/styles/shared';
+
+.centered-content {
+  composes: centered-content from 'hagans-family/styles/shared';
+}
+
+.flash-messages.flash-messages {
+  margin: 24px 0 0;
+}
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+}
+
+.subtitle {
+  color: medium-gray;
+  text-align: center;
+}
+
+.input-label {
+  composes: input-label from 'hagans-family/styles/shared';
+}
+
+.input {
+  composes: input from 'hagans-family/styles/shared';
+}
+
+.buttons {
+  composes: button-container from 'hagans-family/styles/shared';
+}
+
+.primary-button {
+  composes: primary-button from 'hagans-family/styles/shared';
+}
+
+.secondary-button {
+  composes: secondary-button from 'hagans-family/styles/shared';
+}

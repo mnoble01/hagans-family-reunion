@@ -46,6 +46,7 @@ Router.map(function() {
       this.route('database');
     });
   });
+  this.route('reunion-registration');
 });
 
 export default Router;
