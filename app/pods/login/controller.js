@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import keycode from 'keycode';
-import { scheduleOnce, run } from '@ember/runloop';
+import { scheduleOnce } from '@ember/runloop';
 
 export default Controller.extend({
   session: service(),
