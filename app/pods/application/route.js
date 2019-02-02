@@ -41,6 +41,8 @@ export default Route.extend({
     const unauthRoutes = [
       'index',
       'login',
+      'register',
+      'contact',
       'post',
       'reunion-registration',
     ];
