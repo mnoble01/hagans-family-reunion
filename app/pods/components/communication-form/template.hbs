@@ -1,12 +1,24 @@
 {{flash-messages scope='communication-form'}}
 
-{{#if (not success)}}
+{{#if (not session.isAuthenticated)}}
+  <a href='mailto:hagansreunion@gmail.com' local-class='link'>
+    Email
+  </a>
+{{else if (not success)}}
   <div local-class='form-input'>
     <div local-class='label'>
       Subject
     </div>
     <input local-class='input' type='text' value={{editedFields.subject}} oninput={{action (mut editedFields.subject) value='target.value'}}>
   </div>
+  {{#unless hasFromUser}}
+    <div local-class='form-input'>
+      <div local-class='label'>
+        Email
+      </div>
+      <input local-class='input' type='email' value={{editedFields.replyTo}} oninput={{action (mut editedFields.replyTo) value='target.value'}}>
+    </div>
+  {{/unless}}
   <div local-class='form-input'>
     <div local-class='label'>
       Content
@@ -18,7 +30,7 @@
     <button
       local-class='submit'
       onclick={{perform submit}}
-      disabled={{or submit.isRunning (not (and editedFields.content))}}
+      disabled={{or submit.isRunning (not isValid)}}
     >
       {{#if submit.isRunning}}
         Please wait...

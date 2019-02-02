@@ -28,3 +28,8 @@
   composes: primary-button from 'hagans-family/styles/shared';
   max-width: 150px;
 }
+
+.link {
+  composes: link from 'hagans-family/styles/shared';
+  text-align: center;
+}

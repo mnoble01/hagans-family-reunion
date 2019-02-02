@@ -13,6 +13,7 @@ export default Component.extend({
 
   flashMessages: service(),
   ajax: service(),
+  session: service(),
 
   init() {
     this._super(...arguments);
@@ -21,10 +22,26 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    run(() => document.querySelector('input').focus());
+    run(() => {
+      const input = document.querySelector('input');
+      if (input) input.focus();
+    });
   },
 
   hasFromUser: notEmpty('editedFields.fromUser'),
+
+  fromUser: computed('session.user.id', function() {
+    const userId = this.get('session.user.id');
+    if (userId) return [userId];
+  }),
+
+  isValid: computed('hasFromUser', 'editedFields.{content,replyTo}', function() {
+    const content = this.editedFields.content;
+    const replyTo = this.editedFields.replyTo;
+    const hasContent = content && content.trim();
+    const validFromUser = this.hasFromUser || replyTo && replyTo.trim();
+    return hasContent && validFromUser;
+  }),
 
   editedFields: computed(...EDITABLE_FIELDS, function() {
     return EDITABLE_FIELDS.reduce((memo, field) => {
