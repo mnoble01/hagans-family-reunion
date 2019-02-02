@@ -36,7 +36,7 @@ export default Route.extend({
     }
   },
 
-  afterModel() {
+  afterModel(model, transition) {
     // if not authenticated, transition to login with 'redirect' parameter
     const unauthRoutes = [
       'index',
@@ -44,7 +44,7 @@ export default Route.extend({
       'post',
       'reunion-registration',
     ];
-    const onWhitelistedPage = unauthRoutes.some(route => this.router.isActive(route));
+    const onWhitelistedPage = unauthRoutes.some(route => route === transition.targetName);
     const hasRedirectParam = window.location.hash.indexOf('redirect') > -1;
 
     if (!this.session.isAuthenticated && !hasRedirectParam && !onWhitelistedPage) {
