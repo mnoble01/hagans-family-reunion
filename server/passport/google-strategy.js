@@ -42,6 +42,8 @@ module.exports = function(app) {
   app.get('/auth/google', function(req, res, next) {
     logger.log('info', 'GOOGLE AUTH QUERY', req.query);
     req.session.redirect = req.query.redirect;
+    logger.log('info', 'query redirect', req.query.redirect, req.query.redirect.length);
+    logger.log('info', 'session redirect', req.session.redirect, req.session.redirect.length);
     passport.authenticate('google', { scope: ['profile', 'email', 'openid'] })(...arguments);
   });
 
