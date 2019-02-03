@@ -29,7 +29,14 @@ export default Service.extend({
   },
 
   bugsnagClient: computed(function() {
-    return bugsnag(ENV.bugsnag.apiKey || {});
+    const apiKey = ENV.bugsnag.apiKey;
+    if (apiKey) {
+      return bugsnag(apiKey);
+    } else {
+      return {
+        notify: () => {},
+      };
+    }
   }),
 
   _setBugsnagClientUser: observer('user', function() {

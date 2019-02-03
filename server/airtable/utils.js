@@ -8,7 +8,7 @@ const TABLES = Object.freeze({
   POST_CATEGORY_TABLE : 'post_categories',
   UPLOAD_TABLE : 'uploads',
   COMMUNICATION_TABLE : 'communications',
-  REGISTRATION_TABLE : 'registrations',
+  REGISTRATION_TABLE : 'reunion_registrations',
   TSHIRT_ORDER_TABLE : 'tshirt_orders',
   TSHIRT_SIZE_TABLE : 'tshirt_sizes',
 });
@@ -170,7 +170,7 @@ function creationCallback(tableName) {
       const record = await createAirtableRecord(tableName, { attrs });
       res.status(200).json(record.serialize());
     } catch (error) {
-      res.status(error.statusCode).json(error);
+      res.status(error.statusCode || 500).json(error);
     }
   };
 }
@@ -181,10 +181,10 @@ function updateCallback(tableName) {
     const id = req.params.id;
 
     try {
-      const record = updateAirtableRecord(tableName, { id, attrs });
+      const record = await updateAirtableRecord(tableName, { id, attrs });
       res.status(200).json(record.serialize());
     } catch (error) {
-      res.status(error.statusCode).json(error);
+      res.status(error.statusCode || 500).json(error);
     }
   };
 }
@@ -197,18 +197,22 @@ function findCallback(tableName) {
       const record = await findAirtableRecordById(tableName, { id });
       res.status(200).json(record.serialize());
     } catch (error) {
-      res.status(error.statusCode).json(error);
+      res.status(error.statusCode || 500).json(error);
     }
   };
 }
 
 function fetchCallback(tableName) {
   return async function(req, res) {
+    const ids = req.params.ids; // Allow fetching by many ids
     try {
-      const records = fetchAirtableRecords(tableName);
+      let records = await fetchAirtableRecords(tableName);
+      if (ids) {
+        records = records.filter(record => ids.includes(record.id));
+      }
       res.status(200).json(records.map(record => record.serialize()));
     } catch (error) {
-      res.status(error.statusCode).json(error);
+      res.status(error.statusCode || 500).json(error);
     }
   };
 }

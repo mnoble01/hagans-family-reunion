@@ -1,3 +1,5 @@
+@value medium-gray from 'hagans-family/styles/shared';
+
 .centered-content {
   composes: centered-content from 'hagans-family/styles/shared';
 }

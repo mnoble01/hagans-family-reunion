@@ -35,6 +35,7 @@ module.exports = function(app) {
   require('routes/users-api')(app);
   require('routes/posts-api')(app);
   require('routes/communications-api')(app);
+  require('routes/reunion-registrations-api')(app);
   require('routes/location-api')(app);
   require('routes/upload-api')(app);
 

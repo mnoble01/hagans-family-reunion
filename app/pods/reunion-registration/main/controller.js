@@ -1,18 +1,59 @@
 import Controller from '@ember/controller';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { alias, and, readOnly } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 // import ReunionRegistrationModel from 'hagans-family/pods/airtable/reunion-registration-model';
 
 // const EDITABLE_FIELDS = (new ReunionRegistrationModel).clientEditableFields;
 
+// TODO need reunion-registration-form
+// TODO need tshirt-order-form
+const EDITABLE_USER_FIELDS = [
+  'firstName',
+  'lastName',
+  'email',
+  'birthDate',
+  'phone',
+  'address',
+];
+const EDITABLE_REGISTRATION_FIELDS = [
+  'tShirtSize',
+];
+
 export default Controller.extend({
-  editedUserFields: computed(function() {
-    return {};
+  session: service(),
+
+  editedUserFields: computed('session.user', function() {
+    const user = this.session.user;
+    return EDITABLE_USER_FIELDS.reduce((memo, fieldKey) => {
+      memo[fieldKey] = user[fieldKey];
+      return memo;
+    }, {});
   }),
 
   editedRegistrationFields: computed(function() {
     return {};
   }),
+
+  reunionRegistration: alias('model.reunionRegistration'),
+  registeredByUser: alias('model.registeredByUser'),
+  tshirtSizes: readOnly('model.tshirtSizes'),
+
+  registeringSelf: true,
+
+  validUserFields: computed(`editedUserFields.{${EDITABLE_USER_FIELDS}}`, function() {
+    const userFields = this.editedUserFields;
+    return EDITABLE_USER_FIELDS.every(fieldKey => userFields[fieldKey]);
+  }),
+
+  validRegistrationFields: computed(`editedRegistrationFields.{${EDITABLE_REGISTRATION_FIELDS}}`, function() {
+    // const regFields = this.editedRegistrationFields;
+    return true;
+  }),
+
+  canSubmit: and('validUserFields', 'validRegistrationFields'),
+
   submit: task(function*() {
     this.flashMessages.clearMessages();
     try {
