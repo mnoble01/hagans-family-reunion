@@ -13,7 +13,7 @@ function isLoggedIn(req, res, next) {
   });
 }
 
-function setCustomDirect(req, res, next()) {
+function setCustomDirect(req, res, next) {
   logger.log('info', 'SET CUSTOM REDIRECT', req.query);
   req.session.redirect = req.query.redirect || null;
   next();
