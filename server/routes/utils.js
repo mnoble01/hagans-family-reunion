@@ -14,10 +14,11 @@ function isLoggedIn(req, res, next) {
 }
 
 function loginSuccessRedirect(req, res) {
-  const defaultRedirect = `${req.host}${LOGIN_SUCCESS_REDIRECT}`;
+  const defaultRedirect = `${req.hostname}${LOGIN_SUCCESS_REDIRECT}`;
   if (req.session.redirect) {
-    logger.log('SESSION', req.session);
-    logger.log('info', 'CUSTOM REDIRECT', req.session.redirect.toString());
+    logger.log('info', 'SESSION', req.session);
+    logger.log('info', 'CUSTOM REDIRECT', req.session.redirect);
+    logger.log('info', req.session.redirect.length);
   } else {
     logger.log('info', 'DEFAULT REDIRECT', defaultRedirect);
   }
