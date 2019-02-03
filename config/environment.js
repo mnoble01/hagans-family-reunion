@@ -35,6 +35,10 @@ module.exports = function(environment) {
       'Noto+Serif:400,700',
     ],
 
+    bugsnag: {
+      apiKey: process.env.BUGSNAG_API_KEY,
+    },
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created

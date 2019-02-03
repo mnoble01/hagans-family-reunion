@@ -1,7 +1,10 @@
 import Service, { inject as service } from '@ember/service';
 import UserModel from 'hagans-family/pods/airtable/user-model';
-import { computed } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { bool, equal } from '@ember/object/computed';
+import ENV from 'hagans-family/config/environment';
+import bugsnag from '@bugsnag/js';
+import Ember from 'ember';
 
 export default Service.extend({
   ajax: service(),
@@ -11,6 +14,27 @@ export default Service.extend({
   userIsPending: equal('user.status', 'Pending Review'),
   userPermissions: computed('user.permissions', function() {
     return this.isAuthenticated && this.user.permissions || [];
+  }),
+
+  init() {
+    this._super(...arguments);
+    this._initBugsnag();
+  },
+
+  _initBugsnag() {
+    const bugsnagClient = this.bugsnagClient;
+    Ember.onerror = function(error) {
+      bugsnagClient.notify(error);
+    };
+  },
+
+  bugsnagClient: computed(function() {
+    return bugsnag(ENV.bugsnag.apiKey);
+  }),
+
+  _setBugsnagClientUser: observer('user', function() {
+    const user = this.user;
+    this.bugsnagClient.user = user && user.serialize();
   }),
 
   async authorize() {
