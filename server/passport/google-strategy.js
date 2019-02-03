@@ -17,11 +17,11 @@ passport.use(new GoogleStrategy({
     callbackURL: 'https://hagans.family/auth/google/callback',
   },
   function(accessToken, refreshToken, profile, done) {
+    logger.log('info', 'GOOGLE PROFILE', profile);
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
     const email = profile.emails[0].value;
     const profileImageUrl = imageUrl(profile.photos && profile.photos[0] && profile.photos[0].value);
-    logger.log('info', 'GOOGLE PROFILE', profile);
     registerOrLogin({
       done,
       email,
@@ -39,12 +39,12 @@ module.exports = function(app) {
   //   request.  The first step in Google authentication will involve
   //   redirecting the user to google.com.  After authorization, Google
   //   will redirect the user back to this application at /auth/google/callback
-  // app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email', 'openid'] }));
-  app.get('/auth/google', function(req, res, next) {
-    logger.log('info', 'auth QUERY', req.query);
-    // passport.authenticate('google', { successReturnToOrRedirect : "http://example.net/auth/google/return/" + encodedReturnUrl })(req, res, next);
-    passport.authenticate('google', { scope: ['profile', 'email', 'openid'], successRedirect: 'http://google.com?whatup=true' })(...arguments);
-  });
+  app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email', 'openid'] }));
+  // app.get('/auth/google', function(req, res, next) {
+  //   logger.log('info', 'auth QUERY', req.query);
+  //   // passport.authenticate('google', { successReturnToOrRedirect : "http://example.net/auth/google/return/" + encodedReturnUrl })(req, res, next);
+  //   passport.authenticate('google', { scope: ['profile', 'email', 'openid'], successRedirect: 'http://google.com?whatup=true' })(...arguments);
+  // });
 
   // GET /auth/google/callback
   //   Use passport.authenticate() as route middleware to authenticate the

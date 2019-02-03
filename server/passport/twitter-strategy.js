@@ -20,12 +20,12 @@ passport.use(new TwitterStrategy({
     includeEntities: false,
   },
   function(token, tokenSecret, profile, done) {
+    logger.log('info', 'TWITTER PROFILE', profile);
     const name = profile.displayName.split(' ');
     const firstName = name[0];
     const lastName = name[1];
     const email = profile.emails[0].value;
     const profileImageUrl = imageUrl(profile.photos && profile.photos[0] && profile.photos[0].value);
-    logger.log('info', 'TWITTER PROFILE', profile);
     registerOrLogin({
       done,
       email,
