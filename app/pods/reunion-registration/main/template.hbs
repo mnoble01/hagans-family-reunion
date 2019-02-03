@@ -50,19 +50,20 @@
 
     {{!-- Registration Fields --}}
     <label local-class='input-label'> T-Shirt Size </label>
-    {{!-- <input local-class='input' type='text' value={{editedRegistrationFields.address}} oninput={{action (mut editedUserFields.address) value='target.value'}}> --}}
-    {{log tshirtSizes}}
-    {{power-select
+    {{#power-select
       options=tshirtSizes
       onchange=(action (mut editedRegistrationFields.tShirtSize))
       selected=editedRegistrationFields.tShirtSize
       searchEnabled=false
+      as |size|
     }}
-
+      {{size}}
+    {{/power-select}}
     {{#if (not registeringSelf)}}
       {{!-- Relationship - can update the user field also --}}
       SHOW RELATIONSHIP FIELD
     {{/if}}
+    
     <div local-class='buttons'>
       <button
         local-class='primary-button'

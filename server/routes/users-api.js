@@ -25,6 +25,15 @@ const upload = multer({
   dest: '/tmp',
 });
 
+function isCurrentUser(req, res, next) {
+  if (req.params.id === req.user.id) {
+    next();
+  }
+  res.status(401).json({
+    message: 'access denied',
+  });
+}
+
 module.exports = function(app) {
   app.get('/api/user', isLoggedIn, function(req, res) {
     return res.status(200).json({ ...req.user });
@@ -43,7 +52,7 @@ module.exports = function(app) {
 
   app.get('/api/users/:id', isLoggedIn, findCallback(USER_TABLE));
 
-  app.put('/api/users/:id', isLoggedIn, updateCallback(USER_TABLE));
+  app.put('/api/users/:id', isLoggedIn, isCurrentUser, updateCallback(USER_TABLE));
 
   app.get('/api/users/by_email/:email', isLoggedIn, async function(req, res) {
     try {

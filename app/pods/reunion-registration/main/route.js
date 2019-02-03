@@ -9,8 +9,8 @@ export default Route.extend({
 
   async model() {
     const reunionRegistrationId = this.get('session.user.reunionRegistrationId.0');
-    const tshirtSizes = await this.ajax.request('/api/tshirt_sizes');
-    // console.log('sizes', tshirtSizes);
+    const tshirtSizes = (await this.ajax.request('/api/tshirt_sizes')).mapBy('Name');
+
     if (reunionRegistrationId) {
       const reunionRegistration = await this.ajax.request(`/api/reunion_registrations/${reunionRegistrationId}`);
       const registeredByUser = await this.ajax.request(`/api/users/${reunionRegistration.registered_by_id[0]}`);
@@ -24,5 +24,11 @@ export default Route.extend({
         tshirtSizes,
       };
     }
+  },
+
+  actions: {
+    refreshModel() {
+      this.refresh();
+    },
   },
 });

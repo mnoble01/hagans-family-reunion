@@ -158,6 +158,7 @@ textarea.input {
   margin-bottom: 16px;
 }
 :global(.ember-power-select-trigger) {
+  display: flex;
   color: input-color;
   border-radius: 2px;
   border: 2px solid #DDD;
@@ -168,6 +169,10 @@ textarea.input {
 :global(.ember-power-select-trigger--active) {
   border-color: #BBB;
 }
+:global(.ember-power-select-trigger:focus),
+:global(.ember-power-select-trigger--active) {
+  outline: none;  
+}
 :global(.ember-power-select-multiple-option) {
   line-height: 32px;
   color: input-color;
@@ -177,8 +182,17 @@ textarea.input {
   display: flex;
   padding: 0 8px;
 }
+:global(.ember-power-select-selected-item) {
+  line-height: 32px;
+  color: input-color;
+  margin-left: 0;
+  align-self: center;
+}
 :global(.ember-power-select-multiple-option .ember-power-select-multiple-remove-btn) {
   margin-right: 8px;
+}
+:global(.ember-power-select-options[role=listbox]) {
+  max-height: 100%;
 }
 :global(.ember-power-select-options .ember-power-select-option) {
   line-height: 32px;

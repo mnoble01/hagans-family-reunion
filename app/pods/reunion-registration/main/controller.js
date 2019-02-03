@@ -3,12 +3,9 @@ import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { alias, and, readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-// import ReunionRegistrationModel from 'hagans-family/pods/airtable/reunion-registration-model';
+import UserModel from 'hagans-family/pods/airtable/user-model';
+import ReunionRegistrationModel from 'hagans-family/pods/airtable/reunion-registration-model';
 
-// const EDITABLE_FIELDS = (new ReunionRegistrationModel).clientEditableFields;
-
-// TODO need reunion-registration-form
-// TODO need tshirt-order-form
 const EDITABLE_USER_FIELDS = [
   'firstName',
   'lastName',
@@ -19,10 +16,12 @@ const EDITABLE_USER_FIELDS = [
 ];
 const EDITABLE_REGISTRATION_FIELDS = [
   'tShirtSize',
+  'relationship',
 ];
 
 export default Controller.extend({
   session: service(),
+  ajax: service(),
 
   editedUserFields: computed('session.user', function() {
     const user = this.session.user;
@@ -48,8 +47,8 @@ export default Controller.extend({
   }),
 
   validRegistrationFields: computed(`editedRegistrationFields.{${EDITABLE_REGISTRATION_FIELDS}}`, function() {
-    // const regFields = this.editedRegistrationFields;
-    return true;
+    const regFields = this.editedRegistrationFields;
+    return EDITABLE_REGISTRATION_FIELDS.every(fieldKey => regFields[fieldKey]);
   }),
 
   canSubmit: and('validUserFields', 'validRegistrationFields'),
@@ -57,66 +56,62 @@ export default Controller.extend({
   submit: task(function*() {
     this.flashMessages.clearMessages();
     try {
-      // Create or update user
+      let user = this.registeringSelf ? this.session.user : new UserModel;
+      const userFields = this.editedUserFields;
+      for (const key of Object.keys(userFields)) {
+        user.set(key, userFields[key]);
+      }
 
-      // const response = await this.get('ajax').post('/api/register', {
-      //   data: {
-      //     email,
-      //     password,
-      //     firstName,
-      //     lastName,
-      //   },
-      // });
-      // const user = new UserModel(response);
+      if (this.registeringSelf) {
+        yield this.ajax.put(`/api/users/${user.id}`, {
+          data: JSON.stringify(user.serialize()),
+        });
+      } else {
+        user = yield this.createOrUpdateUser.perform(user);
+      }
 
-      // const communicationModel = new CommunicationModel;
-      // for (const key of Object.keys(this.editedFields)) {
-      //   communicationModel.set(key, this.editedFields[key]);
-      // }
-      //
-      // yield this.get('ajax').post('/api/communications', {
-      //   data: communicationModel.serialize(),
-      // });
-      //
-      // this.flashMessages.info('Successfully sent!', {
-      //   scope: 'communication-form',
-      // });
-      this.set('success', true);
+      yield this.createReunionRegistration.perform(user);
+
+      this.send('refreshModel');
     } catch (e) {
       this.flashMessages.danger(e, { scope: 'form' });
     }
   }),
 
+  createOrUpdateUser: task(function*(user) {
+    // Get user by email app.get('/api/users/by_email/:email')
+    // IF USER EXISTS
+    // update with attrs not filled in -- have to modify the UPDATE USER API for this
+    // ELSE
+    // Create new Pending user - can I use the register route??
 
-  // app.get('/api/users/by_email/:email',
-  // app.post('/api/reunion_registrations', isLoggedIn, creationCallback(REGISTRATION_TABLE));
-  //
-  // app.get('/api/reunion_registrations/:id', isLoggedIn, findCallback(REGISTRATION_TABLE));
-  //
-  // app.post('/api/tshirt_orders', isLoggedIn, creationCallback(TSHIRT_ORDER_TABLE));
-  //
-  // app.get('/api/tshirt_sizes', isLoggedIn, fetchCallback(TSHIRT_SIZE_TABLE));
+    // const response = await this.get('ajax').post('/api/register', {
+    //   data: {
+    //     email,
+    //     password,
+    //     firstName,
+    //     lastName,
+    //   },
+    // });
+  }),
 
-  createReunionRegistration: task(function*() {
-    // 'user_id',
-    // 'registered_by_id',
-    // 'First Name',
-    // 'Last Name',
-    // 'Email',
-    // 'Birth Date',
-    // 'Phone',
-    // 'Address',
-    // 'Relationship',
-    // 'T-Shirt Size',
-    this.clearFlashMessages();
-    try {
-      // console.log('create reunion registration');
-    } catch (e) {
-      this.handleError(e);
+  createReunionRegistration: task(function*(user) {
+    const registration = new ReunionRegistrationModel;
+    registration.set('user_id', [user.id]);
+    registration.set('registered_by_id', [this.session.user.id]);
+
+    const regFields = this.editedRegistrationFields;
+    for (const key of Object.keys(regFields)) {
+      user.set(key, regFields[key]);
     }
+
+    yield this.ajax.post('/api/reunion_registrations', {
+      data: JSON.stringify(registration.serialize()),
+    });
   }),
 
   // TODO this goes in its own route
+  // app.post('/api/tshirt_orders', isLoggedIn, creationCallback(TSHIRT_ORDER_TABLE));
   createTshirtOrder: task(function*() {
     this.clearFlashMessages();
     try {
