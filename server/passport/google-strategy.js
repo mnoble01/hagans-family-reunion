@@ -39,9 +39,8 @@ module.exports = function(app) {
   //   request.  The first step in Google authentication will involve
   //   redirecting the user to google.com.  After authorization, Google
   //   will redirect the user back to this application at /auth/google/callback
-  // app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email', 'openid'] }));
   app.get('/auth/google', function(req, res, next) {
-    logger.log('info', 'GOOGLE AUTH REDIRECT', req.query.redirect);
+    logger.log('info', 'GOOGLE AUTH QUERY', req.query);
     req.session.redirect = req.query.redirect;
     passport.authenticate('google', { scope: ['profile', 'email', 'openid'] })(...arguments);
   });
