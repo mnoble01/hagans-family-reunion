@@ -3,6 +3,7 @@ import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { alias, and, readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import moment from 'moment';
 import UserModel from 'hagans-family/pods/airtable/user-model';
 import ReunionRegistrationModel from 'hagans-family/pods/airtable/reunion-registration-model';
 
@@ -22,6 +23,12 @@ const EDITABLE_REGISTRATION_FIELDS = [
 export default Controller.extend({
   session: service(),
   ajax: service(),
+
+  formExpired: computed(function() {
+    const deadline = moment('2019-07-12');
+    const now = moment();
+    return now.isAfter(deadline);
+  }),
 
   editedUserFields: computed('session.user', function() {
     const user = this.session.user;

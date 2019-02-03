@@ -7,7 +7,11 @@
 
   {{flash-messages scope='form' flashClass=(local-class 'flash-messages')}}
 
-  {{#if reunionRegistration}}
+  {{#if formExpired}}
+    <h2 local-class='subtitle'>
+      Registration has closed.
+    </h2>
+  {{else if reunionRegistration}}
     <h2 local-class='subtitle'>
       {{#if (eq session.user.id registeredByUser.id)}}
         Looks like you already registered
@@ -37,11 +41,12 @@
         <input local-class='input' value={{editedUserFields.lastName}} oninput={{action (mut editedUserFields.lastName) value='target.value'}} type='text'>
       </div>
     </div>
-    <label local-class='input-label'> Email </label>
-    <input local-class='input' type='email' value={{editedUserFields.email}} oninput={{action (mut editedUserFields.email) value='target.value'}}>
     <label local-class='input-label'> Birth Date </label>
     <input local-class='input' type='date' value={{editedUserFields.birthDate}} onchange={{action (mut editedUserFields.birthDate) value='target.value'}}>
+    {{!-- if not registeringSelf, make email optional but still show it --}}
     {{#if registeringSelf}}
+      <label local-class='input-label'> Email </label>
+      <input local-class='input' type='email' value={{editedUserFields.email}} oninput={{action (mut editedUserFields.email) value='target.value'}}>
       <label local-class='input-label'> Phone Number </label>
       <input local-class='input' type='tel' value={{editedUserFields.phone}} oninput={{action (mut editedUserFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}'>
       <label local-class='input-label'> Address </label>
@@ -63,7 +68,7 @@
       {{!-- Relationship - can update the user field also --}}
       SHOW RELATIONSHIP FIELD
     {{/if}}
-    
+
     <div local-class='buttons'>
       <button
         local-class='primary-button'
