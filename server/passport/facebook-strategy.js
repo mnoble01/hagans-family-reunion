@@ -3,7 +3,7 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const registerOrLogin = require('passport/register-or-login');
 const routeUtils = require('routes/utils');
-const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
+const { loginSuccessRedirect, setCustomDirect, LOGIN_FAILURE_REDIRECT } = routeUtils;
 const logger = require('utils/logger');
 
 function imageUrl(userId) {
@@ -39,11 +39,7 @@ module.exports = function(app) {
   // Redirect the user to Facebook for authentication.  When complete,
   // Facebook will redirect the user back to the application at
   //     /auth/facebook/callback
-  app.get('/auth/facebook', function(req, res, next) {
-    logger.log('info', 'FACEBOOK AUTH QUERY', req.query);
-    req.session.redirect = req.query.redirect;
-    passport.authenticate('facebook')(...arguments);
-  });
+  app.get('/auth/facebook', setCustomDirect, passport.authenticate('facebook'));
 
   // Facebook will redirect the user to this URL after approval.  Finish the
   // authentication process by attempting to obtain an access token.  If
@@ -51,7 +47,5 @@ module.exports = function(app) {
   // authentication has failed.
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: LOGIN_FAILURE_REDIRECT,
-  }), function(req, res) {
-    res.redirect(req.session.redirect || LOGIN_SUCCESS_REDIRECT);
-  });
+  }), loginSuccessRedirect);
 };

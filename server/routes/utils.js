@@ -13,21 +13,26 @@ function isLoggedIn(req, res, next) {
   });
 }
 
+function setCustomDirect(req, res) {
+  logger.log('info', 'SET CUSTOM REDIRECT', req.query);
+  req.session.redirect = req.query.redirect || null;
+}
+
 function loginSuccessRedirect(req, res) {
   const defaultRedirect = `${req.hostname}${LOGIN_SUCCESS_REDIRECT}`;
   if (req.session.redirect) {
-    logger.log('info', 'SESSION', req.session);
     logger.log('info', 'CUSTOM REDIRECT', req.session.redirect);
-    logger.log('info', req.session.redirect.length);
   } else {
     logger.log('info', 'DEFAULT REDIRECT', defaultRedirect);
   }
   res.redirect(req.session.redirect || defaultRedirect);
+  req.session.redirect = null;
 }
 
 module.exports = {
   isLoggedIn,
   loginSuccessRedirect,
+  setCustomDirect,
   LOGIN_SUCCESS_REDIRECT,
   LOGIN_FAILURE_REDIRECT,
 };

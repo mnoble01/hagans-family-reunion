@@ -3,7 +3,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const registerOrLogin = require('passport/register-or-login');
 const routeUtils = require('routes/utils');
-const { LOGIN_FAILURE_REDIRECT, loginSuccessRedirect } = routeUtils;
+const { LOGIN_FAILURE_REDIRECT, loginSuccessRedirect, setCustomDirect } = routeUtils;
 const logger = require('utils/logger');
 
 function imageUrl(url) {
@@ -39,13 +39,7 @@ module.exports = function(app) {
   //   request.  The first step in Google authentication will involve
   //   redirecting the user to google.com.  After authorization, Google
   //   will redirect the user back to this application at /auth/google/callback
-  app.get('/auth/google', function(req, res, next) {
-    logger.log('info', 'GOOGLE AUTH QUERY', req.query);
-    req.session.redirect = req.query.redirect;
-    logger.log('info', 'query redirect', req.query.redirect, req.query.redirect.length);
-    logger.log('info', 'session redirect', req.session.redirect, req.session.redirect.length);
-    passport.authenticate('google', { scope: ['profile', 'email', 'openid'] })(...arguments);
-  });
+  app.get('/auth/google', setCustomDirect, passport.authenticate('google', { scope: ['profile', 'email', 'openid'] }));
 
   // GET /auth/google/callback
   //   Use passport.authenticate() as route middleware to authenticate the

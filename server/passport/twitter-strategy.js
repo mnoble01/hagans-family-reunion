@@ -3,7 +3,7 @@ const passport = require('passport');
 const registerOrLogin = require('passport/register-or-login');
 const TwitterStrategy = require('passport-twitter').Strategy;
 const routeUtils = require('routes/utils');
-const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
+const { loginSuccessRedirect, setCustomDirect, LOGIN_FAILURE_REDIRECT } = routeUtils;
 const logger = require('utils/logger');
 
 function imageUrl(url) {
@@ -41,11 +41,7 @@ module.exports = function(app) {
   // Redirect the user to Twitter for authentication.  When complete, Twitter
   // will redirect the user back to the application at
   //   /auth/twitter/callback
-  app.get('/auth/twitter', function(req, res, next) {
-    logger.log('info', 'TWITTER AUTH QUERY', req.query);
-    req.session.redirect = req.query.redirect;
-    passport.authenticate('twitter')(...arguments);
-  });
+  app.get('/auth/twitter', setCustomDirect, passport.authenticate('twitter'));
 
   // Twitter will redirect the user to this URL after approval.  Finish the
   // authentication process by attempting to obtain an access token.  If
@@ -53,7 +49,5 @@ module.exports = function(app) {
   // authentication has failed.
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: LOGIN_FAILURE_REDIRECT,
-  }), function(req, res) {
-    res.redirect(req.session.redirect || LOGIN_SUCCESS_REDIRECT);
-  });
+  }), loginSuccessRedirect);
 };

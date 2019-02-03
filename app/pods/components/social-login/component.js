@@ -10,7 +10,7 @@ export default Component.extend({
   redirect(location) {
     const currentRouteName = this.get('router.currentRouteName');
     const params = getOwner(this).lookup('route:application').paramsFor(currentRouteName);
-    const redirectParam = params.redirect;
-    window.location = `${location}?redirect=${encodeURIComponent(redirectParam)}`;
+    const queryParams = params.redirect ? `?redirect=${encodeURIComponent(params.redirect)}` : '';
+    window.location = `${location}${queryParams}`;
   },
 });
