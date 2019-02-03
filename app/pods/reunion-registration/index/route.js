@@ -10,5 +10,8 @@ export default Route.extend({
     this._super(...arguments);
 
     // If is authenticated, move to first step
+    if (this.session.isAuthenticated) {
+      this.replaceWith('reunion-registration.main');
+    }
   },
 });

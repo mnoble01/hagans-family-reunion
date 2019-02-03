@@ -10,8 +10,10 @@ const moment = require('moment');
 const airtableUtils = require('airtable/utils');
 const {
   fetchAirtableUsers,
-  findAirtableRecordById,
   updateAirtableRecord,
+  findAirtableUserByEmail,
+  updateCallback,
+  findCallback,
   tables: {
     USER_TABLE,
   },
@@ -39,31 +41,17 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/users/:id', isLoggedIn, function(req, res) {
-    findAirtableRecordById(USER_TABLE, {
-      id: req.params.id,
-      onSuccess: (airtableUser) => {
-        res.status(200).json(airtableUser.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
+  app.get('/api/users/:id', isLoggedIn, findCallback(USER_TABLE));
 
-  app.put('/api/users/:id', isLoggedIn, function(req, res) {
-    const attrs = req.body;
+  app.put('/api/users/:id', isLoggedIn, updateCallback(USER_TABLE));
 
-    updateAirtableRecord(USER_TABLE, {
-      id: req.params.id,
-      attrs,
-      onSuccess: (airtableUser) => {
-        res.status(200).json(airtableUser.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
+  app.get('/api/users/by_email/:email', isLoggedIn, async function(req, res) {
+    try {
+      const airtableUser = await findAirtableUserByEmail({ email: req.params.email });
+      res.status(200).json(airtableUser.serialize());
+    } catch (error) {
+      res.status(error.statusCode).json(error);
+    }
   });
 
   // TODO create an object for managing uploads

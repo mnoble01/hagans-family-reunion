@@ -4,10 +4,10 @@ const { isLoggedIn } = routeUtils;
 const airtableUtils = require('airtable/utils');
 const {
   fetchAirtablePosts,
-  findAirtableRecordById,
-  updateAirtableRecord,
-  createAirtableRecord,
-  fetchAirtableRecords,
+  creationCallback,
+  updateCallback,
+  findCallback,
+  fetchCallback,
   tables: {
     POST_TABLE,
     POST_CATEGORY_TABLE,
@@ -38,57 +38,13 @@ module.exports = function(app) {
 
   // Purposefully open to non logged-in users
   // TODO Might want to limit the fields that are returned to unauth users
-  app.get('/api/posts/:id', function(req, res) {
-    findAirtableRecordById(POST_TABLE, {
-      id: req.params.id,
-      onSuccess: (airtablePost) => {
-        res.status(200).json(airtablePost.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
+  app.get('/api/posts/:id', findCallback(POST_TABLE));
 
   // TODO check user permissions
-  app.put('/api/posts/:id', isLoggedIn, function(req, res) {
-    const attrs = req.body;
-
-    updateAirtableRecord(POST_TABLE, {
-      id: req.params.id,
-      attrs,
-      onSuccess: (airtablePost) => {
-        res.status(200).json(airtablePost.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
+  app.put('/api/posts/:id', isLoggedIn, updateCallback(POST_TABLE));
 
   // TODO check user permissions
-  app.post('/api/posts', isLoggedIn, function(req, res) {
-    const attrs = req.body;
+  app.post('/api/posts', isLoggedIn, creationCallback(POST_TABLE));
 
-    createAirtableRecord(POST_TABLE, {
-      attrs,
-      onSuccess: (airtablePost) => {
-        res.status(200).json(airtablePost.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
-
-  app.get('/api/post_categories', function(req, res) {
-    fetchAirtableRecords(POST_CATEGORY_TABLE, {
-      onSuccess: (airtableCategories) => {
-        res.status(200).json(airtableCategories.map(post => post.serialize()));
-      },
-      onError:(error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
+  app.get('/api/post_categories', fetchCallback(POST_CATEGORY_TABLE));
 };

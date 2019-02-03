@@ -2,11 +2,16 @@
 const Airtable = require('airtable');
 const AirtableModel = require('airtable/model');
 
-const USER_TABLE = 'users';
-const POST_TABLE = 'posts';
-const POST_CATEGORY_TABLE = 'post_categories';
-const UPLOAD_TABLE = 'uploads';
-const COMMUNICATION_TABLE = 'communications';
+const TABLES = Object.freeze({
+  USER_TABLE: 'users',
+  POST_TABLE: 'posts',
+  POST_CATEGORY_TABLE : 'post_categories',
+  UPLOAD_TABLE : 'uploads',
+  COMMUNICATION_TABLE : 'communications',
+  REGISTRATION_TABLE : 'registrations',
+  TSHIRT_ORDER_TABLE : 'tshirt_orders',
+  TSHIRT_SIZE_TABLE : 'tshirt_sizes',
+});
 
 const airtableBase = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -15,7 +20,7 @@ const airtableBase = new Airtable({
 
 // TODO rewrite these to use promises!!!
 // TODO remove ALL CALLBACKS when all uses are converted to async/await
-function fetchAirtableRecords(tableName, { onSuccess, onError }) {
+function fetchAirtableRecords(tableName, { onSuccess, onError } = {}) {
   const airtableRecords = [];
   return new Promise((resolve, reject) => {
     airtableBase(tableName).select({
@@ -83,7 +88,7 @@ function updateAirtableRecord(tableName, { id, attrs, onSuccess, onError }) {
 function fetchAirtableUsers({ onSuccess, onError }) {
   // TODO use generic function w/ custom filter callbacks
   const airtableRecords = [];
-  airtableBase(USER_TABLE).select({
+  airtableBase(TABLES.USER_TABLE).select({
       pageSize: 100,
       view: 'Grid view',
   }).eachPage((records, fetchNextPage) => {
@@ -106,7 +111,7 @@ function fetchAirtableUsers({ onSuccess, onError }) {
 function fetchAirtablePosts({ status, onSuccess, onError }) {
   // TODO use generic function w/ custom filter callbacks
   const airtableRecords = [];
-  airtableBase(POST_TABLE).select({
+  airtableBase(TABLES.POST_TABLE).select({
       pageSize: 100,
       view: 'Grid view',
   }).eachPage((records, fetchNextPage) => {
@@ -134,7 +139,7 @@ function findAirtableUserByEmail({ email, onSuccess, onError }) {
   // TODO use generic function w/ custom filter callbacks
   let foundModel;
   return new Promise((resolve, reject) => {
-    airtableBase(USER_TABLE).select({
+    airtableBase(TABLES.USER_TABLE).select({
         pageSize: 100,
         view: 'Grid view',
     }).eachPage((records, fetchNextPage) => {
@@ -157,24 +162,74 @@ function findAirtableUserByEmail({ email, onSuccess, onError }) {
   });
 }
 
+function creationCallback(tableName) {
+  return async function(req, res) {
+    const attrs = req.body;
+
+    try {
+      const record = await createAirtableRecord(tableName, { attrs });
+      res.status(200).json(record.serialize());
+    } catch (error) {
+      res.status(error.statusCode).json(error);
+    }
+  };
+}
+
+function updateCallback(tableName) {
+  return async function(req, res) {
+    const attrs = req.body;
+    const id = req.params.id;
+
+    try {
+      const record = updateAirtableRecord(tableName, { id, attrs });
+      res.status(200).json(record.serialize());
+    } catch (error) {
+      res.status(error.statusCode).json(error);
+    }
+  };
+}
+
+function findCallback(tableName) {
+  return async function(req, res) {
+    const id = req.params.id;
+
+    try {
+      const record = await findAirtableRecordById(tableName, { id });
+      res.status(200).json(record.serialize());
+    } catch (error) {
+      res.status(error.statusCode).json(error);
+    }
+  };
+}
+
+function fetchCallback(tableName) {
+  return async function(req, res) {
+    try {
+      const records = fetchAirtableRecords(tableName);
+      res.status(200).json(records.map(record => record.serialize()));
+    } catch (error) {
+      res.status(error.statusCode).json(error);
+    }
+  };
+}
+
 module.exports = {
   airtableBase,
 
-  fetchAirtableRecords,
+  // Bespoke functions to maybe get rid of:
+  findAirtableUserByEmail,
   fetchAirtableUsers,
   fetchAirtablePosts,
 
+  fetchAirtableRecords,
   findAirtableRecordById,
-  findAirtableUserByEmail,
-
   createAirtableRecord,
   updateAirtableRecord,
 
-  tables: {
-    USER_TABLE,
-    POST_TABLE,
-    POST_CATEGORY_TABLE,
-    UPLOAD_TABLE,
-    COMMUNICATION_TABLE,
-  },
+  creationCallback,
+  updateCallback,
+  findCallback,
+  fetchCallback,
+
+  tables: TABLES,
 };

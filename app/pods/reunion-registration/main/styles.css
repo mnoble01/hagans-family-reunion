@@ -1,5 +1,3 @@
-@value medium-gray from 'hagans-family/styles/shared';
-
 .centered-content {
   composes: centered-content from 'hagans-family/styles/shared';
 }
@@ -15,6 +13,25 @@
 .subtitle {
   color: medium-gray;
   text-align: center;
+}
+
+.form-row {
+  display: flex;
+  margin-bottom: 16px;
+}
+.form-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.form-column:not(:last-child) {
+  margin-right: 8px;
+}
+.form-column:not(:first-child) {
+  margin-left: 8px;
+}
+.form-column:last-child {
+  margin-right: 0;
 }
 
 .input-label {

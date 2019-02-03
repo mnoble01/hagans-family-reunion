@@ -1,0 +1,48 @@
+<div local-class='centered-content'>
+  {{article-header}}
+
+  <div local-class='page-title'>
+    2019 Reunion Registration
+  </div>
+
+  {{flash-messages scope='form' flashClass=(local-class 'flash-messages')}}
+
+  {{!-- User Fields --}}
+  {{!-- ONLY SHOW NEEDED USER FIELDS --}}
+  {{!-- First Name --}}
+  {{!-- Last Name --}}
+  {{!-- Email --}}
+  {{!-- Birth Date --}}
+  {{!-- Phone --}}
+  {{!-- Address --}}
+  <div local-class='form-row'>
+    <div local-class='form-column'>
+      <label local-class='input-label'> First Name </label>
+      <input local-class='input' oninput={{action (mut firstName) value='target.value'}} type='text'>
+    </div>
+    <div local-class='form-column'>
+      <label local-class='input-label'> Last Name </label>
+      <input local-class='input' oninput={{action (mut lastName) value='target.value'}} type='text'>
+    </div>
+  </div>
+  <label local-class='input-label'> Email </label>
+  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email'>
+  {{!-- Relationship can update the user field too!!!! --}}
+
+  {{!-- Registration Fields --}}
+  {{!-- Relationship --}}
+  {{!-- T-shirt Size --}}
+  <div local-class='buttons'>
+    <button
+      local-class='primary-button'
+      onclick={{perform register}}
+      disabled={{or (not (and firstName lastName email password passwordConfirm)) register.isRunning}}
+    >
+      {{#if submit.isRunning}}
+        Please wait...
+      {{else}}
+        Submit
+      {{/if}}
+    </button>
+  </div>
+</div>

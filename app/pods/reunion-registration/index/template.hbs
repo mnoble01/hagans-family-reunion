@@ -1,0 +1,26 @@
+<div local-class='centered-content'>
+  {{article-header}}
+
+  <div local-class='page-title'>
+    2019 Reunion Registration
+  </div>
+
+  {{#if session.isAuthenticated}}
+    {{#link-to 'reunion-registration.main' local-class='primary-button'}}
+      Get Started
+    {{/link-to}}
+  {{else}}
+    <h2 local-class='subtitle'>
+      Please register or login to get started.
+    </h2>
+
+    <div local-class='buttons'>
+      {{#link-to 'login' (query-params redirect=redirectHere handhold=true) local-class='primary-button'}}
+          Login
+      {{/link-to}}
+      {{#link-to 'register' (query-params redirect=redirectHere handhold=true) local-class='secondary-button'}}
+          Register
+      {{/link-to}}
+    </div>
+  {{/if}}
+</div>
