@@ -3,7 +3,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const registerOrLogin = require('passport/register-or-login');
 const routeUtils = require('routes/utils');
-const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
+const { LOGIN_FAILURE_REDIRECT, loginSuccessRedirect } = routeUtils;
 const logger = require('utils/logger');
 
 function imageUrl(url) {
@@ -52,7 +52,5 @@ module.exports = function(app) {
   //   which, in this example, will redirect the user to the home page.
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: LOGIN_FAILURE_REDIRECT,
-  }), function(req, res) {
-    res.redirect(req.session.redirect || LOGIN_SUCCESS_REDIRECT);
-  });
+  }), loginSuccessRedirect);
 };
