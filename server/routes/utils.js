@@ -16,7 +16,8 @@ function isLoggedIn(req, res, next) {
 function loginSuccessRedirect(req, res) {
   const defaultRedirect = `${req.host}${LOGIN_SUCCESS_REDIRECT}`;
   if (req.session.redirect) {
-    logger.log('info', 'CUSTOM REDIRECT', req.session.redirect);
+    logger.log('SESSION', req.session);
+    logger.log('info', 'CUSTOM REDIRECT', req.session.redirect.toString());
   } else {
     logger.log('info', 'DEFAULT REDIRECT', defaultRedirect);
   }
