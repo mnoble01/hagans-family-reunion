@@ -21,7 +21,7 @@ passport.use(new FacebookStrategy({
     logger.log('info', 'FACEBOOK PROFILE', profile);
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
-    const email = profile.emails && profile.emails[0].value;
+    const email = profile.emails && profile.emails[0] && profile.emails[0].value;
     const profileImageUrl = imageUrl(profile.id);
     registerOrLogin({
       done,

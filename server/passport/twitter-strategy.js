@@ -24,7 +24,7 @@ passport.use(new TwitterStrategy({
     const name = profile.displayName.split(' ');
     const firstName = name[0];
     const lastName = name[1];
-    const email = profile.emails[0].value;
+    const email = profile.emails && profile.emails[0] && profile.emails[0].value;
     const profileImageUrl = imageUrl(profile.photos && profile.photos[0] && profile.photos[0].value);
     registerOrLogin({
       done,
