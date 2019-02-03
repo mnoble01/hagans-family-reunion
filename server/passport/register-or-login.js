@@ -90,7 +90,9 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
           email,
           airtableId: airtableUser.id,
         });
-        newDbUser.setPassword(password);
+        if (password) {
+          newDbUser.setPassword(password);
+        }
         newDbUser.save(function(err) {
           if (err) {
             return done(err);
