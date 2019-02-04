@@ -1,5 +1,9 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# custom
+.env
+.combined.log
+
 # compiled output
 /dist/
 /tmp/
@@ -17,7 +21,6 @@
 /npm-debug.log*
 /testem.log
 /yarn-error.log
-.env
 
 # ember-try
 /.node_modules.ember-try/

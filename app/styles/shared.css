@@ -32,17 +32,18 @@
 }
 
 /* TODO get a css reset */
+@value input-padding: 12px;
 textarea.input {
-  padding: 12px;
+  padding: input-padding;
 }
 .input {
+  width: auto;
   color: input-color;
   border-radius: 2px;
   border: 2px solid #DDD;
-  padding: 0 12px;
+  padding: 0 input-padding;
   height: 40px;
   font-size: 15px;
-  flex: 1;
 }
 .input:focus {
   border-color: #BBB;
