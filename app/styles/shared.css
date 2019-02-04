@@ -42,6 +42,7 @@ textarea.input {
   padding: 0 12px;
   height: 40px;
   font-size: 15px;
+  width: 100%;
 }
 .input:focus {
   border-color: #BBB;
@@ -171,7 +172,7 @@ textarea.input {
 }
 :global(.ember-power-select-trigger:focus),
 :global(.ember-power-select-trigger--active) {
-  outline: none;  
+  outline: none;
 }
 :global(.ember-power-select-multiple-option) {
   line-height: 32px;
