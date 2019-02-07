@@ -4,13 +4,23 @@ import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
 
+const STEPS = Object.freeze({
+  ADDITIONAL_REGISTRATION: 'additional_registration',
+  SUCCESSFUL_REGISTRATION: 'success',
+
+  TSHIRT_ORDER_DECISION: 'tshirt_order?',
+  ADDITIONAL_TSHIRT_ORDER: 'tshirt_order',
+
+  PAYMENT: 'payment',
+});
+
 export default Controller.extend({
   session: service(),
 
-  // Might want to consolidate these into a single 'step' parameter
-  queryParams: ['additionalRegistration', 'orderingTshirts'],
-  additionalRegistration: false,
-  orderingTshirts: false,
+  queryParams: ['step'],
+  step: null,
+
+  STEPS,
 
   // For ordering t-shirts:
   // referenceRegistrationId: readOnly('session.user.reunionRegistrationId.0'),
@@ -28,10 +38,10 @@ export default Controller.extend({
     return moment().year();
   }),
 
-  onRegistrationSuccess() {
-    this.set('successfullyRegistered', true);
-    this.send('refreshModel');
-  },
+  // onRegistrationSuccess() {
+  //   this.set('successfullyRegistered', true);
+  //   this.send('refreshModel');
+  // },
 
   // registerAnother() {
   //   this.set('successfullyRegistered');

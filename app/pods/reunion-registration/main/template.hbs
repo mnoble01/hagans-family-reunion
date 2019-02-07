@@ -14,7 +14,7 @@
     <h2 local-class='subtitle'>
       Registration has closed.
     </h2>
-  {{else if successfullyRegistered}}
+  {{else if (eq step STEPS.SUCCESSFUL_REGISTRATION)}}
     <h2 local-class='subtitle'>
       <div local-class='checkmark'></div>
       Great! You have registered
@@ -26,15 +26,34 @@
     </h2>
 
     <div local-class='buttons'>
-      {{#link-to 'reunion-registration.main' (query-params additionalRegistration=true) replace=true local-class='primary-button'}}
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_REGISTRATION) local-class='primary-button'}}
         Yes
       {{/link-to}}
-      {{#link-to 'reunion-registration.main' (query-params orderingTshirts=true) replace=true local-class='secondary-button'}}
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_TSHIRT_ORDER) local-class='secondary-button'}}
         No
       {{/link-to}}
     </div>
-  {{else if orderingTshirts}}
+  {{else if (eq step STEPS.ADDITIONAL_REGISTRATION)}}
+    {{reunion-registration-form
+      onSuccess=(action (mut step) STEPS.SUCCESSFUL_REGISTRATION)
+    }}
+  {{else if (eq step STEPS.TSHIRT_ORDER_DECISION)}}
+    <h2 local-class='subtitle'>
+      A t-shirt for each person is included with the reunion fees. Would you like to order additional t-shirts?
+    </h2>
+
+    <div local-class='buttons'>
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_TSHIRT_ORDER) local-class='primary-button'}}
+        Yes
+      {{/link-to}}
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.PAYMENT) local-class='secondary-button'}}
+        No
+      {{/link-to}}
+    </div>
+  {{else if (eq step STEPS.ADDITIONAL_TSHIRT_ORDER)}}
     TODO order additional t-shirts
+  {{else if (eq step STEPS.PAYMENT)}}
+    TODO payment
   {{else if reunionRegistration}}
     <h2 local-class='subtitle'>
       {{#if (eq session.user.id registeredByUser.id)}}
@@ -56,7 +75,7 @@
   {{else}}
     {{reunion-registration-form
       user=session.user
-      onSuccess=(action onRegistrationSuccess)
+      onSuccess=(action (mut step) STEPS.SUCCESSFUL_REGISTRATION)
     }}
   {{/if}}
 </div>

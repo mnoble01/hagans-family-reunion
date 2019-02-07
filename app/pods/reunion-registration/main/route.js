@@ -8,12 +8,7 @@ export default Route.extend({
   session: service(),
 
   queryParams: {
-    additionalRegistration: {
-      as: 'additional_registration',
-      refreshModel: true,
-    },
-    orderingTshirts: {
-      as: 'ordering_tshirts',
+    step: {
       refreshModel: true,
     },
   },
@@ -33,10 +28,8 @@ export default Route.extend({
   },
 
   resetController(controller, isExiting) {
-    console.log('isExiting?', isExiting);
     if (isExiting) {
-      controller.set('successfullyRegistered');
-      controller.set('orderingTshirts', false);
+      controller.set('step', null);
     }
   },
 
