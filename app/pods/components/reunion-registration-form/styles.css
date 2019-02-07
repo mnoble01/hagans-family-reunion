@@ -1,0 +1,61 @@
+.reunion-registration-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 36px;
+}
+
+.flash-messages.flash-messages {
+  margin: 0 0 24px;
+}
+
+@value form-margin: 16px;
+.form-row {
+  display: flex;
+  margin-bottom: form-margin;
+}
+.form-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.form-column:not(:last-child) {
+  margin-right: calc(form-margin / 2);
+}
+.form-column:not(:first-child) {
+  margin-left: calc(form-margin / 2);
+}
+.form-column:last-child {
+  margin-right: 0;
+}
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+  .form-column {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .form-column:not(:last-child) {
+    margin-bottom: form-margin;
+  }
+}
+
+.input-label {
+  composes: input-label from 'hagans-family/styles/shared';
+}
+
+.input {
+  composes: input from 'hagans-family/styles/shared';
+}
+
+.buttons {
+  composes: button-container from 'hagans-family/styles/shared';
+}
+
+.primary-button {
+  composes: primary-button from 'hagans-family/styles/shared';
+}
+
+.secondary-button {
+  composes: secondary-button from 'hagans-family/styles/shared';
+}

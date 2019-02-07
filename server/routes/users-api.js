@@ -5,6 +5,7 @@ const request = require('request');
 const fs = require('fs');
 const schedule = require('node-schedule');
 const moment = require('moment');
+const logger = require('utils/logger');
 
 // airtable utilities
 const airtableUtils = require('airtable/utils');
@@ -27,7 +28,7 @@ const upload = multer({
 
 function isCurrentUser(req, res, next) {
   if (req.params.id === req.user.id) {
-    next();
+    return next();
   }
   res.status(401).json({
     message: 'access denied',

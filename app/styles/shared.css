@@ -167,6 +167,7 @@ textarea.input {
   padding: 0 12px;
   min-height: 40px;
   font-size: 15px;
+  cursor: pointer;
 }
 :global(.ember-power-select-trigger--active) {
   border-color: #BBB;

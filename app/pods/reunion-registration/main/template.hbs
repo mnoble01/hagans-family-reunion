@@ -5,8 +5,6 @@
     2019 Reunion Registration
   </div>
 
-  {{flash-messages scope='form' flashClass=(local-class 'flash-messages')}}
-
   {{#if formExpired}}
     <h2 local-class='subtitle'>
       Registration has closed.
@@ -29,58 +27,25 @@
         Your remaining fees due are ${{reunionRegistration.remainingFeesDue}} / ${{reunionRegistration.totalFeesDue}}.
       {{/if}}
     </h2>
-  {{else}}
-    {{!-- User Fields --}}
-    <div local-class='form-row'>
-      <div local-class='form-column'>
-        <label local-class='input-label'> First Name </label>
-        <input local-class='input' value={{editedUserFields.firstName}} oninput={{action (mut editedUserFields.firstName) value='target.value'}} type='text'>
-      </div>
-      <div local-class='form-column'>
-        <label local-class='input-label'> Last Name </label>
-        <input local-class='input' value={{editedUserFields.lastName}} oninput={{action (mut editedUserFields.lastName) value='target.value'}} type='text'>
-      </div>
-    </div>
-    <label local-class='input-label'> Birth Date </label>
-    <input local-class='input' type='date' value={{editedUserFields.birthDate}} onchange={{action (mut editedUserFields.birthDate) value='target.value'}}>
-    {{!-- if not registeringSelf, make email optional but still show it --}}
-    {{#if registeringSelf}}
-      <label local-class='input-label'> Email </label>
-      <input local-class='input' type='email' value={{editedUserFields.email}} oninput={{action (mut editedUserFields.email) value='target.value'}}>
-      <label local-class='input-label'> Phone Number </label>
-      <input local-class='input' type='tel' value={{editedUserFields.phone}} oninput={{action (mut editedUserFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}'>
-      <label local-class='input-label'> Address </label>
-      <input local-class='input' type='text' value={{editedUserFields.address}} oninput={{action (mut editedUserFields.address) value='target.value'}}>
-    {{/if}}
-
-    {{!-- Registration Fields --}}
-    <label local-class='input-label'> T-Shirt Size </label>
-    {{#power-select
-      options=tshirtSizes
-      onchange=(action (mut editedRegistrationFields.tShirtSize))
-      selected=editedRegistrationFields.tShirtSize
-      searchEnabled=false
-      as |size|
-    }}
-      {{size}}
-    {{/power-select}}
-    {{#if (not registeringSelf)}}
-      {{!-- Relationship - can update the user field also --}}
-      SHOW RELATIONSHIP FIELD
-    {{/if}}
+  {{else if successfullyRegistered}}
+    <h2 local-class='subtitle'>
+      Would you like to register another person in your household?
+    </h2>
 
     <div local-class='buttons'>
-      <button
-        local-class='primary-button'
-        onclick={{perform submit}}
-        disabled={{or submit.isRunning (not canSubmit)}}
-      >
-        {{#if submit.isRunning}}
-          Please wait...
-        {{else}}
-          Submit
-        {{/if}}
-      </button>
+      {{#link-to 'reunion-registration.main' (query-params additionalRegistration=true) local-class='primary-button'}}
+        Yes
+      {{/link-to}}
+      {{#link-to 'reunion-registration.main' (query-params orderingTshirts=true) local-class='secondary-button'}}
+        No
+      {{/link-to}}
     </div>
+  {{else if orderingTshirts}}
+    TODO order additional t-shirts
+  {{else}}
+    {{reunion-registration-form
+      user=session.user
+      onSuccess=(action onRegistrationSuccess)
+    }}
   {{/if}}
 </div>

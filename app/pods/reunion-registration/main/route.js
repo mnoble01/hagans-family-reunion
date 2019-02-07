@@ -7,28 +7,42 @@ export default Route.extend({
   ajax: service(),
   session: service(),
 
+  queryParams: {
+    additionalRegistration: {
+      as: 'additional_registration',
+      refreshModel: true,
+    },
+    orderingTshirts: {
+      as: 'ordering_tshirts',
+      refreshModel: true,
+    },
+  },
+
   async model() {
     const reunionRegistrationId = this.get('session.user.reunionRegistrationId.0');
-    const tshirtSizes = (await this.ajax.request('/api/tshirt_sizes')).mapBy('Name');
 
+    // TODO add query param for 'registering other user' or 'additionalRegistration'
     if (reunionRegistrationId) {
       const reunionRegistration = await this.ajax.request(`/api/reunion_registrations/${reunionRegistrationId}`);
       const registeredByUser = await this.ajax.request(`/api/users/${reunionRegistration.registered_by_id[0]}`);
       return {
         reunionRegistration: new ReunionRegistrationModel(reunionRegistration),
         registeredByUser: new UserModel(registeredByUser),
-        tshirtSizes,
-      };
-    } else {
-      return {
-        tshirtSizes,
       };
     }
   },
 
-  actions: {
-    refreshModel() {
-      this.refresh();
-    },
+  resetController(controller, isExiting) {
+    console.log('isExiting?', isExiting);
+    if (isExiting) {
+      controller.set('successfullyRegistered');
+      controller.set('orderingTshirts', false);
+    }
   },
+  //
+  // actions: {
+  //   refreshModel() {
+  //     this.refresh();
+  //   },
+  // },
 });
