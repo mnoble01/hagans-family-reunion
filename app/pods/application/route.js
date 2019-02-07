@@ -90,6 +90,10 @@ export default Route.extend({
     //   }
     // },
 
+    refreshModel() {
+      this.refresh();
+    },
+
     didTransition() {
       this.flashMessages.clearMessages();
     },

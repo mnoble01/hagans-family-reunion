@@ -50,6 +50,10 @@ export default Service.extend({
     this.set('user', user);
   },
 
+  reloadUser() {
+    return this.authorize();
+  },
+
   async authenticate({ email, password }) {
     try {
       const response = await this.get('ajax').post('/api/login', {

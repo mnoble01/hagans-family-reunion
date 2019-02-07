@@ -7,6 +7,7 @@ import moment from 'moment';
 export default Controller.extend({
   session: service(),
 
+  // Might want to consolidate these into a single 'step' parameter
   queryParams: ['additionalRegistration', 'orderingTshirts'],
   additionalRegistration: false,
   orderingTshirts: false,
@@ -23,8 +24,13 @@ export default Controller.extend({
     return now.isAfter(deadline);
   }),
 
+  currentYear: computed(function() {
+    return moment().year();
+  }),
+
   onRegistrationSuccess() {
     this.set('successfullyRegistered', true);
+    this.send('refreshModel');
   },
 
   // registerAnother() {

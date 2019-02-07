@@ -39,10 +39,13 @@ export default Route.extend({
       controller.set('orderingTshirts', false);
     }
   },
-  //
-  // actions: {
-  //   refreshModel() {
-  //     this.refresh();
-  //   },
-  // },
+
+  actions: {
+    async refreshModel() {
+      // manually set for reloading user
+      this.controller.set('loading', true);
+      await this.session.reloadUser();
+      this.refresh();
+    },
+  },
 });

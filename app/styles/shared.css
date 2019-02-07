@@ -263,3 +263,18 @@ textarea.input {
 .offset-block a[href^=tel] {
   margin-top: 12px;
 }
+
+.checkmark {
+  background-color: green;
+  color: white;
+  border-radius: 100%;
+  width: 42px;
+  height: 42px;
+  margin: 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.checkmark:after {
+  content: '✔';
+}

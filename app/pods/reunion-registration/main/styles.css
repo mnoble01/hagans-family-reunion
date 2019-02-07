@@ -24,3 +24,7 @@
 .secondary-button {
   composes: secondary-button from 'hagans-family/styles/shared';
 }
+
+.checkmark {
+  composes: checkmark from 'hagans-family/styles/shared';
+}
