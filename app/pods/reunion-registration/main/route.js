@@ -11,10 +11,14 @@ export default Route.extend({
     step: {
       refreshModel: true,
     },
+    reunionRegistrationId: {
+      refreshModel: true,
+      as: 'reg_id',
+    },
   },
 
-  async model() {
-    const reunionRegistrationId = this.get('session.user.reunionRegistrationId.0');
+  async model(params) {
+    const reunionRegistrationId = params.reunionRegistrationId || this.get('session.user.reunionRegistrationId.0');
 
     // TODO add query param for 'registering other user' or 'additionalRegistration'
     if (reunionRegistrationId) {

@@ -13,12 +13,14 @@ const {
   fetchAirtableUsers,
   updateAirtableRecord,
   findAirtableUserByEmail,
+  createAirtableRecord,
   updateCallback,
   findCallback,
   tables: {
     USER_TABLE,
   },
 } = airtableUtils;
+const AirtableModel = require('airtable/model');
 
 // file upload utilities
 const multer = require('multer');
@@ -49,6 +51,45 @@ module.exports = function(app) {
         res.status(error.statusCode).json(error);
       },
     });
+  });
+
+  // Endpoint for users to register other users
+  app.post('/api/users/register_other', async function(req, res) {
+      let airtableUser;
+      const { email, attrs } = req.body;
+      logger.log('debug', '/api/users/register_other', email, attrs);
+      try {
+        if (email) {
+          logger.log('debug', 'finding user by email', email);
+          airtableUser = await findAirtableUserByEmail({ email });
+          // Update user attrs
+          airtableUser = await updateAirtableRecord(USER_TABLE, {
+            id: airtableUser.id,
+            attrs,
+          });
+        }
+      } catch (e) {
+        // Swallow error
+        logger.log('debug', 'user not found or error', e);
+      }
+
+      try {
+        if (!airtableUser) { // Existing user not found
+          logger.log('debug', 'no existing user found, so create new', attrs);
+          airtableUser = await createAirtableRecord(USER_TABLE, {
+            attrs: {
+              ...attrs,
+              Status: 'Pending Review',
+              ['Registration Source']: ['Other User'],
+              ['Invited By']: [req.user.id],
+            },
+          });
+        }
+        res.status(200).json(airtableUser.serialize());
+      } catch (error) {
+        logger.log('debug', '/api/users/register_other error', error);
+        res.status(error.statusCode).json(error);
+      }
   });
 
   app.get('/api/users/:id', isLoggedIn, findCallback(USER_TABLE));

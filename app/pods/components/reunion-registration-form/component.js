@@ -26,13 +26,16 @@ export default Component.extend({
   session: service(),
   ajax: service(),
 
-  user: null,
   onSuccess() {},
 
   init() {
     this._super(...arguments);
     this.loadTshirtSizes.perform();
   },
+
+  user: computed(function() {
+    return new UserModel;
+  }),
 
   loadTshirtSizes: task(function*() {
     try {
@@ -90,7 +93,9 @@ export default Component.extend({
 
   validUserFields: computed('editableUserFields', `editedUserFields.{${ALL_EDITABLE_USER_FIELDS}}`, function() {
     const userFields = this.editedUserFields;
-    return this.editableUserFields.every(fieldKey => userFields[fieldKey]);
+    const notRequired = this.registeringSelf ? [] : ['email'];
+    const requiredUserFields = this.editableUserFields.reject(fieldKey => notRequired.includes(fieldKey));
+    return requiredUserFields.every(fieldKey => userFields[fieldKey]);
   }),
 
   validRegistrationFields: computed('editableRegistrationFields', `editedRegistrationFields.{${ALL_EDITABLE_REGISTRATION_FIELDS}}`, function() {
@@ -104,16 +109,16 @@ export default Component.extend({
     this.flashMessages.clearMessages();
     try {
       const user = yield this.createOrUpdateUser.perform();
-      yield this.createReunionRegistration.perform(user);
+      const reunionRegistration = yield this.createReunionRegistration.perform(user);
 
-      this.get('onSuccess')(user);
+      this.get('onSuccess')(user, reunionRegistration);
     } catch (e) {
       this.flashMessages.danger(e, { scope: 'form' });
     }
   }),
 
   createOrUpdateUser: task(function*() {
-    const user = this.registeringSelf ? this.session.user : new UserModel;
+    const user = this.user;
     const userFields = this.editedUserFields;
     for (const key of Object.keys(userFields)) {
       user.set(key, userFields[key]);
@@ -124,22 +129,13 @@ export default Component.extend({
       });
       return new UserModel(response);
     } else {
-      // user = yield this.createOrUpdateUser.perform(user);
-      console.log('TODO register other user');
-      // Get user by email app.get('/api/users/by_email/:email')
-      // IF USER EXISTS
-      // update with attrs not filled in -- have to modify the UPDATE USER API for this
-      // ELSE
-      // Create new Pending user - can I use the register route??
-
-      // const response = await this.get('ajax').post('/api/register', {
-      //   data: {
-      //     email,
-      //     password,
-      //     firstName,
-      //     lastName,
-      //   },
-      // });
+      const response = yield this.get('ajax').post('/api/users/register_other', {
+        data: {
+          email: userFields.email,
+          attrs: user.serialize(),
+        },
+      });
+      return new UserModel(response);
     }
   }),
 
@@ -153,9 +149,11 @@ export default Component.extend({
       registration.set(key, regFields[key]);
     }
 
-    return yield this.ajax.post('/api/reunion_registrations', {
+    const response = yield this.ajax.post('/api/reunion_registrations', {
       data: JSON.stringify(registration.serialize()),
     });
+
+    return new ReunionRegistrationModel(response);
   }),
 
   // TODO this goes in its own route

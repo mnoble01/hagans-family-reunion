@@ -13,8 +13,7 @@
 </div>
 <label local-class='input-label'> Birth Date </label>
 <input local-class='input' type='date' value={{editedUserFields.birthDate}} onchange={{action (mut editedUserFields.birthDate) value='target.value'}}>
-{{!-- if not registeringSelf, make email optional but still show it --}}
-<label local-class='input-label'> Email </label>
+<label local-class='input-label'> Email {{unless registeringSelf '(not required, but please enter if they have one)'}}</label>
 <input local-class='input' type='email' value={{editedUserFields.email}} oninput={{action (mut editedUserFields.email) value='target.value'}}>
 {{#if registeringSelf}}
   <label local-class='input-label'> Phone Number </label>
@@ -35,12 +34,9 @@
   {{option.name}}
 {{/power-select}}
 {{#if (not registeringSelf)}}
-  {{!-- Relationship - can update the user field also --}}
-  SHOW RELATIONSHIP FIELD
+  <label local-class='input-label'> Relationship to you </label>
+  <input local-class='input' type='text' value={{editedRegistrationFields.relationship}} oninput={{action (mut editedRegistrationFields.relationship) value='target.value'}}>
 {{/if}}
-
-{{log 'validUserFields' validUserFields}}
-{{log 'validRegistrationFields' validRegistrationFields}}
 
 <div local-class='buttons'>
   <button

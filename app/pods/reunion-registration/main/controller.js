@@ -17,8 +17,9 @@ const STEPS = Object.freeze({
 export default Controller.extend({
   session: service(),
 
-  queryParams: ['step'],
+  queryParams: ['step', 'reunionRegistrationId'],
   step: null,
+  reunionRegistrationId: null,
 
   STEPS,
 
@@ -38,12 +39,8 @@ export default Controller.extend({
     return moment().year();
   }),
 
-  // onRegistrationSuccess() {
-  //   this.set('successfullyRegistered', true);
-  //   this.send('refreshModel');
-  // },
-
-  // registerAnother() {
-  //   this.set('successfullyRegistered');
-  // },
+  onRegistrationSuccess(user, reunionRegistration) {
+    this.set('reunionRegistrationId', reunionRegistration.id);
+    this.set('step', STEPS.SUCCESSFUL_REGISTRATION);
+  },
 });

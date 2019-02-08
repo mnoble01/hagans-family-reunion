@@ -156,7 +156,8 @@ textarea.input {
 
 /* power select styles - match other inputs */
 
-.input-label + div :global(.ember-power-select-trigger)  {
+.input-label + div :global(.ember-power-select-trigger),
+.input-label + :global(.ember-power-select-trigger)  {
   margin-bottom: 16px;
 }
 :global(.ember-power-select-trigger) {

@@ -26,16 +26,16 @@
     </h2>
 
     <div local-class='buttons'>
-      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_REGISTRATION) local-class='primary-button'}}
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_REGISTRATION reunionRegistrationId=null) local-class='primary-button'}}
         Yes
       {{/link-to}}
-      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_TSHIRT_ORDER) local-class='secondary-button'}}
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.TSHIRT_ORDER_DECISION reunionRegistrationId=null) local-class='secondary-button'}}
         No
       {{/link-to}}
     </div>
   {{else if (eq step STEPS.ADDITIONAL_REGISTRATION)}}
     {{reunion-registration-form
-      onSuccess=(action (mut step) STEPS.SUCCESSFUL_REGISTRATION)
+      onSuccess=(action onRegistrationSuccess)
     }}
   {{else if (eq step STEPS.TSHIRT_ORDER_DECISION)}}
     <h2 local-class='subtitle'>
@@ -75,7 +75,7 @@
   {{else}}
     {{reunion-registration-form
       user=session.user
-      onSuccess=(action (mut step) STEPS.SUCCESSFUL_REGISTRATION)
+      onSuccess=(action onRegistrationSuccess)
     }}
   {{/if}}
 </div>
