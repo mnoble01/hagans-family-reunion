@@ -23,9 +23,6 @@ export default Controller.extend({
 
   STEPS,
 
-  // For ordering t-shirts:
-  // referenceRegistrationId: readOnly('session.user.reunionRegistrationId.0'),
-
   reunionRegistration: alias('model.reunionRegistration'),
   registeredByUser: alias('model.registeredByUser'),
 

@@ -113,7 +113,7 @@ export default Component.extend({
 
       this.get('onSuccess')(user, reunionRegistration);
     } catch (e) {
-      this.flashMessages.danger(e, { scope: 'form' });
+      this.handleError(e);
     }
   }),
 
@@ -156,14 +156,7 @@ export default Component.extend({
     return new ReunionRegistrationModel(response);
   }),
 
-  // TODO this goes in its own route
-  // app.post('/api/tshirt_orders', isLoggedIn, creationCallback(TSHIRT_ORDER_TABLE));
-  createTshirtOrder: task(function*() {
-    this.clearFlashMessages();
-    try {
-      // console.log('create t-shirt order');
-    } catch (e) {
-      this.handleError(e);
-    }
-  }),
+  handleError(error) {
+    this.flashMessages.danger(error, { scope: 'form' });
+  },
 });

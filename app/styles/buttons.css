@@ -1,4 +1,4 @@
-@value light-gold from 'hagans-family/styles/colors';
+@value gold, light-gold from 'hagans-family/styles/colors';
 @value input-color from 'hagans-family/styles/forms';
 
 .button-container {

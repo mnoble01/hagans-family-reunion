@@ -51,9 +51,12 @@
       {{/link-to}}
     </div>
   {{else if (eq step STEPS.ADDITIONAL_TSHIRT_ORDER)}}
-    TODO order additional t-shirts
+    <h2 local-class='subtitle'>
+      T-Shirt Order
+    </h2>
     {{tshirt-order-form onSuccess=(action (mut step) STEPS.PAYMENT)}}
   {{else if (eq step STEPS.PAYMENT)}}
+    {{!-- TODO add ability to pay multiple ways --}}
     TODO payment
   {{else if reunionRegistration}}
     <h2 local-class='subtitle'>

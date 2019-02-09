@@ -1,1 +1,43 @@
-{{yield}}
+{{flash-messages scope='form' flashClass=(local-class 'flash-messages')}}
+
+{{#each editedOrders as |order index|}}
+  <div local-class='form-row'>
+    <div local-class='form-column'>
+      <label local-class='input-label'> T-Shirt Size </label>
+      {{!-- TODO extract tshirt dropdown at some point that does its own fetching --}}
+      {{#power-select
+        options=tshirtSizes
+        onchange=(action setTshirtSize order)
+        selected=order.selectedTshirtSize
+        searchEnabled=false
+        as |option|
+      }}
+        {{option.name}}
+      {{/power-select}}
+    </div>
+    <div local-class={{concat 'form-column ' (if (gt index 0) 'no-right-margin')}}>
+      <label local-class='input-label'> Quantity </label>
+      <input local-class='input' type='number' min='0' step='1' value={{or order.quantity 0}} oninput={{action setQuantity order}}>
+    </div>
+    {{#if (gt index 0)}}
+      <a local-class='remove-link' title='Remove' onclick={{action removeOrder order}}> ✕ </a>
+    {{/if}}
+  </div>
+{{/each}}
+<a onclick={{action addOrder}} local-class='add-link'>
+  + Add Order
+</a>
+
+<div local-class='buttons'>
+  <button
+    local-class='primary-button'
+    onclick={{perform submit}}
+    disabled={{or submit.isRunning (not canSubmit)}}
+  >
+    {{#if submit.isRunning}}
+      Please wait...
+    {{else}}
+      Submit
+    {{/if}}
+  </button>
+</div>

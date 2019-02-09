@@ -38,6 +38,38 @@ textarea.input {
   margin-top: 16px;
 }
 
+@value form-margin: 16px;
+.form-row {
+  display: flex;
+  margin-bottom: form-margin;
+}
+.form-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.form-column:not(:last-child) {
+  margin-right: calc(form-margin / 2);
+}
+.form-column:not(:first-child) {
+  margin-left: calc(form-margin / 2);
+}
+.form-column:last-child {
+  margin-right: 0;
+}
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+  .form-column {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .form-column:not(:last-child) {
+    margin-bottom: form-margin;
+  }
+}
+
 /* power select styles - match other inputs */
 .input-label + div :global(.ember-power-select-trigger),
 .input-label + :global(.ember-power-select-trigger) {
