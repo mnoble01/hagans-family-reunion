@@ -24,3 +24,22 @@
 .secondary-button {
   composes: secondary-button from 'hagans-family/styles/buttons';
 }
+
+.authenticated-actions {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.authenticated-or {
+  margin: 36px 0;  
+}
+.get-started-button {
+  composes: primary-button from 'hagans-family/styles/buttons';
+  width: auto;
+  margin: auto;
+}
+.download-pdf-button {
+  composes: secondary-button from 'hagans-family/styles/buttons';
+  width: auto;
+  margin: auto;
+}

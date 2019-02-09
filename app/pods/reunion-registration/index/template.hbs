@@ -2,13 +2,21 @@
   {{article-header}}
 
   <div local-class='page-title'>
-    2019 Reunion Registration
+    {{currentYear}} Reunion Registration
   </div>
 
   {{#if session.isAuthenticated}}
-    {{#link-to 'reunion-registration.main' local-class='primary-button'}}
-      Get Started
-    {{/link-to}}
+    <div local-class='authenticated-actions'>
+      {{#link-to 'reunion-registration.main' local-class='get-started-button'}}
+        Get Started
+      {{/link-to}}
+      <div local-class='authenticated-or'>
+        — OR —
+      </div>
+      <a local-class='download-pdf-button' href={{concat '/registration-forms/' currentYear '.pdf'}}>
+        Download PDF Registration Form
+      </a>
+    </div>
   {{else}}
     <h2 local-class='subtitle'>
       Please register or login to get started.
