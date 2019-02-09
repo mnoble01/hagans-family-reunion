@@ -1,0 +1,54 @@
+@value light-gray from 'hagans-family/styles/colors';
+@value powder-blue from 'hagans-family/styles/colors';
+@value red, green from 'hagans-family/styles/colors';
+
+.reunion-registration-payment {
+  display: flex;
+  flex-direction: column;
+}
+
+.expand-breakdown-toggle {
+  composes: gray-link from 'hagans-family/styles/links';
+  font-size: larger;
+  text-align: center;
+}
+
+.breakdown-table {
+  margin-top: 16px;
+  text-align: left;
+  border-collapse: collapse;
+}
+.breakdown-table,
+.breakdown-table th,
+.breakdown-table td {
+  border: 1px solid light-gray;
+  padding: 8px;
+}
+.breakdown-table thead {
+  color: powder-blue;
+  border-bottom: 4px solid;
+}
+.breakdown-table tfoot {
+  color: powder-blue;
+  border-top: 4px solid;
+}
+
+.total-cell {
+  text-align: right;
+}
+.overall-total-cell {
+  font-size: larger;
+  font-weight: bold;
+}
+
+/* .buttons {
+  composes: button-container from 'hagans-family/styles/buttons';
+}
+
+.primary-button {
+  composes: primary-button from 'hagans-family/styles/buttons';
+}
+
+.secondary-button {
+  composes: secondary-button from 'hagans-family/styles/buttons';
+} */

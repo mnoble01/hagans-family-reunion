@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import ReunionRegistrationModel from 'hagans-family/pods/airtable/reunion-registration-model';
 import UserModel from 'hagans-family/pods/airtable/user-model';
+import TshirtOrderModel from 'hagans-family/pods/airtable/tshirt-order-model';
 
 export default Route.extend({
   ajax: service(),
@@ -20,13 +21,29 @@ export default Route.extend({
   async model(params) {
     const reunionRegistrationId = params.reunionRegistrationId || this.get('session.user.reunionRegistrationId.0');
 
-    // TODO add query param for 'registering other user' or 'additionalRegistration'
     if (reunionRegistrationId) {
-      const reunionRegistration = await this.ajax.request(`/api/reunion_registrations/${reunionRegistrationId}`);
-      const registeredByUser = await this.ajax.request(`/api/users/${reunionRegistration.registered_by_id[0]}`);
+      const reunionRegistration = new ReunionRegistrationModel(
+        await this.ajax.request(`/api/reunion_registrations/${reunionRegistrationId}`)
+      );
+      const registeredByUser = new UserModel(
+        await this.ajax.request(`/api/users/${reunionRegistration.registeredById.firstObject}`)
+      );
+      const dependentRegistrations = (
+        await this.ajax.request(`/api/users/${reunionRegistration.userId.firstObject}/reunion_registrations`)
+      ).map(response => new ReunionRegistrationModel(response));
+
+      const tshirtOrderIds = reunionRegistration.additionalTShirtOrders || [];
+      const tshirtOrderResponses = await Promise.all(tshirtOrderIds.map((orderId) => {
+        return this.ajax.request(`/api/tshirt_orders/${orderId}`);
+      }));
+      const tshirtOrders = tshirtOrderResponses.map(response => new TshirtOrderModel(response));
+
       return {
-        reunionRegistration: new ReunionRegistrationModel(reunionRegistration),
-        registeredByUser: new UserModel(registeredByUser),
+        reunionRegistration,
+        registeredByUser,
+        tshirtOrders,
+        // Remove duplicate toplevel registration
+        dependentRegistrations: dependentRegistrations.reject(reg => reg.id === reunionRegistration.id),
       };
     }
   },

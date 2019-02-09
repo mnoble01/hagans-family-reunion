@@ -18,9 +18,8 @@ const airtableBase = new Airtable({
   endpointUrl: 'https://api.airtable.com',
 }).base(process.env.AIRTABLE_BASE);
 
-// TODO rewrite these to use promises!!!
-// TODO remove ALL CALLBACKS when all uses are converted to async/await
-function fetchAirtableRecords(tableName, { onSuccess, onError } = {}) {
+// TODO remove ALL onSuccess/onError CALLBACKS when all uses are converted to async/await
+function fetchAirtableRecords(tableName, { onSuccess, onError, filterCallback } = {}) {
   const airtableRecords = [];
   return new Promise((resolve, reject) => {
     airtableBase(tableName).select({
@@ -28,7 +27,13 @@ function fetchAirtableRecords(tableName, { onSuccess, onError } = {}) {
         view: 'Grid view',
     }).eachPage((records, fetchNextPage) => {
       for (const record of records) {
-        airtableRecords.push(new AirtableModel(record));
+        const airtableModel = new AirtableModel(record);
+        if (!filterCallback || filterCallback(airtableModel)) {
+          // If no filterCallback exists,
+          // Else if the filterCallback returns true,
+          // Return record in results
+          airtableRecords.push(airtableModel);
+        }
       }
       fetchNextPage();
     }, (error) => {

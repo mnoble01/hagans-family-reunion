@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 import { computed, set } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import AirtableModel from 'hagans-family/pods/airtable/model';
-import TshirtOrderModel from 'hagans-family/pods/airtable/tshirt-order-model';
+import TshirtOrderModel, { TSHIRT_PRICE } from 'hagans-family/pods/airtable/tshirt-order-model';
 
 const EDITABLE_FIELDS = Object.freeze([
   'tShirtSize',
@@ -80,6 +80,7 @@ export default Component.extend({
     const tshirtOrderModel = new TshirtOrderModel;
     tshirtOrderModel.set('userId', [this.session.user.id]);
     tshirtOrderModel.set('registrations', [this.referenceRegistrationId]);
+    tshirtOrderModel.set('price', TSHIRT_PRICE);
 
     for (const key of EDITABLE_FIELDS) {
       tshirtOrderModel.set(key, orderFields[key]);

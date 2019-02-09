@@ -1,0 +1,45 @@
+<div local-class='expand-breakdown-toggle' onclick={{action (mut expanded) (not expanded)}}>
+  {{#if expanded}}
+    Hide Breakdown
+  {{else}}
+    Show Breakdown
+  {{/if}}
+</div>
+
+{{!-- TODO use animated if --}}
+{{#if expanded}}
+  <table local-class='breakdown-table'>
+    <thead>
+      <th>Name</th>
+      <th>Registration Fee</th>
+      <th>Additional T-Shirts</th>
+      <th>Total</th>
+    </thead>
+    <tbody>
+      {{#each rows as |reg|}}
+        <tr>
+          <td>{{reg.fullName}}</td>
+          <td>${{reg.registrationFee}}</td>
+          <td>
+            {{#if reg.additionalTShirtQuantity}}
+              {{reg.additionalTShirtQuantity}} @ ${{tshirtPrice}} = ${{reg.additionalTShirtFees}}
+            {{/if}}
+          </td>
+          <td local-class='total-cell'>${{reg.totalFeesDue}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td local-class='total-cell overall-total-cell'>${{totalFeesDue}}</td>
+      </tr>
+    </tfoot>
+  </table>
+{{/if}}
+{{!-- ${{reunionRegistration.remainingFeesDue}} --}}
+{{!-- TODO add ability to pay down on remaining balance --}}
+{{!-- TODO add ability to pay multiple ways --}}
+{{!-- TODO payment --}}

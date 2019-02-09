@@ -1,6 +1,6 @@
 /* eslint-env node */
 const routeUtils = require('routes/utils');
-const { isLoggedIn } = routeUtils;
+const { isLoggedIn, isCurrentUser } = routeUtils;
 const request = require('request');
 const fs = require('fs');
 const schedule = require('node-schedule');
@@ -26,15 +26,6 @@ const multer = require('multer');
 const upload = multer({
   dest: '/tmp',
 });
-
-function isCurrentUser(req, res, next) {
-  if (req.params.id === req.user.id) {
-    return next();
-  }
-  res.status(401).json({
-    message: 'access denied',
-  });
-}
 
 module.exports = function(app) {
   app.get('/api/user', isLoggedIn, function(req, res) {

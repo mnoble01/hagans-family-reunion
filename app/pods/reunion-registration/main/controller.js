@@ -25,6 +25,20 @@ export default Controller.extend({
 
   reunionRegistration: alias('model.reunionRegistration'),
   registeredByUser: alias('model.registeredByUser'),
+  dependentRegistrations: alias('model.dependentRegistrations'),
+  tshirtOrders: alias('model.tshirtOrders'),
+
+  allRegistrations: computed('reunionRegistration', 'dependentRegistrations', function() {
+    return [this.reunionRegistration, ...this.dependentRegistrations];
+  }),
+
+  remainingFeesDue: computed('allRegistrations', 'tshirtOrders', function() {
+    return sum(this.allRegistrations, 'remainingFeesDue');
+  }),
+
+  totalFeesDue: computed('allRegistrations', 'tshirtOrders', function() {
+    return sum(this.allRegistrations, 'totalFeesDue');
+  }),
 
   formExpired: computed(function() {
     const deadline = moment('2019-07-12');
@@ -41,3 +55,9 @@ export default Controller.extend({
     this.set('step', STEPS.SUCCESSFUL_REGISTRATION);
   },
 });
+
+function sum(array, objectKey) {
+  return array.reduce((sum, object) => {
+    return sum + object[objectKey];
+  }, 0);
+}

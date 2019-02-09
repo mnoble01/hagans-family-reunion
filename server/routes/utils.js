@@ -13,6 +13,15 @@ function isLoggedIn(req, res, next) {
   });
 }
 
+function isCurrentUser(req, res, next) {
+  if (req.params.id === req.user.id) {
+    return next();
+  }
+  res.status(401).json({
+    message: 'access denied',
+  });
+}
+
 function setCustomDirect(req, res, next) {
   logger.log('info', 'SET CUSTOM REDIRECT', req.query);
   req.session.redirect = req.query.redirect || null;
@@ -32,8 +41,11 @@ function loginSuccessRedirect(req, res) {
 
 module.exports = {
   isLoggedIn,
+  isCurrentUser,
+
   loginSuccessRedirect,
   setCustomDirect,
+
   LOGIN_SUCCESS_REDIRECT,
   LOGIN_FAILURE_REDIRECT,
 };

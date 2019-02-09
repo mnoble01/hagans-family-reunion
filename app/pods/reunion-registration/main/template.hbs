@@ -57,7 +57,7 @@
     {{tshirt-order-form onSuccess=(action (mut step) STEPS.PAYMENT)}}
   {{else if (eq step STEPS.PAYMENT)}}
     <h2 local-class='subtitle highlight'>
-      Your total reunion fees due are ${{reunionRegistration.remainingFeesDue}}.
+      Your total reunion fees due are ${{remainingFeesDue}}.
     </h2>
     <div local-class='subtitle'>
       You can pay all, a partial amount, or none of your fees right now.
@@ -65,8 +65,13 @@
     <div local-class='subtitle'>
       Come back to this page any time via the {{reunionRegistration.year}} Reunion > Registration menu item.
     </div>
-    {{!-- TODO add ability to pay multiple ways --}}
-    TODO payment
+    {{reunion-registration-payment
+      reunionRegistration=reunionRegistration
+      dependentRegistrations=dependentRegistrations
+      tshirtOrders=tshirtOrders
+      remainingFeesDue=remainingFeesDue
+      totalFeesDue=totalFeesDue
+    }}
   {{else if reunionRegistration}}
     <h2 local-class='subtitle'>
       {{#if (eq session.user.id registeredByUser.id)}}
@@ -77,15 +82,25 @@
       on {{moment-format reunionRegistration.createdAt}}.
     </h2>
 
-    {{#if (not reunionRegistration.remainingFeesDue)}}
+    {{#if (not remainingFeesDue)}}
       <h2 local-class='subtitle highlight'>
         Your reunion fees have all been paid!
       </h2>
     {{else}}
       <h2 local-class='subtitle highlight'>
-        Your remaining fees due are ${{reunionRegistration.remainingFeesDue}} / ${{reunionRegistration.totalFeesDue}}.
+        Your remaining fees due are ${{remainingFeesDue}}
+        {{#if (not-eq remainingFeesDue totalFeesDue)}}
+          / ${{totalFeesDue}}
+        {{/if}}
+        .
       </h2>
-      {{!-- TODO add ability to pay down on remaining balance, same as above --}}
+      {{reunion-registration-payment
+        reunionRegistration=reunionRegistration
+        dependentRegistrations=dependentRegistrations
+        tshirtOrders=tshirtOrders
+        remainingFeesDue=remainingFeesDue
+        totalFeesDue=totalFeesDue
+      }}
     {{/if}}
   {{else}}
     {{reunion-registration-form
