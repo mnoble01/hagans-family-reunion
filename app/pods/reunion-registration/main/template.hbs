@@ -56,7 +56,7 @@
     </h2>
     {{tshirt-order-form onSuccess=(action (mut step) STEPS.PAYMENT)}}
   {{else if (eq step STEPS.PAYMENT)}}
-    <h2 local-class='subtitle'>
+    <h2 local-class='subtitle highlight'>
       Your total reunion fees due are ${{reunionRegistration.remainingFeesDue}}.
     </h2>
     <div local-class='subtitle'>
@@ -70,21 +70,23 @@
   {{else if reunionRegistration}}
     <h2 local-class='subtitle'>
       {{#if (eq session.user.id registeredByUser.id)}}
-        Looks like you already registered
+        Looks like you registered
       {{else}}
-        Looks like you were already registered by {{registeredByUser.fullName}}
+        Looks like you were registered by {{registeredByUser.fullName}}
       {{/if}}
       on {{moment-format reunionRegistration.createdAt}}.
     </h2>
 
-    <h2 local-class='subtitle'>
-      {{#if (not reunionRegistration.remainingFeesDue)}}
+    {{#if (not reunionRegistration.remainingFeesDue)}}
+      <h2 local-class='subtitle highlight'>
         Your reunion fees have all been paid!
-      {{else}}
+      </h2>
+    {{else}}
+      <h2 local-class='subtitle highlight'>
         Your remaining fees due are ${{reunionRegistration.remainingFeesDue}} / ${{reunionRegistration.totalFeesDue}}.
-        {{!-- TODO add ability to pay down on remaining balance, same as above --}}
-      {{/if}}
-    </h2>
+      </h2>
+      {{!-- TODO add ability to pay down on remaining balance, same as above --}}
+    {{/if}}
   {{else}}
     {{reunion-registration-form
       user=session.user
