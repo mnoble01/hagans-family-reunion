@@ -96,6 +96,8 @@ export default Controller.extend({
 
   editedFields: computed('user', 'formattedAddress', 'allUsers', function() {
     return {
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
       birthDate: this.user.birthDate,
       contactMethods: this.user.contactMethods,
       phone: this.user.phone,

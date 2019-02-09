@@ -20,10 +20,10 @@
       or using password
     </h2>
   {{/if}}
-  
+
   <label local-class='input-label'> First Name </label>
   <input local-class='input' oninput={{action (mut firstName) value='target.value'}} type='text'>
-  <label local-class='input-label'> Last Name </label>
+  <label local-class='input-label'> Middle / Last Name(s) </label>
   <input local-class='input' oninput={{action (mut lastName) value='target.value'}} type='text'>
   <label local-class='input-label'> Email </label>
   <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email'>
