@@ -48,12 +48,12 @@ export default Component.extend({
   setTshirtSize(order, { id }) {
     set(order, 'tShirtSize', [id]);
     set(order, 'selectedTshirtSize', this.tshirtSizes.findBy('id', id));
-    this.notifyPropertyChange('canSubmit');
+    this.notifyPropertyChange('canSubmit'); // not sure why I have to do this
   },
 
   setQuantity(order, { target: { value: quantity } }) {
     set(order, 'quantity', parseInt(quantity, 10));
-    this.notifyPropertyChange('canSubmit');
+    this.notifyPropertyChange('canSubmit'); // not sure why I have to do this
   },
 
   canSubmit: computed(`editedOrders.@each.${EDITABLE_FIELDS}`, function() {
