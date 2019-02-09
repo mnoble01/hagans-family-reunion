@@ -56,6 +56,10 @@ export default Component.extend({
       route: '2019-reunion',
       name: '2019 Reunion',
       children: [{
+      // Uncomment when going live
+      //   route: 'reunion-registration',
+      //   name: 'Registration',
+      // }, {
         route: '2019-reunion.announcements',
         name: 'Announcements',
       }, {

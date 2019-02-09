@@ -13,6 +13,11 @@
   text-align: center;
 }
 
+div.subtitle {
+  font-size: larger;
+  margin-bottom: 16px;
+}
+
 .buttons {
   composes: button-container from 'hagans-family/styles/buttons';
 }

@@ -37,7 +37,8 @@
 }
 
 .add-link {
-  composes: link from 'hagans-family/styles/links';
+  composes: gray-link from 'hagans-family/styles/links';
+  font-size: larger;
 }
 
 @value red from 'hagans-family/styles/colors';

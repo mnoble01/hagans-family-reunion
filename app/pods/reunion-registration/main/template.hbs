@@ -56,6 +56,15 @@
     </h2>
     {{tshirt-order-form onSuccess=(action (mut step) STEPS.PAYMENT)}}
   {{else if (eq step STEPS.PAYMENT)}}
+    <h2 local-class='subtitle'>
+      Your total reunion fees due are ${{reunionRegistration.remainingFeesDue}}.
+    </h2>
+    <div local-class='subtitle'>
+      You can pay all, a partial amount, or none of your fees right now.
+    </div>
+    <div local-class='subtitle'>
+      Come back to this page any time via the {{reunionRegistration.year}} Reunion > Registration menu item.
+    </div>
     {{!-- TODO add ability to pay multiple ways --}}
     TODO payment
   {{else if reunionRegistration}}
@@ -69,11 +78,11 @@
     </h2>
 
     <h2 local-class='subtitle'>
-      {{!-- TODO add ability to pay down on remaining balance --}}
       {{#if (not reunionRegistration.remainingFeesDue)}}
         Your reunion fees have all been paid!
       {{else}}
         Your remaining fees due are ${{reunionRegistration.remainingFeesDue}} / ${{reunionRegistration.totalFeesDue}}.
+        {{!-- TODO add ability to pay down on remaining balance, same as above --}}
       {{/if}}
     </h2>
   {{else}}
