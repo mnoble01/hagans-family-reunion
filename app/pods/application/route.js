@@ -44,7 +44,7 @@ export default Route.extend({
       'register',
       'contact',
       'post',
-      'reunion-registration',
+      'reunion-registration.index',
     ];
     const onWhitelistedPage = unauthRoutes.some(route => route === transition.targetName);
     const hasRedirectParam = window.location.hash.indexOf('redirect') > -1;
