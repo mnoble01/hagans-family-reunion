@@ -1,4 +1,4 @@
-@value medium-gray from 'hagans-family/styles/shared';
+@value medium-gray from 'hagans-family/styles/colors';
 
 .register-form {
   composes: centered-content from 'hagans-family/styles/shared';
@@ -26,21 +26,21 @@
 }
 
 .input-label {
-  composes: input-label from 'hagans-family/styles/shared';
+  composes: input-label from 'hagans-family/styles/forms';
 }
 
 .input {
-  composes: input from 'hagans-family/styles/shared';
+  composes: input from 'hagans-family/styles/forms';
 }
 
 .buttons {
-  composes: button-container from 'hagans-family/styles/shared';
+  composes: button-container from 'hagans-family/styles/buttons';
 }
 
 .register {
-  composes: primary-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
 }
 
 .login {
-  composes: secondary-button from 'hagans-family/styles/shared';
+  composes: secondary-button from 'hagans-family/styles/buttons';
 }

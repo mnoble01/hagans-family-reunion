@@ -1,4 +1,4 @@
-@value dark-gray, gold from 'hagans-family/styles/shared';
+@value dark-gray, gold from 'hagans-family/styles/colors';
 
 .users {
   display: flex;
@@ -7,7 +7,7 @@
 }
 
 .user-link {
-  composes: link from 'hagans-family/styles/shared';
+  composes: link from 'hagans-family/styles/links';
   display: flex;
   align-items: center;
   color: dark-gray;

@@ -1,4 +1,4 @@
-@value light-gray, dark-gray from 'hagans-family/styles/shared';
+@value light-gray, dark-gray from 'hagans-family/styles/colors';
 
 .title {
   color: dark-gray;

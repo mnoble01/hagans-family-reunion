@@ -1,4 +1,4 @@
-@value medium-gray, black from 'hagans-family/styles/shared';
+@value medium-gray, black from 'hagans-family/styles/colors';
 
 .reunion-page-header {
   composes: reunion-page-header from 'hagans-family/styles/shared';
@@ -19,7 +19,7 @@
 }
 
 .link {
-  composes: gray-link from 'hagans-family/styles/shared';
+  composes: gray-link from 'hagans-family/styles/links';
   text-decoration: underline;
   height: 40px;
 }
@@ -29,5 +29,5 @@
 }
 
 .centered-text {
-  text-align: center;  
+  text-align: center;
 }

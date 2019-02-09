@@ -1,3 +1,5 @@
+@value black from 'hagans-family/styles/colors';
+
 .reunion-page-header {
   composes: reunion-page-header from 'hagans-family/styles/shared';
 }

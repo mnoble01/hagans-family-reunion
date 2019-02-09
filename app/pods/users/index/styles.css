@@ -1,4 +1,4 @@
-@value light-gray, dark-gray, gold from 'hagans-family/styles/shared';
+@value light-gray, dark-gray, gold from 'hagans-family/styles/colors';
 
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';

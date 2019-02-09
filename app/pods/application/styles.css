@@ -1,5 +1,5 @@
-@value dark-gray, black from 'hagans-family/styles/shared';
-@value powder-blue from 'hagans-family/styles/shared';
+@value dark-gray, black from 'hagans-family/styles/colors';
+@value powder-blue from 'hagans-family/styles/colors';
 @value footer-height: 60px;
 @value fixed-post-image-width from 'hagans-family/styles/shared';
 
@@ -91,7 +91,7 @@
 } */
 
 .loading {
-  margin-top: 36px;  
+  margin-top: 36px;
 }
 
 .site-image {

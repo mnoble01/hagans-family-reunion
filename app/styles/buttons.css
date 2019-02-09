@@ -1,0 +1,64 @@
+@value light-gold from 'hagans-family/styles/colors';
+@value input-color from 'hagans-family/styles/forms';
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 32px;
+}
+
+.-button {
+  color: white;
+  vertical-align: middle;
+  height: auto;
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: none;
+  text-shadow: none;
+  font-family: inherit;
+  outline: none;
+  margin: 0;
+  border-radius: 4px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+
+  /* opacity: 1; */
+  min-width: 100px;
+  padding: 16px 20px;
+
+  transition: all .3s;
+}
+.-button:disabled {
+  cursor: not-allowed;
+}
+
+.-button + .-button {
+  margin-left: 16px;
+}
+
+.primary-button {
+  composes: -button;
+  background: gold;
+}
+.primary-button:hover {
+  background: light-gold;
+}
+.primary-button:disabled {
+  background: #C59C20;
+}
+
+.secondary-button {
+  composes: -button;
+  color: input-color;
+  background: #EEE;
+}
+.secondary-button:hover {
+  background: #E5E5E5;
+}
+
+.small-button {
+  padding: 8px;
+  width: auto;
+}

@@ -52,6 +52,7 @@
     </div>
   {{else if (eq step STEPS.ADDITIONAL_TSHIRT_ORDER)}}
     TODO order additional t-shirts
+    {{tshirt-order-form onSuccess=(action (mut step) STEPS.PAYMENT)}}
   {{else if (eq step STEPS.PAYMENT)}}
     TODO payment
   {{else if reunionRegistration}}

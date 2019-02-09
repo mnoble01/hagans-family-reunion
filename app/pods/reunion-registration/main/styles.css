@@ -14,15 +14,15 @@
 }
 
 .buttons {
-  composes: button-container from 'hagans-family/styles/shared';
+  composes: button-container from 'hagans-family/styles/buttons';
 }
 
 .primary-button {
-  composes: primary-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
 }
 
 .secondary-button {
-  composes: secondary-button from 'hagans-family/styles/shared';
+  composes: secondary-button from 'hagans-family/styles/buttons';
 }
 
 .checkmark {

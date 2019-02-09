@@ -1,4 +1,4 @@
-@value dark-gray from 'hagans-family/styles/shared';
+@value dark-gray from 'hagans-family/styles/colors';
 
 .communication-form {
   composes: centered-content from 'hagans-family/styles/shared';
@@ -13,24 +13,24 @@
 }
 
 .label {
-  composes: input-label from 'hagans-family/styles/shared';
+  composes: input-label from 'hagans-family/styles/forms';
 }
 
 .input {
-  composes: input from 'hagans-family/styles/shared';
+  composes: input from 'hagans-family/styles/forms';
 }
 
 .buttons {
-  composes: button-container from 'hagans-family/styles/shared';
+  composes: button-container from 'hagans-family/styles/buttons';
 }
 
 .submit {
-  composes: primary-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
   max-width: 150px;
 }
 
 .link {
-  composes: gray-link from 'hagans-family/styles/shared';
+  composes: gray-link from 'hagans-family/styles/links';
   font-size: x-large;
   text-align: center;
 }

@@ -1,8 +1,8 @@
-@value black, gold from 'hagans-family/styles/shared';
+@value black, gold from 'hagans-family/styles/colors';
 
 .link-to-index {
   composes: page-title from 'hagans-family/styles/shared';
-  composes: gold-link from 'hagans-family/styles/shared';
+  composes: gold-link from 'hagans-family/styles/links';
   text-decoration: none;
   font-size: 30px;
   margin: 0;
@@ -48,7 +48,7 @@
 }
 
 .menu-link {
-  composes: link from 'hagans-family/styles/shared';
+  composes: link from 'hagans-family/styles/links';
   display: block;
   color: white;
   text-decoration: none;

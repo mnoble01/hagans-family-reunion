@@ -1,4 +1,4 @@
-@value medium-gray, dark-gray, black from 'hagans-family/styles/shared';
+@value medium-gray, dark-gray, black from 'hagans-family/styles/colors';
 
 .posts {
   display: flex;
@@ -120,7 +120,7 @@
 }
 
 .read-more-button {
-  composes: primary-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
   border-radius: 0;
   text-transform: uppercase;
   margin: 32px auto 0;

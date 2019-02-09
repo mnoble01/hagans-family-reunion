@@ -1,5 +1,5 @@
-@value light-gray, dark-gray from 'hagans-family/styles/shared';
-@value powder-blue, gold from 'hagans-family/styles/shared';
+@value light-gray, dark-gray from 'hagans-family/styles/colors';
+@value powder-blue, gold from 'hagans-family/styles/colors';
 
 .page-title {
   composes: page-title from 'hagans-family/styles/shared';
@@ -157,7 +157,7 @@
 }
 
 .tab-link {
-  composes: link from 'hagans-family/styles/shared';
+  composes: link from 'hagans-family/styles/links';
   text-decoration: none;
   text-transform: uppercase;
   color: #EEF4FC;
@@ -171,14 +171,14 @@
 }
 
 .input {
-  composes: input from 'hagans-family/styles/shared';
+  composes: input from 'hagans-family/styles/forms';
 }
 
 .buttons {
-  composes: button-container from 'hagans-family/styles/shared';
+  composes: button-container from 'hagans-family/styles/buttons';
 }
 
 .submit {
-  composes: primary-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
   max-width: 150px;
 }

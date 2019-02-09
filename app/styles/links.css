@@ -1,0 +1,25 @@
+@value medium-gray, dark-gray from 'hagans-family/styles/colors';
+@value gold, light-gold from 'hagans-family/styles/colors';
+
+.link {
+  transition: all .3s;
+  cursor: pointer;
+}
+.link:focus {
+  outline: none;
+}
+
+.gold-link {
+  composes: link;
+  color: gold;
+}
+.gold-link:hover {
+  color: light-gold;
+}
+
+.gray-link {
+  color: medium-gray;
+}
+.gray-link:hover {
+  color: dark-gray;
+}

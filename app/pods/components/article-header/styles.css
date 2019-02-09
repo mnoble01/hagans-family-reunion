@@ -1,5 +1,5 @@
-@value gold from 'hagans-family/styles/shared';
-@value light-gray from 'hagans-family/styles/shared';
+@value gold from 'hagans-family/styles/colors';
+@value light-gray from 'hagans-family/styles/colors';
 
 .article-header {
   border-top: 1px solid light-gray;
