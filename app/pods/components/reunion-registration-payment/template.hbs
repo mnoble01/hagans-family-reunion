@@ -1,13 +1,13 @@
-<div local-class='expand-breakdown-toggle' onclick={{action (mut expanded) (not expanded)}}>
+{{!-- <div local-class='expand-breakdown-toggle' onclick={{action (mut expandedBreakdown) (not expandedBreakdown)}}>
   {{#if expanded}}
     Hide Breakdown
   {{else}}
     Show Breakdown
   {{/if}}
-</div>
+</div> --}}
 
 {{!-- TODO use animated if --}}
-{{#if expanded}}
+{{#if (or expandedBreakdown true)}} {{!-- Always show breakdown, for now --}}
   <table local-class='breakdown-table'>
     <thead>
       <th>Name</th>
@@ -39,7 +39,52 @@
     </tfoot>
   </table>
 {{/if}}
-{{!-- ${{reunionRegistration.remainingFeesDue}} --}}
-{{!-- TODO add ability to pay down on remaining balance --}}
-{{!-- TODO add ability to pay multiple ways --}}
-{{!-- TODO payment --}}
+
+<div local-class='buttons'>
+  <button local-class='make-payment-button' onclick={{action (mut expandedPayments) (not expandedPayments)}}>
+    {{#if expandedPayments}}
+      Hide Payment Methods
+    {{else}}
+      Make a Payment
+    {{/if}}
+  </button>
+</div>
+
+{{#if expandedPayments}}
+  <div local-class='payments'>
+    <div local-class='buttons payment-buttons'>
+      <a local-class='payment-button' href='https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=Hagansreunion2019%40gmail.com&currency_code=USD&source=url'>
+        <div local-class='payment-logo paypal'></div>
+        PayPal
+      </a>
+      <button local-class='payment-button' onclick={{action (mut showZelleModal) true}}>
+        <div local-class='payment-logo zelle'></div>
+        Zelle
+      </button>
+      <a local-class='payment-button' href='https://cash.me/$RiseBarringer'>
+        <div local-class='payment-logo cash'></div>
+        Cash
+      </a>
+    </div>
+    <div local-class='check-mailing-info'>
+      Or send a check, payable to Risë Barringer, to:
+      <div local-class='address'>
+        Risë Barringer<br>
+        1770 Glencairn Lane<br>
+        Lewisville, TX  75067<br>
+      </div>
+    </div>
+    <div local-class='payments-disclaimer'>
+      Please note that we'll be manually updating your balance due, so this page may take a little while to reflect any payments that are made.
+    </div>
+  </div>
+{{/if}}
+
+{{#if showZelleModal}}
+  {{#hagans-modal-dialog title='Zelle' onClose=(action (mut showZelleModal false))}}
+    <div local-class='zelle-modal'>
+      <div local-class='payment-logo zelle'></div>
+      Send <a href='https://www.zellepay.com/go/zelle' local-class='link'>Zelle</a> payments to Risë at 214-514-3214
+    </div>
+  {{/hagans-modal-dialog}}
+{{/if}}
