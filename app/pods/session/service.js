@@ -25,6 +25,9 @@ export default Service.extend({
     const bugsnagClient = this.bugsnagClient;
     Ember.onerror = function(error) {
       bugsnagClient.notify(error);
+      if (Ember.testing) {
+        throw error;
+      }
     };
   },
 

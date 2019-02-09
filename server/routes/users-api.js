@@ -20,7 +20,6 @@ const {
     USER_TABLE,
   },
 } = airtableUtils;
-const AirtableModel = require('airtable/model');
 
 // file upload utilities
 const multer = require('multer');
