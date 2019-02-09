@@ -10,7 +10,7 @@ export default Controller.extend({
 
   queryParams: ['logout', 'redirect', 'handhold'],
   logout: false,
-  handhold: false,
+  handhold: true,
 
   setup() {
     this._super(...arguments);
