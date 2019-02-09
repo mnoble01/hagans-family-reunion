@@ -19,6 +19,7 @@ export default Route.extend({
   },
 
   async model(params) {
+    await this.session.reloadUser();
     const reunionRegistrationId = params.reunionRegistrationId || this.get('session.user.reunionRegistrationId.0');
 
     if (reunionRegistrationId) {
@@ -54,12 +55,12 @@ export default Route.extend({
     }
   },
 
-  actions: {
-    async refreshModel() {
-      // manually set for reloading user
-      this.controller.set('loading', true);
-      await this.session.reloadUser();
-      this.refresh();
-    },
-  },
+  // actions: {
+  //   async refreshModel() {
+  //     // manually set for reloading user
+  //     this.controller.set('loading', true);
+  //     await this.session.reloadUser();
+  //     this.refresh();
+  //   },
+  // },
 });
