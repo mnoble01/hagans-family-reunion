@@ -119,10 +119,9 @@
   font-size: 17px;
   color: dark-gray;
   text-transform: uppercase;
-}
-
-.profile-edit-section {
-  margin-left: 36px;
+  padding: 8px;
+  background: #E2EFFE;
+  border-bottom: none;
 }
 
 .address-map {
@@ -135,39 +134,37 @@
 
 .tab-nav {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   text-align: center;
-  background: powder-blue;
   margin-bottom: 32px;
-  border-radius: 4px;
-  padding: 16px 0;
+  padding: 8px 0;
 }
 
 .tab {
   font-size: 18px;
   transition: all .3s;
   padding: 0 16px;
-  border-bottom: 2px solid transparent;
 }
-.tab:not(:last-child) {
-  border-right: 1px solid #466B95;
+.tab:first-child {
+  padding-left: 0;
 }
-.tab.active {
-  /* border-bottom: 2px solid powder-blue; */
+.tab:last-child {
+  padding-right: 0;
 }
 
 .tab-link {
-  composes: link from 'hagans-family/styles/links';
+  composes: gray-link from 'hagans-family/styles/links';
   text-decoration: none;
   text-transform: uppercase;
-  color: #EEF4FC;
+  padding: 8px 0;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
 }
 .tab.active .tab-link,
 .tab:hover .tab-link {
-  color: gold;
-}
-.tab.active .tab-link {
-  text-shadow: 1px 1px 2px #466B95;
+  /* color: #466B95; */
+  color: powder-blue;
+  border-bottom: 2px solid powder-blue;
 }
 
 .input {
