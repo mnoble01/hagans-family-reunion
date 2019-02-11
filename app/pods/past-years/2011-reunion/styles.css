@@ -1,0 +1,13 @@
+@value powder-blue from 'hagans-family/styles/colors';
+
+.planning-committee {
+  margin-top: 24px;
+}
+
+.committee-user-list > h4 {
+  color: powder-blue;
+  margin-bottom: 4px;
+}
+.committee-user-list > div {
+  margin-bottom: 8px;
+}
