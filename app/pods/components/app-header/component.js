@@ -94,6 +94,10 @@ export default Component.extend({
       name: 'Account',
       isActive: this.router.currentURL.endsWith(this.session.user.id),
       children: [{
+        route: 'account',
+        name: 'My Account',
+        isActive: this.router.currentURL.endsWith(this.session.user.id),
+      }, {
         action: this.logout,
         name: 'Logout',
       }],
@@ -111,6 +115,14 @@ export default Component.extend({
       route: 'admin.posts',
       name: 'My Posts',
       visible: canPost,
+    }, {
+      route: 'admin.posts.new',
+      name: 'New Post',
+      visible: canPost,
+    }, {
+      route: 'admin.users.database',
+      name: 'User Database',
+      visible: true,
     }];
     const visibleChildren = children.filter(child => child.visible);
     if (!visibleChildren.length) {
@@ -125,6 +137,6 @@ export default Component.extend({
   }),
 
   logout() {
-    this.transitionTo('login', { queryParams: { logout: true } });
+    this.transitionTo('login', { queryParams: { logout: true, handhold: false } });
   },
 });
