@@ -14,7 +14,7 @@ export default Route.extend({
   },
 
   titleToken() {
-    return this.reunionYear;
+    return `${this.reunionYear} Reunion`;
   },
 
   async model() {
