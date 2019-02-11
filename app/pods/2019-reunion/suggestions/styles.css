@@ -9,3 +9,11 @@
   color: black;
   margin-bottom: 42px;
 }
+
+.p {
+  padding-bottom: 24px;
+}
+
+.link {
+  composes: link from 'hagans-family/styles/links';
+}
