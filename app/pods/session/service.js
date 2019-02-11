@@ -19,6 +19,7 @@ export default Service.extend({
   init() {
     this._super(...arguments);
     this._initBugsnag();
+    this._initFullstory();
   },
 
   _initBugsnag() {
@@ -45,6 +46,22 @@ export default Service.extend({
   _setBugsnagClientUser: observer('user', function() {
     const user = this.user;
     this.bugsnagClient.user = user && user.serialize();
+  }),
+
+  _initFullstory() {
+    if (this.user) {
+      // eslint-disable-next-line no-undef
+      FS.identify(this.user.id, {
+        displayName: this.user.fullName,
+        email: this.user.email,
+        // Add your own custom user variables here, details at
+        // http://help.fullstory.com/develop-js/setuservars
+      });
+    }
+  },
+
+  _initFullstoryOnUserChange: observer('user', function() {
+    this._initFullstory();
   }),
 
   async authorize() {
