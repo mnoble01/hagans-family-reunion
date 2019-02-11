@@ -77,7 +77,7 @@ export default Component.extend({
         route: '2019-reunion.committee',
         name: 'Planning Committee',
       }, {
-        route: '2019-reunion.suggestions',
+        route: 'suggestions',
         name: 'Suggestions',
       }],
     }, {
