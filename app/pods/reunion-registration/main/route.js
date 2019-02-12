@@ -18,9 +18,13 @@ export default Route.extend({
     },
   },
 
-  async model(params) {
+  async model(params, transition) {
     await this.session.reloadUser();
     const reunionRegistrationId = params.reunionRegistrationId || this.get('session.user.reunionRegistrationId.0');
+
+    if (params.step && !reunionRegistrationId) {
+      this.replaceWith('reunion-registration.index');
+    }
 
     if (reunionRegistrationId) {
       const reunionRegistration = new ReunionRegistrationModel(
