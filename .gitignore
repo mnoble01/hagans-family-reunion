@@ -2,7 +2,8 @@
 
 # custom
 .env
-.combined.log
+combined.log
+error.log
 
 # compiled output
 /dist/

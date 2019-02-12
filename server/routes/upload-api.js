@@ -48,6 +48,7 @@ module.exports = function(app) {
     try {
       const response = await googleCloudStorage.bucket(bucketName).upload(filePath);
       googleCloudStorageLink = response[0].metadata.mediaLink;
+      logger.log('info', `Successful upload - Google Cloud Storage - ${googleCloudStorageLink}`);
 
       // delete local file
       fs.unlink(filePath, () => {});
@@ -61,6 +62,11 @@ module.exports = function(app) {
 
     // TODO schedule google cloud deletion after 3 months or something???
 
+    // I tried just using the google cloud storage link, but it didn't work
+    // return res.status(200).json({
+    //   url: googleCloudStorageLink,
+    //   message: 'Successfully uploaded',
+    // });
     try {
       const airtableUpload = await createAirtableRecord(UPLOAD_TABLE, {
         attrs: {

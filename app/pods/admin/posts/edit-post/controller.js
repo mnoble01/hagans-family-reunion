@@ -93,14 +93,14 @@ export default Controller.extend({
 
   removeAttachment: task(function*(id) {
     // TODO confirm first
-    const attachments = [...this.post.attachments];
+    const attachments = [...(this.post.attachments || [])];
     this.post.set('attachments', attachments.reject(a => a.id === id));
   }),
 
   addAttachment: task(function*() {
     this.set('showAddAttachmentModal', true);
     this.set('uploadAttachmentCallback', (url) => {
-      const attachments = [...this.post.attachments];
+      const attachments = [...(this.post.attachments || [])];
       attachments.push({ url });
       this.post.set('attachments', attachments);
       this.set('showAddAttachmentModal', false);
