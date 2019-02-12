@@ -4,6 +4,7 @@ const { isLoggedIn } = routeUtils;
 const fs = require('fs');
 const { Storage } = require('@google-cloud/storage');
 const airtableUtils = require('airtable/utils');
+const logger = require('utils/logger');
 const {
   createAirtableRecord,
   tables: {
@@ -54,7 +55,8 @@ module.exports = function(app) {
       // delete local file
       fs.unlink(filePath, () => {});
 
-      res.status(500).json(error);
+      logger.log('info', 'Failed upload', 'Google Cloud Storage', error);
+      return res.status(500).json(error);
     }
 
     // TODO schedule google cloud deletion after 3 months or something???
@@ -68,12 +70,13 @@ module.exports = function(app) {
         },
       });
       await waitUntilUploaded(airtableUpload);
-      res.status(200).json({
+      return res.status(200).json({
         url: airtableUpload.file[0].url,
         message: 'Successfully uploaded',
       });
     } catch (error) {
-      res.status(error.statusCode).json(error);
+      logger.log('info', 'Failed upload', 'Airtable', error);
+      return res.status(error.statusCode).json(error);
     }
   });
 };
