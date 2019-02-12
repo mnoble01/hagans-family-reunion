@@ -47,7 +47,6 @@ Router.map(function() {
     });
   });
   this.route('reunion-registration', function() {
-    this.route('index');
     this.route('main');
   });
 });
