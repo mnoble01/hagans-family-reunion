@@ -32,7 +32,7 @@ export default Component.extend({
   },
 
   _takeWords(content, maxNumChars, numWords) {
-    content = content.replace(/<{1}[^<>]{1,}>{1}/g, ' '); // Remove html
+    content = content.replace(/<{1}[^<>]{1,}>{1}/g, ' ').replace(/&nbsp;/g, ' '); // Remove html
     return content.substr(0, maxNumChars).split(' ').slice(0, numWords).join(' ');
   },
 });
