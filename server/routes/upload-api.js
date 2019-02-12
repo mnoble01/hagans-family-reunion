@@ -55,7 +55,7 @@ module.exports = function(app) {
       // delete local file
       fs.unlink(filePath, () => {});
 
-      logger.log('info', 'Failed upload', 'Google Cloud Storage', error);
+      logger.log('info', `Failed upload - Google Cloud Storage - ${error}`);
       return res.status(500).json(error);
     }
 
@@ -75,7 +75,7 @@ module.exports = function(app) {
         message: 'Successfully uploaded',
       });
     } catch (error) {
-      logger.log('info', 'Failed upload', 'Airtable', error);
+      logger.log('info', `Failed upload - Airtable - ${error}`);
       return res.status(error.statusCode).json(error);
     }
   });
