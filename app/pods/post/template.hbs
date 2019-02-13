@@ -51,8 +51,10 @@
       </span>
     </div>
   </div>
-  <div local-class='post-content' class='ql-editor'>{{!-- Add ql-editor class for Quill Editor styling --}}
-    {{{post.content}}}
+  <div local-class='post-content' class='ql-snow'>{{!-- Add ql-snow and ql-editor classes for Quill Editor styling --}}
+    <div class='ql-editor'>
+      {{{post.content}}}
+    </div>
   </div>
 
   {{article-footer}}
