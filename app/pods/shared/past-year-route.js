@@ -26,7 +26,7 @@ export default Route.extend({
 
     const categories = categoriesResponse.map(cat => new AirtableModel(cat));
     const posts = postsResponse.map(post => new PostModel(post)).filter((post) => {
-      const postCategoryIds = post.categories;
+      const postCategoryIds = post.categories || [];
       const postCategoryNames = categories.filter(cat => postCategoryIds.includes(cat.id)).mapBy('name');
       return postCategoryNames.includes(`${year} Reunion`);
     });

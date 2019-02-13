@@ -14,8 +14,8 @@ export default Controller.extend({
   }),
 
   categoriesForDisplay: computed('post.categories', 'model.categories', function() {
-    const allCategories = this.model.categories;
-    const postCategoryIds = this.post.categories;
+    const allCategories = this.model.categories || [];
+    const postCategoryIds = this.post.categories || [];
     return allCategories.filter(cat => postCategoryIds.includes(cat.id)).mapBy('name').join(', ');
   }),
 
