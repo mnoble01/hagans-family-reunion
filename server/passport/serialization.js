@@ -12,7 +12,7 @@ const logger = require('utils/logger');
 passport.serializeUser(function(user, done) {
   // user was successfully authenticated
   // so return the user id storage in the session
-  logger.info('passport.serializeUser', user.id, user);
+  logger.log('info', 'passport.serializeUser', user.id, user);
   done(null, user.id);
 });
 
@@ -21,7 +21,7 @@ passport.deserializeUser(async function(id, done) {
   // The id comes from same storage as serializeUser
   try {
     const airtableUser = await findAirtableRecordById(USER_TABLE, { id });
-    logger.info('passport.deserializeUser', id, airtableUser);
+    logger.log('info', 'passport.deserializeUser', id, airtableUser);
     return done(null, airtableUser);
   } catch (error) {
     return done(null, false, {
