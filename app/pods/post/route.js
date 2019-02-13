@@ -18,10 +18,10 @@ export default Route.extend({
       this.get('ajax').request('/api/post_categories'),
     ]);
     const post = new PostModel(postResponse);
-    const authorId = post.author[0];
+    const authorId = post.author && post.author[0];
 
     let author;
-    if (this.session.isAuthenticated) {
+    if (this.session.isAuthenticated && authorId) {
       author = await this.get('ajax').request(`/api/users/${authorId}`);
     } else {
       // We can now fetch posts by id when not authenticated, but we cannot fetch users

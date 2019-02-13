@@ -31,7 +31,7 @@ export default Route.extend({
       return postCategoryNames.includes(`${year} Reunion`);
     });
 
-    const authorIds = posts.map(post => post.author).uniq();
+    const authorIds = posts.map(post => post.author).compact().uniq();
     const authorsResponses = await Promise.all(authorIds.map((authorId) => {
       return this.get('ajax').request(`/api/users/${authorId}`);
     }));
