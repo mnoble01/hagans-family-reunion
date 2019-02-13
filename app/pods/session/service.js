@@ -85,7 +85,8 @@ export default Service.extend({
       const user = new UserModel(response);
       this.set('user', user);
     } catch (e) {
-      throw e;
+      e.message = `Authentication failed: {e.message}`;
+      this.bugsnagClient.notify(e);
     }
   },
 
