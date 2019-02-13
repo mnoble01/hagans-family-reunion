@@ -4,18 +4,6 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   const app = new EmberApp(defaults, {
-    replace: {
-      files: [
-        'app/pods/*',
-      ],
-      patterns: [{
-        match: "'{{BUGSNAG_API_KEY}}'",
-        replacement: process.env.BUGSNAG_API_KEY,
-      }, {
-        match: "'{{AIRTABLE_USER_DB_EMBED_URL}}'",
-        replacement: process.env.AIRTABLE_USER_DB_EMBED_URL,
-      }],
-    },
     sourcemaps: {
       enabled: true,
       extensions: ['js'],
