@@ -14,18 +14,15 @@ passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser(async function(id, done) {
   // called on all requests to confirm session status
   // The id comes from same storage as serializeUser
-  findAirtableRecordById(USER_TABLE, {
-    id,
-    onSuccess(airtableUser) {
-      done(null, airtableUser.serialize());
-    },
-    onError(error) {
-      return done(null, false, {
-        message: 'User not found',
-      });
-    },
-  });
+  try {
+    const airtableUser = await findAirtableRecordById(USER_TABLE, { id });
+    return done(null, airtableUser);
+  } catch (error) {
+    return done(null, false, {
+      message: 'User not found',
+    });
+  }
 });

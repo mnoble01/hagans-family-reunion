@@ -61,10 +61,10 @@ passport.use('local-register', new LocalStrategy({
 
 module.exports = function(app) {
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
-    return res.json({ ...req.user });
+    return res.json({ ...req.user.serialize() });
   });
 
   app.post('/api/register', passport.authenticate('local-register'), function(req, res) {
-    return res.json({ ...req.user });
+    return res.json({ ...req.user.serialize() });
   });
 };

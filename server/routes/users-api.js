@@ -29,7 +29,30 @@ const upload = multer({
 
 module.exports = function(app) {
   app.get('/api/user', isLoggedIn, function(req, res) {
-    return res.status(200).json({ ...req.user });
+    return res.status(200).json({ ...req.user.serialize() });
+  });
+
+  app.get('/api/user/secrets', isLoggedIn, function(req, res) {
+    const userIsMember = req.user.status === 'Member';
+    const userIsAdmin = req.user.permissions && req.user.permissions.includes('is_admin');
+    const adminSecrets = [
+      'AIRTABLE_USER_DB_EMBED_URL',
+    ];
+    const secrets = [
+      ...(userIsAdmin ? adminSecrets : []),
+    ];
+    try {
+      if (userIsMember) {
+        return res.status(200).json(secrets.reduce((memo, key) => {
+          memo[key] = process.env[key];
+          return memo;
+        }, {}));
+      } else {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+    } catch (error) {
+      return res.status(error.statusCode).json(error);
+    }
   });
 
   app.get('/api/users', isLoggedIn, function(req, res) {

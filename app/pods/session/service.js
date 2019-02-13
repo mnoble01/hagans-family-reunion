@@ -68,6 +68,8 @@ export default Service.extend({
     const response = await this.get('ajax').request('/api/user');
     const user = new UserModel(response);
     this.set('user', user);
+    const secrets = await this.get('ajax').request('/api/user/secrets');
+    this.set('secrets', secrets);
   },
 
   reloadUser() {
