@@ -27,6 +27,7 @@ export default Route.extend({
     }
 
     if (reunionRegistrationId) {
+      const currentUserId = this.get('session.user.id');
       const reunionRegistration = new ReunionRegistrationModel(
         await this.ajax.request(`/api/reunion_registrations/${reunionRegistrationId}`)
       );
@@ -34,7 +35,7 @@ export default Route.extend({
         await this.ajax.request(`/api/users/${reunionRegistration.registeredById.firstObject}`)
       );
       const dependentRegistrations = (
-        await this.ajax.request(`/api/users/${reunionRegistration.userId.firstObject}/reunion_registrations`)
+        await this.ajax.request(`/api/users/${currentUserId}/reunion_registrations`)
       ).map(response => new ReunionRegistrationModel(response));
 
       const tshirtOrderIds = reunionRegistration.additionalTShirtOrders || [];
