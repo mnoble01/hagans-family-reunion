@@ -11,6 +11,7 @@ const {
   },
 } = airtableUtils;
 const registerOrLogin = require('passport/register-or-login');
+const logger = require('utils/logger');
 
 passport.use('local-login', new LocalStrategy({
   usernameField: 'email',
@@ -61,10 +62,14 @@ passport.use('local-register', new LocalStrategy({
 
 module.exports = function(app) {
   app.post('/api/login', passport.authenticate('local-login'), function(req, res) {
-    return res.json({ ...req.user.serialize() });
+    logger.log('info', '/api/login user', req.user);
+    const serialized = req.user.serialize ? req.user.serialize() : req.user;
+    return res.json({ ...serialized });
   });
 
   app.post('/api/register', passport.authenticate('local-register'), function(req, res) {
-    return res.json({ ...req.user.serialize() });
+    logger.log('info', '/api/register user', req.user);
+    const serialized = req.user.serialize ? req.user.serialize() : req.user;
+    return res.json({ ...serialized });
   });
 };

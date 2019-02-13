@@ -29,7 +29,9 @@ const upload = multer({
 
 module.exports = function(app) {
   app.get('/api/user', isLoggedIn, function(req, res) {
-    return res.status(200).json({ ...req.user.serialize() });
+    logger.log('info', '/api/user user', req.user);
+    const serialized = req.user.serialize ? req.user.serialize() : req.user;
+    return res.status(200).json({ serialized });
   });
 
   app.get('/api/user/secrets', isLoggedIn, function(req, res) {
