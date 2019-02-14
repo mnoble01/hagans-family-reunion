@@ -20,7 +20,8 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
 
     if (!email) {
       logger.log('info', 'registerOrLogin: No email provided', ...arguments);
-      return done(new Error('No email provided'));
+      // http://www.passportjs.org/docs/configure/#verify-callback
+      return done(null, false, { message: 'No email provided' });
     }
 
     // find or create db user
