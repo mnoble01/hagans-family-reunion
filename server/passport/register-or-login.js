@@ -18,11 +18,11 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
     const updatedRegSource = (airtableUser.registrationSource || []).concat(registrationSource || []);
     const updatedImageUrl = airtableUser.profileImage && airtableUser.profileImage[0] && airtableUser.profileImage[0].url || profileImageUrl;
 
-    // if (!email) {
-    //   logger.log('info', 'No email provided', ...arguments);
-    //   return done(new Error('No email provided'));
-    //   err instanceof mongoose.Error.ValidationError
-    // }
+    if (!email) {
+      logger.log('info', 'registerOrLogin: No email provided', ...arguments);
+      // return done(new Error('No email provided'));
+      // err instanceof mongoose.Error.ValidationError
+    }
 
     // find or create db user
     Users.findOne({ email }, (dbError, dbUser) => {
@@ -81,6 +81,7 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
       }
     });
   } catch (e) {
+    logger.log('info', 'registerOrLogin: Could not find airtable user, or other error', e);
     // no airtable user found, so
     // create airtable user
     createAirtableRecord(USER_TABLE, {
