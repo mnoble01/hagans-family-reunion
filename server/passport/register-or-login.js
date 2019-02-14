@@ -20,8 +20,7 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
 
     if (!email) {
       logger.log('info', 'registerOrLogin: No email provided', ...arguments);
-      // return done(new Error('No email provided'));
-      // err instanceof mongoose.Error.ValidationError
+      return done(new Error('No email provided'));
     }
 
     // find or create db user
