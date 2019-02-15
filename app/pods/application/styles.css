@@ -9,6 +9,10 @@
   flex-direction: column;
 }
 
+.flash-messages {
+  margin: 0 16px;
+}
+
 /* TODO do parallax scrolly thing */
 
 .app-header {
