@@ -67,7 +67,7 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
             id: airtableUser.id,
             attrs: {
               ['In Database']: true,
-              ['Status']: 'Member',
+              ['Status']: airtableUser.status || 'Member',
               ['Registration Source']: updatedRegSource,
               ['First Name']: firstName,
               ['Last Name']: lastName,
@@ -84,9 +84,8 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
       }
     });
   } catch (e) {
-    logger.log('info', 'registerOrLogin: Could not find airtable user, or other error', e);
-    // no airtable user found, so
-    // create airtable user
+    logger.log('info', 'registerOrLogin: Could not find airtable user, creating', e);
+    // no airtable user found, so create one
     createAirtableRecord(USER_TABLE, {
       attrs: {
         Status: 'Pending Review',
