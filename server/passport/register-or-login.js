@@ -21,8 +21,11 @@ module.exports = async function({ done, email, password, firstName, lastName, pr
     if (!email) {
       logger.log('info', 'registerOrLogin: No email provided', ...arguments);
       // http://www.passportjs.org/docs/configure/#verify-callback
-      return done(null, false, { message: 'No email provided' });
+      return done(null, false, { message: `No email provided by ${registrationSource}` });
     }
+
+    // TODO Use async/await with mongoose
+    // https://codeburst.io/using-mongoose-validation-with-async-await-c3a9255459e1
 
     // find or create db user
     Users.findOne({ email }, (dbError, dbUser) => {

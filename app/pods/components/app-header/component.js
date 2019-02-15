@@ -42,6 +42,9 @@ export default Component.extend({
 
   pendingReviewMenuItems: computed(function() {
     return [{
+      route: 'reunion-registration',
+      name: '2019 Reunion Registration',
+    }, {
       route: 'account',
       name: 'Account',
       children: [{
