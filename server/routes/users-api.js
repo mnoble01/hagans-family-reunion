@@ -50,7 +50,7 @@ module.exports = function(app) {
           return memo;
         }, {}));
       } else {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.status(200).json({});
       }
     } catch (error) {
       return res.status(error.statusCode).json(error);
