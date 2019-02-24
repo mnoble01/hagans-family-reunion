@@ -3,7 +3,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const registerOrLogin = require('passport/register-or-login');
 const routeUtils = require('routes/utils');
-const { LOGIN_SUCCESS_REDIRECT, LOGIN_FAILURE_REDIRECT } = routeUtils;
+const { LOGIN_FAILURE_REDIRECT, loginSuccessRedirect, setCustomDirect } = routeUtils;
 const logger = require('utils/logger');
 
 function imageUrl(url) {
@@ -17,11 +17,11 @@ passport.use(new GoogleStrategy({
     callbackURL: 'https://hagans.family/auth/google/callback',
   },
   function(accessToken, refreshToken, profile, done) {
+    logger.log('info', 'GOOGLE PROFILE', profile);
     const firstName = profile.name.givenName;
     const lastName = profile.name.familyName;
-    const email = profile.emails[0].value;
+    const email = profile.emails && profile.emails[0] && profile.emails[0].value;
     const profileImageUrl = imageUrl(profile.photos && profile.photos[0] && profile.photos[0].value);
-    logger.log('info', 'GOOGLE PROFILE', profile);
     registerOrLogin({
       done,
       email,
@@ -39,7 +39,7 @@ module.exports = function(app) {
   //   request.  The first step in Google authentication will involve
   //   redirecting the user to google.com.  After authorization, Google
   //   will redirect the user back to this application at /auth/google/callback
-  app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email', 'openid'] }));
+  app.get('/auth/google', setCustomDirect, passport.authenticate('google', { scope: ['profile', 'email', 'openid'] }));
 
   // GET /auth/google/callback
   //   Use passport.authenticate() as route middleware to authenticate the
@@ -48,7 +48,5 @@ module.exports = function(app) {
   //   which, in this example, will redirect the user to the home page.
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: LOGIN_FAILURE_REDIRECT,
-  }), function(req, res) {
-    res.redirect(LOGIN_SUCCESS_REDIRECT);
-  });
+  }), loginSuccessRedirect);
 };

@@ -1,0 +1,34 @@
+<div local-class='centered-content'>
+  {{article-header}}
+
+  <div local-class='page-title'>
+    {{currentYear}} Reunion Registration
+  </div>
+
+  {{#if session.isAuthenticated}}
+    <div local-class='authenticated-actions'>
+      {{#link-to 'reunion-registration.main' local-class='get-started-button'}}
+        Get Started
+      {{/link-to}}
+      <div local-class='authenticated-or'>
+        — OR —
+      </div>
+      <a local-class='download-pdf-button' href={{concat '/registration-forms/' currentYear '.pdf'}}>
+        Download PDF Registration Form
+      </a>
+    </div>
+  {{else}}
+    <h2 local-class='subtitle'>
+      Please register or login to get started.
+    </h2>
+
+    <div local-class='buttons'>
+      {{#link-to 'login' (query-params redirect=redirectHere handhold=true) local-class='primary-button'}}
+        Login
+      {{/link-to}}
+      {{#link-to 'register' (query-params redirect=redirectHere handhold=true) local-class='secondary-button'}}
+        Register
+      {{/link-to}}
+    </div>
+  {{/if}}
+</div>

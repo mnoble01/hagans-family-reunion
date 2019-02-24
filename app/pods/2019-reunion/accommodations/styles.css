@@ -10,6 +10,23 @@
   margin-bottom: 42px;
 }
 
+.centered-content {
+  composes: centered-content from 'hagans-family/styles/shared';
+}
+
+.address,
+.offset-block {
+  composes: offset-block from 'hagans-family/styles/shared';
+}
+
 .p {
   padding-bottom: 24px;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: 0;
 }

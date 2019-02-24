@@ -1,5 +1,5 @@
-@value dark-gray from 'hagans-family/styles/shared';
-@value powder-blue from 'hagans-family/styles/shared';
+@value dark-gray from 'hagans-family/styles/colors';
+@value powder-blue from 'hagans-family/styles/colors';
 @value footer-height from 'hagans-family/pods/application/styles';
 @value fixed-post-image-width from 'hagans-family/styles/shared';
 
@@ -100,6 +100,7 @@
 .post-meta {
   font-style: italic;
   font-size: 15px;
+  word-spacing: 2px;
 }
 .post-author,
 .post-date {
@@ -134,8 +135,8 @@
   margin-bottom: 32px;
 }
 .edit-button {
-  composes: primary-button from 'hagans-family/styles/shared';
-  composes: small-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
+  composes: small-button from 'hagans-family/styles/buttons';
 }
 .edit-button .icon {
   font-size: larger;

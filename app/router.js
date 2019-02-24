@@ -15,6 +15,7 @@ Router.map(function() {
   });
   this.route('password-reset');
   this.route('contact');
+  this.route('suggestions');
 
   this.route('not-found', { path: '/*path' });
   this.route('past-years', function() {
@@ -31,7 +32,6 @@ Router.map(function() {
     this.route('fees');
     this.route('t-shirts');
     this.route('committee');
-    this.route('suggestions');
   });
   this.route('logout');
   this.route('post', { path: '/posts/:post_id' });
@@ -41,6 +41,13 @@ Router.map(function() {
       this.route('new');
       this.route('edit-post', { path: ':post_id/edit' });
     });
+
+    this.route('users', function() {
+      this.route('database');
+    });
+  });
+  this.route('reunion-registration', function() {
+    this.route('main');
   });
 });
 

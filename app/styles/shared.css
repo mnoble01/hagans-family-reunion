@@ -1,22 +1,6 @@
-/* https://www.hexcolortool.com/ */
-
-@value header-color: rgba(36,38,41,0.8);
-@value input-color: #666;
-
-@value light-gray: #E0E0E0;
-@value medium-gray: #888;
-@value dark-gray: #616A74;
-@value black: #292C2f;
-
-@value light-gold: #E8BB37;
-@value gold: #E7AE01;
-
-@value powder-blue: #678DB8;
-
-@value green: #4EA651;
-@value red: #C74933;
-
+@value medium-gray from 'hagans-family/styles/colors';
 @value fixed-post-image-width: 700px;
+@value header-color: rgba(36,38,41,0.8);
 
 .page-title {
   font-size: 40px;
@@ -31,168 +15,9 @@
   box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
 }
 
-/* TODO get a css reset */
-.input {
-  color: input-color;
-  border-radius: 2px;
-  border: 2px solid #DDD;
-  padding: 0 12px;
-  height: 40px;
-  font-size: 15px;
-}
-.input:focus {
-  border-color: #BBB;
-  outline: none;
-  border-left: 4px solid gold;
-}
-
-.input-label {
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 22px;
-  color: #555;
-  display: block;
-  margin: 0 0 8px 0;
-}
-
-.input + .input-label {
-  margin-top: 16px;
-}
-
-.button-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 32px;
-}
-
-.-button {
-  color: white;
-  vertical-align: middle;
-  height: auto;
-  font-size: 15px;
-  cursor: pointer;
-  width: 100%;
-  box-shadow: none;
-  text-shadow: none;
-  font-family: inherit;
-  outline: none;
-  margin: 0;
-  border-radius: 4px;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-
-  /* opacity: 1; */
-  min-width: 100px;
-  padding: 16px 20px;
-
-  transition: all .3s;
-}
-.-button:disabled {
-  cursor: not-allowed;
-}
-
-.-button + .-button {
-  margin-left: 16px;
-}
-
-.primary-button {
-  composes: -button;
-  background: gold;
-}
-.primary-button:hover {
-  background: light-gold;
-}
-.primary-button:disabled {
-  background: #C59C20;
-}
-
-.secondary-button {
-  composes: -button;
-  color: input-color;
-  background: #EEE;
-}
-.secondary-button:hover {
-  background: #E5E5E5;
-}
-
-.small-button {
-  padding: 8px;
-  width: auto;
-}
-
-.link {
-  transition: all .3s;
-  cursor: pointer;
-}
-.link:focus {
-  outline: none;
-}
-
-.gold-link {
-  composes: link;
-  color: gold;
-}
-.gold-link:hover {
-  color: light-gold;
-}
-
-.gray-link {
-  color: medium-gray;
-}
-.gray-link:hover {
-  color: dark-gray;
-}
-
 .loading {
   color: medium-gray;
   font-style: italic;
-}
-
-/* power select styles - match other inputs */
-
-.input-label + div :global(.ember-power-select-trigger)  {
-  margin-bottom: 16px;
-}
-:global(.ember-power-select-trigger) {
-  color: input-color;
-  border-radius: 2px;
-  border: 2px solid #DDD;
-  padding: 0 12px;
-  min-height: 40px;
-  font-size: 15px;
-}
-:global(.ember-power-select-trigger--active) {
-  border-color: #BBB;
-}
-:global(.ember-power-select-multiple-option) {
-  line-height: 32px;
-  color: input-color;
-  background: white;
-  border-color: #DDD;
-  border-width: 2px;
-  display: flex;
-  padding: 0 8px;
-}
-:global(.ember-power-select-multiple-option .ember-power-select-multiple-remove-btn) {
-  margin-right: 8px;
-}
-:global(.ember-power-select-options .ember-power-select-option) {
-  line-height: 32px;
-  padding: 4px 16px;
-  cursor: pointer;
-}
-:global(.ember-power-select-option[aria-selected=true]) {
-  background: light-gray;
-  color: inherit;
-}
-:global(.ember-power-select-option[aria-current=true]) {
-  background: powder-blue;
-  color: white;
-}
-:global(.ember-power-select-trigger-multiple-input) {
-  line-height: 32px;
-  padding: 4px 0;
 }
 
 :global(.liquid-container),
@@ -200,14 +25,16 @@
   overflow: visible;
 }
 
-.centered-content {
+.centered-content,
+:global(.centered-content) {
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 50%;
   margin: 0 auto;
 }
 @media (max-width: 800px) {
-  .centered-content {
+  .centered-content,
+  :global(.centered-content) {
     margin: 0 16px;
     width: auto !important;
   }
@@ -230,4 +57,31 @@
   to {
     transform: scale3d(1, 1, 1);
   }
+}
+
+.offset-block {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  line-height: 24px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.offset-block a[href^=tel] {
+  margin-top: 12px;
+}
+
+.checkmark {
+  background-color: green;
+  color: white;
+  border-radius: 100%;
+  width: 42px;
+  height: 42px;
+  margin: 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.checkmark:after {
+  content: '✔';
 }

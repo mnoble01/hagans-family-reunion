@@ -1,0 +1,12 @@
+@value medium-gray, light-gold from 'hagans-family/styles/colors';
+
+.site-loader {
+  width: 100%;
+  height: 300px;
+  text-align: center;
+}
+
+.loading-text {
+  color: medium-gray;
+  font-size: larger;
+}

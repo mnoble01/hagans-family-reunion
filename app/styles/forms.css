@@ -1,0 +1,132 @@
+@value light-gray from 'hagans-family/styles/colors';
+@value powder-blue from 'hagans-family/styles/colors';
+@value gold from 'hagans-family/styles/colors';
+
+/* TODO get a css reset */
+@value input-color: #666;
+@value input-padding: 12px;
+@value input-border-color: #DDD;
+@value input-focus-border-color: #BBB;
+textarea.input {
+  padding: input-padding;
+}
+.input {
+  width: auto;
+  color: input-color;
+  border-radius: 2px;
+  border: 2px solid input-border-color;
+  padding: 0 input-padding;
+  height: 40px;
+  font-size: 15px;
+}
+.input:focus {
+  border-color: input-focus-border-color;
+  outline: none;
+  border-left: 4px solid gold;
+}
+
+.input-label {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  color: #555;
+  display: block;
+  margin: 0 0 8px 0;
+}
+
+.input + .input-label {
+  margin-top: 16px;
+}
+
+@value form-margin: 16px;
+.form-row {
+  display: flex;
+  margin-bottom: form-margin;
+}
+.form-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.form-column:not(:last-child) {
+  margin-right: calc(form-margin / 2);
+}
+.form-column:not(:first-child) {
+  margin-left: calc(form-margin / 2);
+}
+.form-column:last-child {
+  margin-right: 0;
+}
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+  .form-column {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .form-column:not(:last-child) {
+    margin-bottom: form-margin;
+  }
+}
+
+/* power select styles - match other inputs */
+.input-label + div :global(.ember-power-select-trigger),
+.input-label + :global(.ember-power-select-trigger) {
+  margin-bottom: 16px;
+}
+:global(.ember-power-select-trigger) {
+  display: flex;
+  color: input-color;
+  border-radius: 2px;
+  border: 2px solid input-border-color;
+  padding: 0 12px;
+  min-height: 40px;
+  font-size: 15px;
+  cursor: pointer;
+}
+:global(.ember-power-select-trigger--active) {
+  border-color: input-focus-border-color;
+}
+:global(.ember-power-select-trigger:focus),
+:global(.ember-power-select-trigger--active) {
+  outline: none;
+}
+:global(.ember-power-select-multiple-option) {
+  line-height: 32px;
+  color: input-color;
+  background: white;
+  border-color: input-border-color;
+  border-width: 2px;
+  display: flex;
+  padding: 0 8px;
+}
+:global(.ember-power-select-selected-item) {
+  line-height: 32px;
+  color: input-color;
+  margin-left: 0;
+  align-self: center;
+}
+:global(.ember-power-select-multiple-option .ember-power-select-multiple-remove-btn) {
+  margin-right: 8px;
+}
+:global(.ember-power-select-options[role=listbox]) {
+  max-height: 100%;
+}
+:global(.ember-power-select-options .ember-power-select-option) {
+  line-height: 32px;
+  padding: 4px 16px;
+  cursor: pointer;
+}
+:global(.ember-power-select-option[aria-selected=true]) {
+  background: light-gray;
+  color: inherit;
+}
+:global(.ember-power-select-option[aria-current=true]) {
+  background: powder-blue;
+  color: white;
+}
+:global(.ember-power-select-trigger-multiple-input) {
+  line-height: 32px;
+  padding: 4px 0;
+}

@@ -1,0 +1,9 @@
+.reunion-page-header {
+  composes: reunion-page-header from 'hagans-family/styles/shared';
+}
+
+.page-title {
+  composes: page-title from 'hagans-family/styles/shared';
+  color: black;
+  margin-bottom: 42px;
+}

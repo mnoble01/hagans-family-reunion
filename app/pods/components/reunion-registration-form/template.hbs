@@ -1,0 +1,53 @@
+{{flash-messages scope='form' flashClass=(local-class 'flash-messages')}}
+
+{{!-- User Fields --}}
+<div local-class='form-row'>
+  <div local-class='form-column'>
+    <label local-class='input-label'> First Name </label>
+    <input local-class='input' value={{editedUserFields.firstName}} oninput={{action (mut editedUserFields.firstName) value='target.value'}} type='text'>
+  </div>
+  <div local-class='form-column'>
+    <label local-class='input-label'> Middle / Last Name(s) </label>
+    <input local-class='input' value={{editedUserFields.lastName}} oninput={{action (mut editedUserFields.lastName) value='target.value'}} type='text'>
+  </div>
+</div>
+<label local-class='input-label'> Birth Date </label>
+<input local-class='input' type='date' value={{editedUserFields.birthDate}} onchange={{action (mut editedUserFields.birthDate) value='target.value'}}>
+<label local-class='input-label'> Email {{unless registeringSelf '(not required, but please enter if they have one)'}}</label>
+<input local-class='input' type='email' value={{editedUserFields.email}} oninput={{action (mut editedUserFields.email) value='target.value'}}>
+{{#if registeringSelf}}
+  <label local-class='input-label'> Phone Number </label>
+  <input local-class='input' type='tel' value={{editedUserFields.phone}} oninput={{action (mut editedUserFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}'>
+  <label local-class='input-label'> Address </label>
+  <input local-class='input' type='text' value={{editedUserFields.address}} oninput={{action (mut editedUserFields.address) value='target.value'}}>
+{{/if}}
+
+{{!-- Registration Fields --}}
+<label local-class='input-label'> T-Shirt Size </label>
+{{#power-select
+  options=tshirtSizes
+  onchange=(action setTshirtSize)
+  selected=selectedTshirtSize
+  searchEnabled=false
+  as |option|
+}}
+  {{option.name}}
+{{/power-select}}
+{{#if (not registeringSelf)}}
+  <label local-class='input-label'> Relationship to you </label>
+  <input local-class='input' type='text' value={{editedRegistrationFields.relationship}} oninput={{action (mut editedRegistrationFields.relationship) value='target.value'}}>
+{{/if}}
+
+<div local-class='buttons'>
+  <button
+    local-class='primary-button'
+    onclick={{perform submit}}
+    disabled={{or submit.isRunning (not canSubmit)}}
+  >
+    {{#if submit.isRunning}}
+      Please wait...
+    {{else}}
+      Submit
+    {{/if}}
+  </button>
+</div>

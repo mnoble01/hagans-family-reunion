@@ -6,19 +6,13 @@
       class=flashClass
       as |component flash|
     }}
-      <div local-class='message'>{{flash.message}}</div>
+      <div local-class='message'>
+        {{#each flash.message as |message|}}
+          • {{message}}<br>
+        {{else}}
+          {{flash.message}}
+        {{/each}}
+      </div>
     {{/flash-message}}
   {{/if}}
 {{/each}}
-<!-- {{#each flashMessageQueue as |queue|}}
-  {{#if (eq queue.flash.scope scope)}}
-    {{#flash-message flash=queue.flash class='flash-alert' click=(action 'preventBubble')}}
-      {{#if queue.flash.allowClose}}
-        <a {{action 'close' queue.flash}} class="close"> &times; </a>
-      {{/if}}
-      {{#each queue.messages as |message|}}
-        <div>{{message}}</div>
-      {{/each}}
-    {{/flash-message}}
-  {{/if}}
-{{/each}} -->

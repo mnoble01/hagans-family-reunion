@@ -42,6 +42,9 @@ export default Component.extend({
 
   pendingReviewMenuItems: computed(function() {
     return [{
+      route: 'reunion-registration',
+      name: '2019 Reunion Registration',
+    }, {
       route: 'account',
       name: 'Account',
       children: [{
@@ -56,6 +59,9 @@ export default Component.extend({
       route: '2019-reunion',
       name: '2019 Reunion',
       children: [{
+        route: 'reunion-registration',
+        name: 'Registration',
+      }, {
         route: '2019-reunion.announcements',
         name: 'Announcements',
       }, {
@@ -74,7 +80,7 @@ export default Component.extend({
         route: '2019-reunion.committee',
         name: 'Planning Committee',
       }, {
-        route: '2019-reunion.suggestions',
+        route: 'suggestions',
         name: 'Suggestions',
       }],
     }, {
@@ -91,6 +97,10 @@ export default Component.extend({
       name: 'Account',
       isActive: this.router.currentURL.endsWith(this.session.user.id),
       children: [{
+        route: 'account',
+        name: 'My Account',
+        isActive: this.router.currentURL.endsWith(this.session.user.id),
+      }, {
         action: this.logout,
         name: 'Logout',
       }],
@@ -99,17 +109,28 @@ export default Component.extend({
 
   adminMenuItems: computed('this.session.isAuthenticated', 'session.userPermissions', function() {
     const permissions = this.session.userPermissions;
+    if (!permissions.includes('is_admin')) return [];
+
     const canPost = permissions.includes('can_post');
     // const canEmail = permissions.includes('can_email');
 
-    // if (!permissions.includes('is_admin')) return;
     const children = [{
       route: 'admin.posts',
       name: 'My Posts',
       visible: canPost,
+    }, {
+      route: 'admin.posts.new',
+      name: 'New Post',
+      visible: canPost,
+    }, {
+      route: 'admin.users.database',
+      name: 'User Database',
+      visible: true,
     }];
     const visibleChildren = children.filter(child => child.visible);
-    if (!visibleChildren.length) return;
+    if (!visibleChildren.length) {
+      return [];
+    }
 
     return [{
       route: 'admin',
@@ -119,6 +140,6 @@ export default Component.extend({
   }),
 
   logout() {
-    this.transitionTo('login', { queryParams: { logout: true } });
+    this.transitionTo('login', { queryParams: { logout: true, handhold: false } });
   },
 });

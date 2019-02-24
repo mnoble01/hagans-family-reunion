@@ -14,7 +14,7 @@ export default Route.extend({
   },
 
   titleToken() {
-    return this.reunionYear;
+    return `${this.reunionYear} Reunion`;
   },
 
   async model() {
@@ -26,12 +26,12 @@ export default Route.extend({
 
     const categories = categoriesResponse.map(cat => new AirtableModel(cat));
     const posts = postsResponse.map(post => new PostModel(post)).filter((post) => {
-      const postCategoryIds = post.categories;
+      const postCategoryIds = post.categories || [];
       const postCategoryNames = categories.filter(cat => postCategoryIds.includes(cat.id)).mapBy('name');
       return postCategoryNames.includes(`${year} Reunion`);
     });
 
-    const authorIds = posts.map(post => post.author).uniq();
+    const authorIds = posts.map(post => post.author).compact().uniq();
     const authorsResponses = await Promise.all(authorIds.map((authorId) => {
       return this.get('ajax').request(`/api/users/${authorId}`);
     }));

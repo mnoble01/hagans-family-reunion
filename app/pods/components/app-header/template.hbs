@@ -1,5 +1,5 @@
 {{#link-to 'index' local-class='link-to-index'}}
-  Hagans Family
+  {{family-tree-icon height=40 local-class='tree-icon'}} Hagans Family
 {{/link-to}}
 
 <div local-class='menu-trigger menu-link {{if showMenu 'show-mobile-menu'}}' onclick={{action (mut showMenu) (not showMenu)}}>
@@ -34,7 +34,15 @@
                   {{child.name}}
                 </a>
               {{else}}
-                {{#link-to child.route local-class=(concat 'menu-link ' (if (eq router.currentRouteName child.route) 'active'))}}
+                {{#link-to child.route
+                  local-class=(concat
+                    'menu-link '
+                    (if (or
+                      (eq router.currentRouteName child.route)
+                      item.isActive
+                    ) 'active')
+                  )
+                }}
                   {{child.name}}
                 {{/link-to}}
               {{/if}}

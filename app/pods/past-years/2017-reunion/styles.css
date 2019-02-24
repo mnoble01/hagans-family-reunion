@@ -1,5 +1,12 @@
-@value medium-gray, black from 'hagans-family/styles/shared';
-
 .p {
   padding-bottom: 24px;
+}
+
+.planning-committee {
+  margin-top: 24px;
+  margin-bottom: 42px;
+}
+
+.planning-committee > div {
+  margin-bottom: 8px;
 }

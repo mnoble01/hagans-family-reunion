@@ -1,4 +1,4 @@
-@value medium-gray, dark-gray, black from 'hagans-family/styles/shared';
+@value medium-gray, dark-gray, black from 'hagans-family/styles/colors';
 
 .posts {
   display: flex;
@@ -107,6 +107,9 @@
   font-size: 17px;
   line-height: 30px;
   padding: 0 10%;
+  /* Fit inside post-summary */
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .post-title {
@@ -117,7 +120,7 @@
 }
 
 .read-more-button {
-  composes: primary-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
   border-radius: 0;
   text-transform: uppercase;
   margin: 32px auto 0;
@@ -131,9 +134,21 @@
   .post-title {
     font-size: 24px;
     line-height: 30px;
+    word-wrap: break-word;
   }
   .post-summary-content {
     font-size: 15px;
     line-height: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .post-title {
+    line-height: 25px;
+    margin-bottom: 16px;
+  }
+  .post-summary-content {
+    padding: 0 15%;
+    line-height: 18px;
   }
 }

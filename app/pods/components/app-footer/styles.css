@@ -9,7 +9,7 @@
 /* max-width: 80%; */
 
 .link {
-  composes: link from 'hagans-family/styles/shared';
+  composes: link from 'hagans-family/styles/links';
   text-decoration: none;
   color: medium-gray;
 }

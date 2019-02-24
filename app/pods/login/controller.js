@@ -8,8 +8,9 @@ export default Controller.extend({
   session: service(),
   flashMessages: service(),
 
-  queryParams: ['logout'],
+  queryParams: ['logout', 'redirect', 'handhold'],
   logout: false,
+  handhold: true,
 
   setup() {
     this._super(...arguments);
@@ -17,11 +18,15 @@ export default Controller.extend({
       scheduleOnce('afterRender', () => {
         this.flashMessages.success('Successfully logged out', { scope: 'login' });
       });
-    } else if (this.redirect && !this.session.isAuthenticated) {
+    } else if (this.redirect && !this.redirect.includes('reunion-registration') && !this.session.isAuthenticated) {
       scheduleOnce('afterRender', () => {
         this.flashMessages.info('Please sign in', { scope: 'login' });
       });
     }
+    // This brings too much attention to the username / password
+    // scheduleOnce('afterRender', () => {
+    //   run(() => document.querySelector('input').focus());
+    // });
   },
 
   login: task(function*() {

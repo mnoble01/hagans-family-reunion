@@ -1,5 +1,5 @@
-@value dark-gray, black from 'hagans-family/styles/shared';
-@value powder-blue from 'hagans-family/styles/shared';
+@value dark-gray, black from 'hagans-family/styles/colors';
+@value powder-blue from 'hagans-family/styles/colors';
 @value footer-height: 60px;
 @value fixed-post-image-width from 'hagans-family/styles/shared';
 
@@ -7,6 +7,10 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+}
+
+.flash-messages {
+  margin: 0 16px;
 }
 
 /* TODO do parallax scrolly thing */
@@ -81,21 +85,17 @@
   padding: 0;
 }
 
-@keyframes -rotate {
+/* @keyframes -rotate {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
   }
-}
+} */
+
 .loading {
-  background: url(/images/watercolor-circle.png);
-  background-size: contain;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto;
-  animation: -rotate 2s infinite;
+  margin-top: 36px;
 }
 
 .site-image {

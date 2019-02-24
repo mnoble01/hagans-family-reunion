@@ -1,12 +1,12 @@
-@value green from 'hagans-family/styles/shared';
-@value light-gray, medium-gray, dark-gray from 'hagans-family/styles/shared';
+@value green from 'hagans-family/styles/colors';
+@value light-gray, medium-gray, dark-gray from 'hagans-family/styles/colors';
 
 .input {
-  composes: input from 'hagans-family/styles/shared';
+  composes: input from 'hagans-family/styles/forms';
 }
 
 .input-label {
-  composes: input-label from 'hagans-family/styles/shared';
+  composes: input-label from 'hagans-family/styles/forms';
 }
 
 .post-title-input {
@@ -35,8 +35,8 @@
 
 .view-button,
 .publish-button {
-  composes: primary-button from 'hagans-family/styles/shared';
-  composes: small-button from 'hagans-family/styles/shared';
+  composes: primary-button from 'hagans-family/styles/buttons';
+  composes: small-button from 'hagans-family/styles/buttons';
 }
 
 .save-status {
@@ -77,13 +77,13 @@
 }
 
 .add-featured-image {
-  composes: secondary-button from 'hagans-family/styles/shared';
-  composes: small-button from 'hagans-family/styles/shared';
+  composes: secondary-button from 'hagans-family/styles/buttons';
+  composes: small-button from 'hagans-family/styles/buttons';
   font-size: 14px;
   margin: 0 auto 16px 0;
 }
 
 .preview-button {
-  composes: gray-link from 'hagans-family/styles/shared';
+  composes: gray-link from 'hagans-family/styles/links';
   margin-right: 16px;
 }

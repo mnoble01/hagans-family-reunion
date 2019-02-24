@@ -1,10 +1,12 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import ENV from 'hagans-family/config/environment';
+import { get } from '@ember/object';
 
 export default Route.extend({
   session: service(),
   router: service(),
+  flashMessages: service(),
 
   init() {
     this._super(...arguments);
@@ -36,12 +38,20 @@ export default Route.extend({
     }
   },
 
-  afterModel() {
+  afterModel(model, transition) {
     // if not authenticated, transition to login with 'redirect' parameter
-    const onLoginPage = window.location.hash.startsWith('#/login');
-    const onIndexPage = window.location.hash === '';
+    const unauthRoutes = [
+      'index',
+      'login',
+      'register',
+      'contact',
+      'post',
+      'reunion-registration.index',
+    ];
+    const onWhitelistedPage = unauthRoutes.some(route => route === transition.targetName);
     const hasRedirectParam = window.location.hash.indexOf('redirect') > -1;
-    if (!this.session.isAuthenticated && !onLoginPage && !hasRedirectParam && !onIndexPage) {
+
+    if (!this.session.isAuthenticated && !hasRedirectParam && !onWhitelistedPage) {
       this.transitionTo('login', { queryParams: { redirect: window.location.href } });
     }
   },
@@ -70,17 +80,17 @@ export default Route.extend({
       return true;
     },
 
-    // error(err, transition) {
-    //   const handler = this.get('errorHandler');
-    //
-    //   if (err && err.status === NOT_FOUND) {
-    //     transition.send('notFound', transition);
-    //   } else if (err && err.status === FORBIDDEN) {
-    //     this.transitionTo('forbidden');
-    //   } else {
-    //     next(handler, handler.handleServerError, err);
-    //   }
-    // },
+    error(error, transition) {
+      const payloadMessage = error && get(error, 'payload.error') || error && get(error, 'payload.message');
+      const errorMessage = error && get(error, 'message');
+      const messages = ['Error', errorMessage, payloadMessage].compact();
+      this.flashMessages.danger(messages);
+      return true;
+    },
+
+    refreshModel() {
+      this.refresh();
+    },
 
     didTransition() {
       this.flashMessages.clearMessages();

@@ -2,19 +2,24 @@
 const Airtable = require('airtable');
 const AirtableModel = require('airtable/model');
 
-const USER_TABLE = 'users';
-const POST_TABLE = 'posts';
-const POST_CATEGORY_TABLE = 'post_categories';
-const UPLOAD_TABLE = 'uploads';
+const TABLES = Object.freeze({
+  USER_TABLE: 'users',
+  POST_TABLE: 'posts',
+  POST_CATEGORY_TABLE : 'post_categories',
+  UPLOAD_TABLE : 'uploads',
+  COMMUNICATION_TABLE : 'communications',
+  REGISTRATION_TABLE : 'reunion_registrations',
+  TSHIRT_ORDER_TABLE : 'tshirt_orders',
+  TSHIRT_SIZE_TABLE : 'tshirt_sizes',
+});
 
 const airtableBase = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
   endpointUrl: 'https://api.airtable.com',
 }).base(process.env.AIRTABLE_BASE);
 
-// TODO rewrite these to use promises!!!
-// TODO remove ALL CALLBACKS when all uses are converted to async/await
-function fetchAirtableRecords(tableName, { onSuccess, onError }) {
+// TODO remove ALL onSuccess/onError CALLBACKS when all uses are converted to async/await
+function fetchAirtableRecords(tableName, { onSuccess, onError, filterCallback } = {}) {
   const airtableRecords = [];
   return new Promise((resolve, reject) => {
     airtableBase(tableName).select({
@@ -22,7 +27,13 @@ function fetchAirtableRecords(tableName, { onSuccess, onError }) {
         view: 'Grid view',
     }).eachPage((records, fetchNextPage) => {
       for (const record of records) {
-        airtableRecords.push(new AirtableModel(record));
+        const airtableModel = new AirtableModel(record);
+        if (!filterCallback || filterCallback(airtableModel)) {
+          // If no filterCallback exists,
+          // Else if the filterCallback returns true,
+          // Return record in results
+          airtableRecords.push(airtableModel);
+        }
       }
       fetchNextPage();
     }, (error) => {
@@ -82,7 +93,7 @@ function updateAirtableRecord(tableName, { id, attrs, onSuccess, onError }) {
 function fetchAirtableUsers({ onSuccess, onError }) {
   // TODO use generic function w/ custom filter callbacks
   const airtableRecords = [];
-  airtableBase(USER_TABLE).select({
+  airtableBase(TABLES.USER_TABLE).select({
       pageSize: 100,
       view: 'Grid view',
   }).eachPage((records, fetchNextPage) => {
@@ -105,7 +116,7 @@ function fetchAirtableUsers({ onSuccess, onError }) {
 function fetchAirtablePosts({ status, onSuccess, onError }) {
   // TODO use generic function w/ custom filter callbacks
   const airtableRecords = [];
-  airtableBase(POST_TABLE).select({
+  airtableBase(TABLES.POST_TABLE).select({
       pageSize: 100,
       view: 'Grid view',
   }).eachPage((records, fetchNextPage) => {
@@ -133,7 +144,7 @@ function findAirtableUserByEmail({ email, onSuccess, onError }) {
   // TODO use generic function w/ custom filter callbacks
   let foundModel;
   return new Promise((resolve, reject) => {
-    airtableBase(USER_TABLE).select({
+    airtableBase(TABLES.USER_TABLE).select({
         pageSize: 100,
         view: 'Grid view',
     }).eachPage((records, fetchNextPage) => {
@@ -156,23 +167,78 @@ function findAirtableUserByEmail({ email, onSuccess, onError }) {
   });
 }
 
+function creationCallback(tableName) {
+  return async function(req, res) {
+    const attrs = req.body;
+
+    try {
+      const record = await createAirtableRecord(tableName, { attrs });
+      res.status(200).json(record.serialize());
+    } catch (error) {
+      res.status(error.statusCode || 500).json(error);
+    }
+  };
+}
+
+function updateCallback(tableName) {
+  return async function(req, res) {
+    const attrs = req.body;
+    const id = req.params.id;
+
+    try {
+      const record = await updateAirtableRecord(tableName, { id, attrs });
+      res.status(200).json(record.serialize());
+    } catch (error) {
+      res.status(error.statusCode || 500).json(error);
+    }
+  };
+}
+
+function findCallback(tableName) {
+  return async function(req, res) {
+    const id = req.params.id;
+
+    try {
+      const record = await findAirtableRecordById(tableName, { id });
+      res.status(200).json(record.serialize());
+    } catch (error) {
+      res.status(error.statusCode || 500).json(error);
+    }
+  };
+}
+
+function fetchCallback(tableName) {
+  return async function(req, res) {
+    const ids = req.params.ids; // Allow fetching by many ids
+    try {
+      let records = await fetchAirtableRecords(tableName);
+      if (ids) {
+        records = records.filter(record => ids.includes(record.id));
+      }
+      res.status(200).json(records.map(record => record.serialize()));
+    } catch (error) {
+      res.status(error.statusCode || 500).json(error);
+    }
+  };
+}
+
 module.exports = {
   airtableBase,
 
-  fetchAirtableRecords,
+  // Bespoke functions to maybe get rid of:
+  findAirtableUserByEmail,
   fetchAirtableUsers,
   fetchAirtablePosts,
 
+  fetchAirtableRecords,
   findAirtableRecordById,
-  findAirtableUserByEmail,
-
   createAirtableRecord,
   updateAirtableRecord,
 
-  tables: {
-    USER_TABLE,
-    POST_TABLE,
-    POST_CATEGORY_TABLE,
-    UPLOAD_TABLE,
-  },
+  creationCallback,
+  updateCallback,
+  findCallback,
+  fetchCallback,
+
+  tables: TABLES,
 };

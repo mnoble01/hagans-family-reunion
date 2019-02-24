@@ -1,6 +1,6 @@
 /* Copied and modified from ember-modal-dialog scss files */
 
-@value light-gray from 'hagans-family/styles/shared';
+@value light-gray from 'hagans-family/styles/colors';
 
 :global(.ember-modal-dialog) {
   z-index: 51;

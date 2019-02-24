@@ -1,0 +1,37 @@
+.reunion-registration-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 36px;
+}
+
+.flash-messages.flash-messages {
+  margin: 0 0 24px;
+}
+
+.form-row {
+  composes: form-row from 'hagans-family/styles/forms';
+}
+
+.form-column {
+  composes: form-column from 'hagans-family/styles/forms';
+}
+
+.input-label {
+  composes: input-label from 'hagans-family/styles/forms';
+}
+
+.input {
+  composes: input from 'hagans-family/styles/forms';
+}
+
+.buttons {
+  composes: button-container from 'hagans-family/styles/buttons';
+}
+
+.primary-button {
+  composes: primary-button from 'hagans-family/styles/buttons';
+}
+
+.secondary-button {
+  composes: secondary-button from 'hagans-family/styles/buttons';
+}

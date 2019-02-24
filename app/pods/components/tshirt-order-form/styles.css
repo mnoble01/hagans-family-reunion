@@ -1,0 +1,75 @@
+.tshirt-order-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 36px;
+}
+
+.flash-messages.flash-messages {
+  margin: 0 0 24px;
+}
+
+.form-row {
+  composes: form-row from 'hagans-family/styles/forms';
+}
+
+.form-column {
+  composes: form-column from 'hagans-family/styles/forms';
+}
+
+.input-label {
+  composes: input-label from 'hagans-family/styles/forms';
+}
+
+.input {
+  composes: input from 'hagans-family/styles/forms';
+}
+
+.buttons {
+  composes: button-container from 'hagans-family/styles/buttons';
+}
+
+.primary-button {
+  composes: primary-button from 'hagans-family/styles/buttons';
+}
+
+.secondary-button {
+  composes: secondary-button from 'hagans-family/styles/buttons';
+}
+
+.add-link {
+  composes: gray-link from 'hagans-family/styles/links';
+  font-size: larger;
+}
+
+@value red from 'hagans-family/styles/colors';
+.form-column.no-right-margin {
+  margin-right: 0;
+}
+.form-row {
+  position: relative;
+  padding-right: 30px;
+}
+.form-row .remove-link {
+  display: none;
+}
+.form-row:hover .remove-link,
+.form-row .remove-link:hover {
+  display: flex;
+}
+.remove-link {
+  composes: link from 'hagans-family/styles/links';
+  background: red;
+  border-radius: 100%;
+  color: white;
+  font-size: larger;
+  font-weight: bold;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 30px;
+  /* right: -30px; */
+  right: 0;
+}

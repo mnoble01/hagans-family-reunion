@@ -14,8 +14,8 @@ export default Controller.extend({
   }),
 
   categoriesForDisplay: computed('post.categories', 'model.categories', function() {
-    const allCategories = this.model.categories;
-    const postCategoryIds = this.post.categories;
+    const allCategories = this.model.categories || [];
+    const postCategoryIds = this.post.categories || [];
     return allCategories.filter(cat => postCategoryIds.includes(cat.id)).mapBy('name').join(', ');
   }),
 
@@ -24,8 +24,9 @@ export default Controller.extend({
     const isAdmin = permissions.includes('is_admin');
     const canPost = permissions.includes('can_post');
     const author = this.author;
-    const isDraft = this.post.status === 'Draft';
-    const correctPermissions = this.session.user.id === author.id && canPost || isAdmin;
-    return correctPermissions && isDraft;
+    const correctStatus = ['Draft', 'Published'].includes(this.post.status);
+    const sessionUserId = this.get('session.user.id');
+    const correctPermissions = sessionUserId && sessionUserId === author.id && canPost || isAdmin;
+    return correctPermissions && correctStatus;
   }),
 });

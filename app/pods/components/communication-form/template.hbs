@@ -1,0 +1,42 @@
+{{flash-messages scope='communication-form'}}
+
+{{#if (not session.isAuthenticated)}}
+  <a href='mailto:hagansreunion@gmail.com' local-class='link'>
+    Email
+  </a>
+{{else if (not success)}}
+  <div local-class='form-input'>
+    <div local-class='label'>
+      Subject
+    </div>
+    <input local-class='input' type='text' value={{editedFields.subject}} oninput={{action (mut editedFields.subject) value='target.value'}}>
+  </div>
+  {{#unless hasFromUser}}
+    <div local-class='form-input'>
+      <div local-class='label'>
+        Email
+      </div>
+      <input local-class='input' type='email' value={{editedFields.replyTo}} oninput={{action (mut editedFields.replyTo) value='target.value'}}>
+    </div>
+  {{/unless}}
+  <div local-class='form-input'>
+    <div local-class='label'>
+      Content
+    </div>
+    {{textarea local-class='input' autoresize=true rows=8 value=editedFields.content}}
+  </div>
+
+  <div local-class='buttons'>
+    <button
+      local-class='submit'
+      onclick={{perform submit}}
+      disabled={{or submit.isRunning (not isValid)}}
+    >
+      {{#if submit.isRunning}}
+        Please wait...
+      {{else}}
+        Submit
+      {{/if}}
+    </button>
+  </div>
+{{/if}}

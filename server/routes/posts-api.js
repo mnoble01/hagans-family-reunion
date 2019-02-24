@@ -4,10 +4,10 @@ const { isLoggedIn } = routeUtils;
 const airtableUtils = require('airtable/utils');
 const {
   fetchAirtablePosts,
-  findAirtableRecordById,
-  updateAirtableRecord,
-  createAirtableRecord,
-  fetchAirtableRecords,
+  creationCallback,
+  updateCallback,
+  findCallback,
+  fetchCallback,
   tables: {
     POST_TABLE,
     POST_CATEGORY_TABLE,
@@ -16,10 +16,18 @@ const {
 
 module.exports = function(app) {
   // Purposefully open to non logged-in users
+  // TODO Might want to limit the fields that are returned to unauth users
   app.get('/api/posts', function(req, res) {
     fetchAirtablePosts({
       status: req.query.status,
       onSuccess: (airtablePosts) => {
+        // Sort by publishedOn or createdAt, depending on which is defined
+        // with most recent being first
+        airtablePosts = airtablePosts.sort((a, b) => {
+          const aDate = a.publishedOn || a.createdAt;
+          const bDate = b.publishedOn || b.createdAt;
+          return new Date(bDate) - new Date(aDate);
+        });
         res.status(200).json(airtablePosts.map(post => post.serialize()));
       },
       onError:(error) => {
@@ -28,57 +36,15 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/posts/:id', isLoggedIn, function(req, res) {
-    findAirtableRecordById(POST_TABLE, {
-      id: req.params.id,
-      onSuccess: (airtablePost) => {
-        res.status(200).json(airtablePost.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
+  // Purposefully open to non logged-in users
+  // TODO Might want to limit the fields that are returned to unauth users
+  app.get('/api/posts/:id', findCallback(POST_TABLE));
 
   // TODO check user permissions
-  app.put('/api/posts/:id', isLoggedIn, function(req, res) {
-    const attrs = req.body;
-
-    updateAirtableRecord(POST_TABLE, {
-      id: req.params.id,
-      attrs,
-      onSuccess: (airtablePost) => {
-        res.status(200).json(airtablePost.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
+  app.put('/api/posts/:id', isLoggedIn, updateCallback(POST_TABLE));
 
   // TODO check user permissions
-  app.post('/api/posts', isLoggedIn, function(req, res) {
-    const attrs = req.body;
+  app.post('/api/posts', isLoggedIn, creationCallback(POST_TABLE));
 
-    createAirtableRecord(POST_TABLE, {
-      attrs,
-      onSuccess: (airtablePost) => {
-        res.status(200).json(airtablePost.serialize());
-      },
-      onError: (error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
-
-  app.get('/api/post_categories', function(req, res) {
-    fetchAirtableRecords(POST_CATEGORY_TABLE, {
-      onSuccess: (airtableCategories) => {
-        res.status(200).json(airtableCategories.map(post => post.serialize()));
-      },
-      onError:(error) => {
-        res.status(error.statusCode).json(error);
-      },
-    });
-  });
+  app.get('/api/post_categories', fetchCallback(POST_CATEGORY_TABLE));
 };

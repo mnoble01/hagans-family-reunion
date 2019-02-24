@@ -10,6 +10,9 @@ export default Route.extend({
     redirect: {
       refreshModel: true,
     },
+    handhold: { // Additional guidance
+      refreshModel: false,
+    },
   },
 
   titleToken: 'Login',

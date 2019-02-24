@@ -1,0 +1,111 @@
+<div local-class='centered-content'>
+  {{article-header}}
+
+  <div local-class='page-title'>
+    {{currentYear}} Reunion Registration
+  </div>
+
+  {{#if loading}}
+    <h2 local-class='subtitle'>
+      Please wait...
+    </h2>
+    {{site-loader local-class='loading'}}
+  {{else if formExpired}}
+    <h2 local-class='subtitle'>
+      Registration has closed.
+    </h2>
+  {{else if (eq step STEPS.SUCCESSFUL_REGISTRATION)}}
+    <h2 local-class='subtitle'>
+      <div local-class='checkmark'></div>
+      Great! You have registered
+      {{if (not-eq reunionRegistration.userId.firstObject session.user.id) reunionRegistration.fullName}}
+      for the {{reunionRegistration.year}} reunion.
+    </h2>
+    <h2 local-class='subtitle'>
+      Would you like to register another person in your household?
+    </h2>
+
+    <div local-class='buttons'>
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_REGISTRATION reunionRegistrationId=null) local-class='primary-button'}}
+        Yes
+      {{/link-to}}
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.TSHIRT_ORDER_DECISION reunionRegistrationId=null) local-class='secondary-button'}}
+        No
+      {{/link-to}}
+    </div>
+  {{else if (eq step STEPS.ADDITIONAL_REGISTRATION)}}
+    {{reunion-registration-form
+      onSuccess=(action onRegistrationSuccess)
+    }}
+  {{else if (eq step STEPS.TSHIRT_ORDER_DECISION)}}
+    <h2 local-class='subtitle'>
+      A t-shirt for each person is included with the reunion fees. Would you like to order additional t-shirts?
+    </h2>
+
+    <div local-class='buttons'>
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.ADDITIONAL_TSHIRT_ORDER) local-class='primary-button'}}
+        Yes
+      {{/link-to}}
+      {{#link-to 'reunion-registration.main' (query-params step=STEPS.PAYMENT) local-class='secondary-button'}}
+        No
+      {{/link-to}}
+    </div>
+  {{else if (eq step STEPS.ADDITIONAL_TSHIRT_ORDER)}}
+    <h2 local-class='subtitle'>
+      T-Shirt Order
+    </h2>
+    {{tshirt-order-form onSuccess=(action (mut step) STEPS.PAYMENT)}}
+  {{else if (eq step STEPS.PAYMENT)}}
+    <h2 local-class='subtitle highlight'>
+      Your total reunion fees due are ${{remainingFeesDue}}.
+    </h2>
+    <div local-class='subtitle'>
+      You can pay all, a partial amount, or none of your fees right now.
+    </div>
+    <div local-class='subtitle'>
+      Come back to this page any time via the {{reunionRegistration.year}} Reunion > Registration menu item.
+    </div>
+    {{reunion-registration-payment
+      reunionRegistration=reunionRegistration
+      dependentRegistrations=dependentRegistrations
+      tshirtOrders=tshirtOrders
+      remainingFeesDue=remainingFeesDue
+      totalFeesDue=totalFeesDue
+    }}
+  {{else if reunionRegistration}}
+    <h2 local-class='subtitle'>
+      {{#if (eq session.user.id registeredByUser.id)}}
+        Looks like you registered
+      {{else}}
+        Looks like you were registered by {{registeredByUser.fullName}}
+      {{/if}}
+      on {{moment-format reunionRegistration.createdAt}}.
+    </h2>
+
+    {{#if (not remainingFeesDue)}}
+      <h2 local-class='subtitle highlight'>
+        Your reunion fees have all been paid!
+      </h2>
+    {{else}}
+      <h2 local-class='subtitle highlight'>
+        Your remaining fees due are ${{remainingFeesDue}}
+        {{#if (not-eq remainingFeesDue totalFeesDue)}}
+          / ${{totalFeesDue}}
+        {{/if}}
+        . Please pay by {{feesDueDate}}.
+      </h2>
+      {{reunion-registration-payment
+        reunionRegistration=reunionRegistration
+        dependentRegistrations=dependentRegistrations
+        tshirtOrders=tshirtOrders
+        remainingFeesDue=remainingFeesDue
+        totalFeesDue=totalFeesDue
+      }}
+    {{/if}}
+  {{else}}
+    {{reunion-registration-form
+      user=session.user
+      onSuccess=(action onRegistrationSuccess)
+    }}
+  {{/if}}
+</div>

@@ -1,0 +1,91 @@
+{{!-- <div local-class='expand-breakdown-toggle' onclick={{action (mut expandedBreakdown) (not expandedBreakdown)}}>
+  {{#if expanded}}
+    Hide Breakdown
+  {{else}}
+    Show Breakdown
+  {{/if}}
+</div> --}}
+
+{{!-- TODO use animated if --}}
+{{#if (or expandedBreakdown true)}} {{!-- Always show breakdown, for now --}}
+  <table local-class='breakdown-table'>
+    <thead>
+      <th>Name</th>
+      <th>Registration Fee</th>
+      <th>Additional T-Shirts</th>
+      <th>Total</th>
+    </thead>
+    <tbody>
+      {{#each rows as |reg|}}
+        <tr>
+          <td>{{reg.fullName}}</td>
+          <td>${{reg.registrationFee}}</td>
+          <td>
+            {{#if reg.additionalTShirtQuantity}}
+              {{reg.additionalTShirtQuantity}} @ ${{tshirtPrice}} = ${{reg.additionalTShirtFees}}
+            {{/if}}
+          </td>
+          <td local-class='total-cell'>${{reg.totalFeesDue}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td local-class='total-cell overall-total-cell'>${{totalFeesDue}}</td>
+      </tr>
+    </tfoot>
+  </table>
+{{/if}}
+
+<div local-class='buttons'>
+  <button local-class='make-payment-button' onclick={{action (mut expandedPayments) (not expandedPayments)}}>
+    {{#if expandedPayments}}
+      Hide Payment Methods
+    {{else}}
+      Make a Payment
+    {{/if}}
+  </button>
+</div>
+
+{{#if expandedPayments}}
+  <div local-class='payments'>
+    <div local-class='buttons payment-buttons'>
+      <a local-class='payment-button' href='https://www.paypal.me/hagansreunion'>
+        <div local-class='payment-logo paypal'></div>
+        PayPal
+      </a>
+      <button local-class='payment-button' onclick={{action (mut showZelleModal) true}}>
+        <div local-class='payment-logo zelle'></div>
+        Zelle
+      </button>
+      <a local-class='payment-button' href='https://cash.me/$RiseBarringer'>
+        <div local-class='payment-logo cash'></div>
+        Cash
+      </a>
+    </div>
+    <div local-class='check-mailing-info'>
+      Or send a check, payable to Risë Barringer, to:
+      <div local-class='address'>
+        Risë Barringer<br>
+        Hagans Family Reunion<br>
+        1770 Glencairn Lane<br>
+        Lewisville, TX  75067<br>
+      </div>
+    </div>
+    <div local-class='payments-disclaimer'>
+      Please note that we'll be manually updating your balance due, so this page may take a little while to reflect any payments that are made.
+    </div>
+  </div>
+{{/if}}
+
+{{#if showZelleModal}}
+  {{#hagans-modal-dialog title='Zelle' onClose=(action (mut showZelleModal false))}}
+    <div local-class='zelle-modal'>
+      <div local-class='payment-logo zelle'></div>
+      Send <a href='https://www.zellepay.com/go/zelle' local-class='link'>Zelle</a> payments to Risë at 214-514-3214
+    </div>
+  {{/hagans-modal-dialog}}
+{{/if}}

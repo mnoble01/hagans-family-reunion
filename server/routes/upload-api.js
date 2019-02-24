@@ -4,6 +4,7 @@ const { isLoggedIn } = routeUtils;
 const fs = require('fs');
 const { Storage } = require('@google-cloud/storage');
 const airtableUtils = require('airtable/utils');
+const logger = require('utils/logger');
 const {
   createAirtableRecord,
   tables: {
@@ -47,6 +48,7 @@ module.exports = function(app) {
     try {
       const response = await googleCloudStorage.bucket(bucketName).upload(filePath);
       googleCloudStorageLink = response[0].metadata.mediaLink;
+      logger.log('info', `Successful upload - Google Cloud Storage - ${googleCloudStorageLink}`);
 
       // delete local file
       fs.unlink(filePath, () => {});
@@ -54,11 +56,17 @@ module.exports = function(app) {
       // delete local file
       fs.unlink(filePath, () => {});
 
-      res.status(500).json(error);
+      logger.log('info', `Failed upload - Google Cloud Storage - ${error}`);
+      return res.status(500).json(error);
     }
 
     // TODO schedule google cloud deletion after 3 months or something???
 
+    // I tried just using the google cloud storage link, but it didn't work
+    // return res.status(200).json({
+    //   url: googleCloudStorageLink,
+    //   message: 'Successfully uploaded',
+    // });
     try {
       const airtableUpload = await createAirtableRecord(UPLOAD_TABLE, {
         attrs: {
@@ -68,12 +76,13 @@ module.exports = function(app) {
         },
       });
       await waitUntilUploaded(airtableUpload);
-      res.status(200).json({
+      return res.status(200).json({
         url: airtableUpload.file[0].url,
         message: 'Successfully uploaded',
       });
     } catch (error) {
-      res.status(error.statusCode).json(error);
+      logger.log('info', `Failed upload - Airtable - ${error}`);
+      return res.status(error.statusCode).json(error);
     }
   });
 };

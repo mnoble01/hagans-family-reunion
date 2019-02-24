@@ -7,12 +7,25 @@
     Login
   </div>
 
+  {{#if handhold}}
+    <h2 local-class='subtitle'>
+      using social account
+    </h2>
+  {{/if}}
+
   {{social-login}}
-  
+
+  {{#if handhold}}
+    {{article-header}}
+    <h2 local-class='subtitle'>
+      or using password
+    </h2>
+  {{/if}}
+
   {{flash-messages scope='login'}}
 
   <label local-class='input-label'> Email </label>
-  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email' autofocus>
+  <input local-class='input' oninput={{action (mut email) value='target.value'}} type='email'>
   <label local-class='input-label'> Password </label>
   <input local-class='input' oninput={{action (mut password) value='target.value'}} type='password' onkeydown={{action onEnter}}>
 
@@ -24,7 +37,7 @@
         Login
       {{/if}}
     </button>
-    {{#link-to 'register' local-class='register'}}
+    {{#link-to 'register' (query-params redirect=redirect) local-class='register'}}
         Register
     {{/link-to}}
   </div>

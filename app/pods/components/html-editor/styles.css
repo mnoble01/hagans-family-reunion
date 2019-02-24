@@ -7,5 +7,8 @@
 :global(.ql-editor) {
   min-height: 200px;
 }
+:global(.ql-snow .ql-editor blockquote) {
+  margin: 0;
+}
 
 /* TODO add post styling to editor (or just let global styles take care of that) */

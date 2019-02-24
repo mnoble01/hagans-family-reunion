@@ -1,1 +1,8 @@
+.planning-committee {
+  margin-top: 24px;
+  margin-bottom: 42px;
+}
 
+.planning-committee > div {
+  margin-bottom: 8px;
+}

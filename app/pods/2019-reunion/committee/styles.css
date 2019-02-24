@@ -1,4 +1,4 @@
-@value medium-gray, black from 'hagans-family/styles/shared';
+@value medium-gray, black from 'hagans-family/styles/colors';
 
 .reunion-page-header {
   composes: reunion-page-header from 'hagans-family/styles/shared';

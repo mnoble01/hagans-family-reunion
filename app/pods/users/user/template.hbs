@@ -17,7 +17,7 @@
 <!-- TODO add a way to upload image -->
 <div local-class='user-image {{if isCurrentUser 'can-upload'}}'>
   {{#animated-value user.profileImage.firstObject.url use=fade duration=500 as |url|}}
-    <img src={{or url '/images/avatar.jpg'}} />
+    <img src={{or url '/images/avatar.jpg'}}>
   {{/animated-value}}
   {{#if isCurrentUser}}
     {{#file-dropzone name='photos' local-class='file-upload' as |dropzone queue|}}
@@ -135,9 +135,23 @@
     <div local-class='profile-edit-section'>
       <div local-class='profile-item'>
         <div local-class='profile-header no-border'>
+          First Name
+        </div>
+        <input local-class='input' type='text' value={{editedFields.firstName}} oninput={{action (mut editedFields.firstName) value='target.value'}}>
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
+          Middle / Last Name(s)
+        </div>
+        <input local-class='input' type='text' value={{editedFields.lastName}} oninput={{action (mut editedFields.lastName) value='target.value'}}>
+      </div>
+
+      <div local-class='profile-item'>
+        <div local-class='profile-header no-border'>
           Birth Date
         </div>
-        <input local-class='input' type='date' value={{editedFields.birthDate}} onchange={{action (mut editedFields.birthDate) value='target.value'}} />
+        <input local-class='input' type='date' value={{editedFields.birthDate}} onchange={{action (mut editedFields.birthDate) value='target.value'}}>
       </div>
 
       <div local-class='profile-item'>
@@ -158,7 +172,7 @@
           <i class='genericon genericon-phone' local-class='icon'></i>
           Phone Number
         </div>
-        <input local-class='input' type='tel' value={{editedFields.phone}} oninput={{action (mut editedFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}' />
+        <input local-class='input' type='tel' value={{editedFields.phone}} oninput={{action (mut editedFields.phone) value='target.value'}} pattern='([0-9]{3}) [0-9]{3}-[0-9]{4}'>
       </div>
 
       <div local-class='profile-item'>
@@ -166,7 +180,7 @@
           <i class='genericon genericon-location' local-class='icon'></i>
           Address
         </div>
-        <input local-class='input' type='text' value={{editedFields.address}} oninput={{action (mut editedFields.address) value='target.value'}} />
+        <input local-class='input' type='text' value={{editedFields.address}} oninput={{action (mut editedFields.address) value='target.value'}}>
       </div>
     </div>
 

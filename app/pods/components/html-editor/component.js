@@ -81,6 +81,7 @@ export default Component.extend({
         this._insertImage(JSON.parse(xhr.responseText).url);
       } else {
         // TODO handle error as above
+        // eslint-disable-next-line no-console
         console.error('ERROR', xhr);
         alert('Image upload error');
       }

@@ -6,6 +6,7 @@ import AirtableModel from 'hagans-family/pods/airtable/model';
 
 export default Route.extend({
   ajax: service(),
+  session: service(),
 
   titleToken({ post }) {
     return post.title;
@@ -17,8 +18,15 @@ export default Route.extend({
       this.get('ajax').request('/api/post_categories'),
     ]);
     const post = new PostModel(postResponse);
-    const authorId = post.author[0];
-    const author = await this.get('ajax').request(`/api/users/${authorId}`);
+    const authorId = post.author && post.author[0];
+
+    let author;
+    if (this.session.isAuthenticated && authorId) {
+      author = await this.get('ajax').request(`/api/users/${authorId}`);
+    } else {
+      // We can now fetch posts by id when not authenticated, but we cannot fetch users
+      author = { ['First Name']: 'A User' };
+    }
 
     return {
       post,

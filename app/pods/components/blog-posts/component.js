@@ -28,7 +28,11 @@ export default Component.extend({
   }),
 
   _postSummary(post) {
-    const content = post.content.replace(/<{1}[^<>]{1,}>{1}/g, ' '); // remove html
-    return content.substr(0, 500).split(' ').slice(0, 25).join(' ');
+    return this._takeWords(post.content, 500, 25);
+  },
+
+  _takeWords(content, maxNumChars, numWords) {
+    content = content.replace(/<{1}[^<>]{1,}>{1}/g, ' ').replace(/&nbsp;/g, ' '); // Remove html
+    return content.substr(0, maxNumChars).split(' ').slice(0, numWords).join(' ');
   },
 });
