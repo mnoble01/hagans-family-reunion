@@ -29,10 +29,24 @@
 .social-login-item:hover {
   top: -3px;
 }
-
 .icon {
   font-size: 24px;
   margin-right: 8px;
+}
+
+@media (max-width: 600px) {
+  .social-login {
+    justify-content: space-between;
+  }
+  .social-login-item {
+    padding: 8px;
+  }
+  .social-login-item:not(:first-child) {
+    margin: 0;
+  }
+  .icon {
+    margin-right: 4px;
+  }
 }
 
 .facebook {
