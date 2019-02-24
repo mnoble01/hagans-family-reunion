@@ -66,13 +66,15 @@ module.exports = function(app) {
     });
   });
 
-  // TODO create an object for managing uploads
+  // TODO maybe create an object for managing uploads
+  // TODO remove this endpoint maybe?
   app.post('/api/users/:id/profile_image', isLoggedIn, upload.single('file'), function(req, res) {
     const file = req.file;
     const filePath = file.path;
     const BASE_IMGR_URL = 'https://api.imgur.com/3/image';
 
     if (file.mimetype.startsWith('image')) {
+      // TODO use same code as /api/upload
       const imgurAuthHeader = {
         Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
       };
