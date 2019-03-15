@@ -45,7 +45,7 @@
 .fixed-post-image .post-info {
   background: rgba(0,0,0,.4);
   padding: 0 40px 40px;
-  height: 245px;
+  min-height: 245px;
   position: absolute;
   bottom: 0;
   left: 0;
