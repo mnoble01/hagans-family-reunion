@@ -5,7 +5,7 @@ const LOGIN_FAILURE_REDIRECT = '/#/login';
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.user.status !== 'Rejected') {
     return next();
   }
   res.status(401).json({

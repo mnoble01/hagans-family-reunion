@@ -36,7 +36,12 @@ export default Controller.extend({
         email: this.email,
         password: this.password,
       });
-      if (this.redirect) {
+
+      if (this.session.user.status === 'Rejected') {
+        this.flashMessages.danger('Your registration request has been rejected.', { scope: 'login' });
+      } else if (this.session.user.status === 'Inactive') {
+        this.flashMessages.danger('Your account is inactive.', { scope: 'login' });
+      } else if (this.redirect) {
         window.location = this.redirect;
       } else {
         this.transitionToRoute('account');
