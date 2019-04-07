@@ -17,11 +17,12 @@ export default Component.extend({
       }
       // const author = authors.findBy('id', post.author && post.author[0]);
       const summary = this._postSummary(post);
+      const hasMoreContent = this._hasMoreContent(post, summary);
       return {
         id: post.id,
         title: post.title,
         summary,
-        hasMoreContent: post.content.length > summary.length,
+        hasMoreContent,
         featuredImageUrl,
       };
     });
@@ -32,7 +33,16 @@ export default Component.extend({
   },
 
   _takeWords(content, maxNumChars, numWords) {
-    content = content.replace(/<{1}[^<>]{1,}>{1}/g, ' ').replace(/&nbsp;/g, ' '); // Remove html
+    content = this._removeHtml(content);
     return content.substr(0, maxNumChars).split(' ').slice(0, numWords).join(' ');
+  },
+
+  _removeHtml(content) {
+    return content.replace(/<{1}[^<>]{1,}>{1}/g, ' ').replace(/&nbsp;/g, ' ');
+  },
+
+  _hasMoreContent(post, summary) {
+    const content = this._removeHtml(post.content);
+    return content.length > summary.length;
   },
 });

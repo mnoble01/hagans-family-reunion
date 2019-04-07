@@ -13,3 +13,26 @@
 .p {
   padding-bottom: 24px;
 }
+
+.designs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.designs > a:not(:first-child) {
+  margin-top: 8px;
+}
+.designs img {
+  width: 100%;
+}
+@media(min-width: 1100px) {
+  .designs {
+    flex-direction: row;
+  }
+  .designs > a:not(:first-child) {
+    margin: 0 0 0 8px;
+  }
+  .designs > a:not(:last-child) {
+    margin: 0 8px 0 0;
+  }
+}
