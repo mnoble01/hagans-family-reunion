@@ -52,7 +52,11 @@
     {{#if expandedPayments}}
       Hide Payment Methods
     {{else}}
-      Make a Payment
+      {{#if remainingFeesDue}}
+        Show Payment Methods
+      {{else}}
+        Make a Payment
+      {{/if}}
     {{/if}}
   </button>
 </div>
