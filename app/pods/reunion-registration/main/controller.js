@@ -4,7 +4,7 @@ import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
 
-const FEES_DUE_DATE = 'May 15th, 2019';
+const FEES_DUE_DATE = 'June 15th, 2019';
 
 const STEPS = Object.freeze({
   ADDITIONAL_REGISTRATION: 'additional_registration',
