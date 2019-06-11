@@ -14,8 +14,7 @@ export default AirtableModel.extend({
       'Contact Methods',
       'Email',
       // relationships
-      'Mother',
-      'Father',
+      'Parents',
       'Siblings',
       'Spouse',
       'Children',

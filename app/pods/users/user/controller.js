@@ -62,15 +62,13 @@ export default Controller.extend({
 
   loadRelationships: task(function*() {
     if (this.user) {
-      const motherReqs = Promise.all((this.user.mother || []).map(id => this._fetchUser(id)));
-      const fatherReq = Promise.all((this.user.father || []).map(id => this._fetchUser(id)));
+      const parentsReqs = Promise.all((this.user.parents || []).map(id => this._fetchUser(id)));
       const siblingsReq = Promise.all((this.user.siblings || []).map(id => this._fetchUser(id)));
       const spouseReq = Promise.all((this.user.spouse || []).map(id => this._fetchUser(id)));
       const childrenReq = Promise.all((this.user.children || []).map(id => this._fetchUser(id)));
-      const [mother, father, siblings, spouse, children] = yield Promise.all([motherReqs, fatherReq, siblingsReq, spouseReq, childrenReq]);
+      const [parents, siblings, spouse, children] = yield Promise.all([parentsReqs, siblingsReq, spouseReq, childrenReq]);
       this.set('relationships', {
-        mother,
-        father,
+        parents,
         siblings,
         spouse,
         children,
@@ -108,8 +106,7 @@ export default Controller.extend({
   editedRelationships: computed('user', 'allUsers', function() {
     const allUsers = this.allUsers || [];
     return {
-      mother: allUsers.filter(user => (this.user.mother || []).includes(user.id)),
-      father: allUsers.filter(user => (this.user.father || []).includes(user.id)),
+      parents: allUsers.filter(user => (this.user.parents || []).includes(user.id)),
       siblings: allUsers.filter(user => (this.user.siblings || []).includes(user.id)),
       spouse: allUsers.filter(user => (this.user.spouse || []).includes(user.id)),
       children: allUsers.filter(user => (this.user.children || []).includes(user.id)),

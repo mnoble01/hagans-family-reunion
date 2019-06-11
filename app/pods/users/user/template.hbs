@@ -82,21 +82,12 @@
   </div>
 
   {{#liquid-if (eq tab 'relationships')}}
-    {{#if relationships.mother.length}}
+    {{#if relationships.parents.length}}
       <div local-class='profile-item'>
         <div local-class='profile-header'>
-          Mother
+          Parents
         </div>
-        {{user-list users=relationships.mother}}
-      </div>
-    {{/if}}
-
-    {{#if relationships.father.length}}
-      <div local-class='profile-item'>
-        <div local-class='profile-header'>
-          Father
-        </div>
-        {{user-list users=relationships.father}}
+        {{user-list users=relationships.parents}}
       </div>
     {{/if}}
 
@@ -190,23 +181,12 @@
     <div local-class='profile-edit-section'>
       <div local-class='profile-item'>
         <div local-class='profile-header no-border'>
-          Mother
+          Parents
         </div>
         {{user-selector
           users=allUsers
-          onchange=(action (mut editedRelationships.mother))
-          selected=editedRelationships.mother
-        }}
-      </div>
-
-      <div local-class='profile-item'>
-        <div local-class='profile-header no-border'>
-          Father
-        </div>
-        {{user-selector
-          users=allUsers
-          onchange=(action (mut editedRelationships.father))
-          selected=editedRelationships.father
+          onchange=(action (mut editedRelationships.parents))
+          selected=editedRelationships.parents
         }}
       </div>
 
