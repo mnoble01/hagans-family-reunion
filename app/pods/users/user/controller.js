@@ -43,12 +43,12 @@ export default Controller.extend({
   }),
 
   loadAddressCoordinates: task(function*() {
-    if (this.user.address) {
-      const address = this.user.address;
-      const response = yield this.ajax.request(`/api/location/${encodeURIComponent(address)}`);
-      this.set('addressLocation', get(response, 'geometry.location'));
-      this.set('formattedAddress', get(response, 'formatted_address'));
-    }
+    // if (this.user.address) {
+    //   const address = this.user.address;
+    //   const response = yield this.ajax.request(`/api/location/${encodeURIComponent(address)}`);
+    //   this.set('addressLocation', get(response, 'geometry.location'));
+    //   this.set('formattedAddress', get(response, 'formatted_address'));
+    // }
   }),
 
   addressLat: readOnly('addressLocation.lat'),
