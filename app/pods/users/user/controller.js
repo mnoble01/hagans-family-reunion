@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { alias } from '@ember/object/computed';
-import { computed, observer, get } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
