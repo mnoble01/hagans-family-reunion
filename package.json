@@ -75,7 +75,8 @@
     "qunit-dom": "^0.6.2"
   },
   "engines": {
-    "node": "6.* || 8.* || >= 10.*"
+    "node": "6.* || 8.* || >= 10.*",
+    "yarn": "1.6.0"
   },
   "dependencies": {
     "@google-cloud/storage": "^2.0.0",
