@@ -94,14 +94,14 @@
         {{/if}}
         . Please pay by {{feesDueDate}}.
       </h2>
-      {{reunion-registration-payment
-        reunionRegistration=reunionRegistration
-        dependentRegistrations=dependentRegistrations
-        tshirtOrders=tshirtOrders
-        remainingFeesDue=remainingFeesDue
-        totalFeesDue=totalFeesDue
-      }}
     {{/if}}
+    {{reunion-registration-payment
+      reunionRegistration=reunionRegistration
+      dependentRegistrations=dependentRegistrations
+      tshirtOrders=tshirtOrders
+      remainingFeesDue=remainingFeesDue
+      totalFeesDue=totalFeesDue
+    }}
   {{else}}
     {{reunion-registration-form
       user=session.user

@@ -34,7 +34,14 @@
         <td></td>
         <td></td>
         <td></td>
-        <td local-class='total-cell overall-total-cell'>${{totalFeesDue}}</td>
+        <td local-class='total-cell overall-total-cell'>
+          {{#if (eq remainingFeesDue 0)}}
+            PAID
+            <strike>${{totalFeesDue}}</strike>
+          {{else}}
+            ${{totalFeesDue}}
+          {{/if}}
+        </td>
       </tr>
     </tfoot>
   </table>
@@ -45,7 +52,11 @@
     {{#if expandedPayments}}
       Hide Payment Methods
     {{else}}
-      Make a Payment
+      {{#if remainingFeesDue}}
+        Show Payment Methods
+      {{else}}
+        Make a Payment
+      {{/if}}
     {{/if}}
   </button>
 </div>
