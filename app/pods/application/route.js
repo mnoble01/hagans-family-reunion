@@ -86,7 +86,6 @@ export default Route.extend({
       const messages = ['Error', errorMessage, payloadMessage].compact();
       this.flashMessages.danger(messages);
       console.trace(); // eslint-disable-line
-      console.log('ERROR', error); // eslint-disable-line
       return true;
     },
 
