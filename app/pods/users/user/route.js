@@ -17,6 +17,12 @@ export default Route.extend({
   },
 
   async model(params) {
+    // eslint-disable-next-line
+    console.log('PARAMS', params);;
+    // eslint-disable-next-line
+    console.log('ajax', this.ajax);
+    // eslint-disable-next-line
+    console.log('UserModel', UserModel);
     const user = await this.get('ajax').request(`/api/users/${params.user_id}`);
     return { user: new UserModel(user) };
   },
